@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 1 · Waves can rebuild anything — Case File 01</title>
+<style>
+{{SHARED_CSS}}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+#main{height:330px}
+#wave60{height:150px}
+.punch{font-family:var(--serif);font-size:17px;color:var(--ink);margin:10px 0 2px}
+.punch b{color:var(--claim-deep)}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 1 of 5</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-1">&larr; Back to the case file (Objection 1)</a></div>
+  <h1>Waves can rebuild anything</h1>
+  <p class="dek">Loehle &amp; Scafetta rebuilt the temperature record out of two waves and a line, and
+     presented the good fit as evidence of real 60- and 20-year cycles. But a fact known since Fourier
+     says the rebuild <i>always</i> works — on any wiggly line at all. Test that claim yourself.</p>
+</header>
+
+<section class="part">
+  <p><b>The game:</b> pick a graph that has nothing to do with climate — or roll a random one.
+     Then drag the slider to hand the rebuild more and more waves. Watch the amber curve
+     (a straight line plus your waves, exactly the claim's recipe) hug the target ever more
+     tightly. It will never refuse. That is the point.</p>
+
+  <div class="panel">
+    <span class="extag c">The rebuild · a line plus waves, like the paper's model</span>
+    <div class="presets">
+      <button class="btn" id="b-stock">Stock price</button>
+      <button class="btn" id="b-skyline">Mountain skyline</button>
+      <button class="btn" id="b-pop">Population of Europe, 0&ndash;2025&nbsp;CE</button>
+      <button class="btn primary" id="b-random">&#127922; Random graph</button>
+    </div>
+    <div class="controls">
+      <span class="lbl">Waves used</span>
+      <input type="range" id="kslider" min="0" max="80" value="0" step="1">
+      <button class="btn" id="play">&#9654; Add them for me</button>
+    </div>
+    <canvas id="main" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip k"><i></i><span id="targetlabel">the target graph</span></span>
+      <span class="chip c"><i></i>rebuilt from a line + <span id="kcount">0</span> waves</span>
+    </div>
+    <div class="readouts">
+      <div class="readout"><b>Waves used</b><div class="val" id="kval">0</div></div>
+      <div class="readout c"><b>How well it hugs (R&sup2;)</b><div class="val" id="r2val">&mdash;</div></div>
+    </div>
+    <p class="punch" id="punch"></p>
+    <div class="cap" id="srclabel"></div>
+  </div>
+
+  <h3 class="sub">And yes — this graph “contains” a 60-unit cycle</h3>
+  <p>The temperature debate stars a 60-<i>year</i> wave. Every graph on this page has a
+     60-<i>unit</i> wave of its own — the mathematics guarantees a wave of every period is in
+     the inventory, with some nonzero strength. Here is this graph's:</p>
+
+  <div class="panel">
+    <span class="extag c">This graph's own “60-unit wave”</span>
+    <canvas id="wave60" class="chart"></canvas>
+    <div class="readouts">
+      <div class="readout c"><b>Its period</b><div class="val" id="p60"></div></div>
+      <div class="readout c"><b>Its strength here</b><div class="val" id="a60"></div></div>
+    </div>
+    <div class="cap">Finding a wave of some chosen period, with some fitted strength, is not a
+      discovery — it is bookkeeping. The discovery would be showing the wave <b>had to</b> be
+      there for a physical reason, and that is the part curve fitting cannot supply.</div>
+  </div>
+
+  <div class="note r"><b>What this exercise shows.</b> The rebuild succeeded on a stock chart, a
+     mountain ridge, twenty centuries of population — and on pure dice. It always succeeds, so
+     succeeding carries no information about <i>causes</i>. Writing a melody down in notes doesn't
+     mean a piano composed it. When L&amp;S11's two waves and a line hugged the temperature
+     record, that was this same guarantee at work — the fit was the language speaking, not
+     nature confessing.</div>
+</section>
+
+<nav class="exnav">
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html">&uarr; Case file 01</a>
+  <a href="ex2-rhythm.html">Exercise 2: Two and a half beats &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Honest labels.</b> Stock price: synthetic random walk (seeded, reproducible)
+  — real prices would behave the same way. Mountain skyline: schematic fractal ridge. European
+  population: approximate scholarly estimates (McEvedy &amp; Jones 1978; UN), interpolated between
+  sparse historical anchor points and plotted on a logarithmic scale; the dips are the Plague of
+  Justinian and the Black Death. Random graph: seeded noise, new seed each press. Method: subtract a
+  least-squares line, decompose the leftover into Fourier waves, rebuild with the strongest
+  <i>k</i> waves (computed on a mirrored copy of the record, so the waves aren't forced to wrap
+  its ends around to meet each other) — the same “line plus waves” family as L&amp;S11's
+  Eq.&nbsp;(1), with the wave budget on a slider.</div>
+
+</div>
+<script>
+{{SHARED_JS}}
+
+/* ---------------- preset series ---------------- */
+function genStock() {
+  const rand = mulberry32(7101);
+  const N = 1024, xs = [], ys = [];
+  let lp = Math.log(42);
+  for (let i = 0; i < N; i++) {
+    lp += 0.00042 + 0.013 * gaussian(rand);
+    xs.push(i); ys.push(Math.exp(lp));
+  }
+  return { xs, ys, xlabel: "trading day", ylabel: "share price ($)",
+           unit: "days", name: "a stock price",
+           src: "Synthetic random walk (seed 7101) — statistically a stand-in for a real share price.",
+           quip: "Nobody thinks Jupiter and Saturn set share prices." };
+}
+function genSkyline() {
+  const rand = mulberry32(90210);
+  const N = 1025, ys = new Array(N).fill(0);
+  ys[0] = 1500 + 300 * (rand() - 0.5); ys[N - 1] = 1500 + 300 * (rand() - 0.5);
+  let stepScale = 640;
+  for (let half = (N - 1) / 2; half >= 1; half /= 2) {
+    for (let i = half; i < N - 1; i += 2 * half)
+      ys[i] = (ys[i - half] + ys[i + half]) / 2 + stepScale * (rand() - 0.5);
+    stepScale *= Math.pow(0.5, 0.92);
+  }
+  const xs = ys.map((_, i) => i);
+  return { xs, ys, xlabel: "distance along the ridge (m)", ylabel: "elevation (m)",
+           unit: "metres", name: "a mountain skyline",
+           src: "Schematic fractal ridge (seed 90210) — the jagged profile any real skyline shares.",
+           quip: "Nobody thinks the mountain is made of waves." };
+}
+function genPopulation() {
+  // Approximate European population estimates, millions (McEvedy & Jones 1978; UN),
+  // interpolated log-linearly between anchor years. Plotted/decomposed as log10(millions).
+  const anchors = [
+    [0, 31], [200, 36], [400, 31], [541, 33], [600, 26], [700, 27], [800, 29],
+    [900, 32], [1000, 36], [1100, 44], [1200, 58], [1300, 79], [1347, 81],
+    [1352, 62], [1400, 58], [1450, 68], [1500, 81], [1550, 90], [1600, 100],
+    [1650, 105], [1700, 120], [1750, 140], [1800, 180], [1850, 265],
+    [1900, 401], [1950, 549], [1970, 656], [1990, 721], [2000, 726],
+    [2010, 735], [2020, 745], [2025, 744],
+  ];
+  const xs = [], ys = [];
+  for (let yr = 0, a = 0; yr <= 2025; yr++) {
+    while (a < anchors.length - 2 && anchors[a + 1][0] < yr) a++;
+    const [x0, v0] = anchors[a], [x1, v1] = anchors[a + 1];
+    const f = (yr - x0) / (x1 - x0);
+    xs.push(yr);
+    ys.push(Math.log10(v0) + f * (Math.log10(v1) - Math.log10(v0)));
+  }
+  return { xs, ys, xlabel: "year (CE)", ylabel: "population (millions, log scale)",
+           unit: "years", name: "Europe's population", logPop: true,
+           src: "Approximate scholarly estimates (McEvedy & Jones 1978; UN), interpolated between sparse anchor years; log scale. The dips: the Plague of Justinian (541) and the Black Death (1347–52).",
+           quip: "The Black Death was not a 60-year astronomical cycle." };
+}
+let randomSeed = 0;
+function genRandom() {
+  randomSeed += 1;
+  const rand = mulberry32(1000 + randomSeed);
+  const N = 1024, xs = [], ys = [];
+  let v = 0;
+  for (let i = 0; i < N; i++) { v = 0.985 * v + gaussian(rand); xs.push(i); ys.push(v); }
+  return { xs, ys, xlabel: "step", ylabel: "value", unit: "steps",
+           name: "a random graph", src: `Seeded noise, seed ${1000 + randomSeed} — press the button again for a new one.`,
+           quip: "This graph has no cause at all beyond dice — and the rebuild works anyway." };
+}
+
+/* ---------------- decomposition ---------------- */
+let S = null;   // current state
+function decompose(series) {
+  /* Decompose on a mirrored copy of the detrended series (length 2N) so the
+     waves aren't forced to wrap the record's ends around to meet each other. */
+  const { xs, ys } = series;
+  const N = ys.length, N2 = 2 * N;
+  const [slope, icept] = linfit(xs, ys);
+  const resid = ys.map((v, i) => v - (slope * xs[i] + icept));
+  const ext = new Float64Array(N2);
+  for (let i = 0; i < N; i++) { ext[i] = resid[i]; ext[N2 - 1 - i] = resid[i]; }
+  const M = N - 1;
+  const comps = [];
+  for (let m = 1; m <= M; m++) {
+    let a = 0, b = 0;
+    const w = 2 * Math.PI * m / N2;
+    for (let i = 0; i < N2; i++) { a += ext[i] * Math.cos(w * i); b += ext[i] * Math.sin(w * i); }
+    a *= 2 / N2; b *= 2 / N2;
+    comps.push({ m, a, b, amp: Math.hypot(a, b), period: N2 / m }); // period in samples = x-units
+  }
+  const order = [...comps].sort((p, q) => q.amp - p.amp);
+  // the component whose period is nearest 60 x-units
+  let near60 = comps[0];
+  for (const cp of comps) if (Math.abs(cp.period - 60) < Math.abs(near60.period - 60)) near60 = cp;
+  return { series, N, N2, slope, icept, comps, order, near60 };
+}
+function rebuild(D, k) {
+  const { N, N2, slope, icept } = D;
+  const xs = D.series.xs;
+  const out = new Array(N);
+  for (let i = 0; i < N; i++) out[i] = slope * xs[i] + icept;
+  for (let j = 0; j < k && j < D.order.length; j++) {
+    const { m, a, b } = D.order[j];
+    const w = 2 * Math.PI * m / N2;
+    for (let i = 0; i < N; i++) out[i] += a * Math.cos(w * i) + b * Math.sin(w * i);
+  }
+  return out;
+}
+
+/* ---------------- UI ---------------- */
+const main = Chart(document.getElementById("main"), { margin: { ml: 56 } });
+const w60c = Chart(document.getElementById("wave60"), { margin: { ml: 56, mb: 26 } });
+const slider = document.getElementById("kslider");
+const playBtn = document.getElementById("play");
+let playTimer = null;
+
+function fmtPop(v) { const p = Math.pow(10, v); return p >= 100 ? Math.round(p) : p.toFixed(0); }
+
+function draw() {
+  const k = +slider.value;
+  const { series } = S;
+  const rec = rebuild(S, k);
+  const lo = Math.min(...series.ys), hi = Math.max(...series.ys);
+  const pad = 0.08 * (hi - lo);
+  main.begin([series.xs[0], series.xs[series.xs.length - 1]], [lo - pad, hi + pad]);
+  const yt = series.logPop
+    ? [Math.log10(25), Math.log10(50), Math.log10(100), Math.log10(200), Math.log10(400), Math.log10(800)]
+    : ticks(lo - pad, hi + pad, 5);
+  main.axes({ xticks: ticks(main.xlim[0], main.xlim[1], 7), yticks: yt,
+              xlabel: series.xlabel, ylabel: series.ylabel,
+              yfmt: series.logPop ? fmtPop : undefined });
+  main.clipPlot(() => {
+    main.line(series.xs, series.ys, { color: C.ink, width: 1.4, alpha: 0.9 });
+    main.line(series.xs, rec, { color: C.claim, width: 2.2 });
+  });
+  const R2 = r2(series.ys, rec);
+  document.getElementById("kval").textContent = k;
+  document.getElementById("kcount").textContent = k;
+  document.getElementById("r2val").textContent = R2 <= 0 ? "0.00" : R2.toFixed(R2 > 0.995 ? 3 : 2);
+  document.getElementById("targetlabel").textContent = series.name;
+  document.getElementById("srclabel").innerHTML = "<b>What you're looking at:</b> " + series.src;
+  const punch = document.getElementById("punch");
+  if (k === 0) punch.innerHTML = "Right now the rebuild is just the straight line. Give it waves.";
+  else if (R2 < 0.6) punch.innerHTML = `With <b>${k} waves</b> the hug is loose &mdash; keep going. The math has plenty more waves to offer.`;
+  else if (R2 < 0.9) punch.innerHTML = `<b>${k} waves</b> already trace the big swings of ${series.name}. ${series.quip}`;
+  else punch.innerHTML = `<b>${k} waves</b> rebuild ${series.name} almost perfectly (R&sup2; ${R2.toFixed(2)}). ${series.quip} The rebuild <b>always</b> works &mdash; that's why a good fit proves nothing about causes.`;
+
+  // ---- the near-60-unit component ----
+  const cp = S.near60;
+  const w = 2 * Math.PI * cp.m / S.N2;
+  const ys60 = series.xs.map((_, i) => cp.a * Math.cos(w * i) + cp.b * Math.sin(w * i));
+  const a = Math.max(cp.amp, 1e-12) * 1.4;
+  w60c.begin(main.xlim, [-a, a]);
+  w60c.axes({ xticks: ticks(main.xlim[0], main.xlim[1], 7), yticks: [] });
+  w60c.clipPlot(() => { w60c.line(series.xs, ys60, { color: C.claimDeep, width: 1.8 }); });
+  document.getElementById("p60").textContent = cp.period.toFixed(1) + " " + series.unit;
+  const ampTxt = series.logPop
+    ? "±" + ((Math.pow(10, cp.amp) - 1) * 100).toFixed(2) + "%"
+    : "±" + (cp.amp >= 10 ? cp.amp.toFixed(0) : cp.amp.toFixed(2));
+  document.getElementById("a60").innerHTML = ampTxt + " <small>" +
+    (series.logPop ? "population swing" : series.ylabel.replace(/ *\(.*\)/, "")) + "</small>";
+}
+
+function setSeries(gen) {
+  stopPlay();
+  S = decompose(gen());
+  slider.value = 0;
+  draw();
+}
+function stopPlay() {
+  if (playTimer) { clearInterval(playTimer); playTimer = null; playBtn.innerHTML = "&#9654; Add them for me"; }
+}
+playBtn.addEventListener("click", () => {
+  if (playTimer) { stopPlay(); return; }
+  playBtn.innerHTML = "&#10074;&#10074; Pause";
+  playTimer = setInterval(() => {
+    if (+slider.value >= +slider.max) { stopPlay(); return; }
+    slider.value = +slider.value + 1;
+    draw();
+  }, 110);
+});
+slider.addEventListener("input", () => { stopPlay(); draw(); });
+document.getElementById("b-stock").addEventListener("click", () => setSeries(genStock));
+document.getElementById("b-skyline").addEventListener("click", () => setSeries(genSkyline));
+document.getElementById("b-pop").addEventListener("click", () => setSeries(genPopulation));
+document.getElementById("b-random").addEventListener("click", () => setSeries(genRandom));
+
+debounceRedraw(draw);
+setSeries(genStock);
+</script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 2 · Two and a half beats — Case File 01</title>
+<style>
+{{SHARED_CSS}}
+#fitchart{height:320px}
+#scanchart{height:260px}
+.periodval{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--rebut-deep);min-width:110px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 2 of 5</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-2">&larr; Back to the case file (Objection 2)</a></div>
+  <h1>Two and a half beats don't make a rhythm</h1>
+  <p class="dek">L&amp;S11 pinned their long cycle at exactly 60 years, on astronomical grounds. But their
+     calibration window — 1850&ndash;1950 — holds fewer than two repeats of such a cycle. If 60 were a real
+     constant of nature, it should fit the data <i>better</i> than its neighbours. Turn the dial and see.</p>
+</header>
+
+<section class="part">
+  <p><b>The game:</b> you control the long period. Every position of the slider refits the full
+     L&amp;S11 model — your wave, plus the 20-year wave, plus a straight line — to the real NOAA
+     temperature record's 1850&ndash;1950 window, live. Watch the fit quality (R&sup2;). Hunt for
+     the period that fits best. Is it 60?</p>
+
+  <div class="panel">
+    <span class="extag k">Real data · NOAA global temperature, fitted live</span>
+    <div class="controls">
+      <span class="lbl">Long period</span>
+      <input type="range" id="pslider" min="30" max="100" value="60" step="0.25">
+      <span class="periodval" id="pval">60.0 yr</span>
+    </div>
+    <canvas id="fitchart" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip k"><i></i>observed temperature (NOAA)</span>
+      <span class="chip c"><i></i>model fitted 1850&ndash;1950</span>
+      <span class="chip c"><i style="border-top-style:dashed"></i>same curve, extended</span>
+    </div>
+    <div class="readouts">
+      <div class="readout r"><b>Fit quality R&sup2; (1850&ndash;1950)</b><div class="val" id="r2val"></div></div>
+      <div class="readout"><b>Full beats in the window</b><div class="val" id="beats"></div></div>
+      <div class="readout"><b>vs. R&sup2; at 60 yr</b><div class="val" id="delta"></div></div>
+    </div>
+    <div class="cap" id="fitcap"></div>
+  </div>
+
+  <h3 class="sub">Your search, mapped</h3>
+  <p>Every period you have tried leaves a dot below. Explore a while — then reveal the whole
+     landscape.</p>
+
+  <div class="panel">
+    <span class="extag r">The period scan · every long period from 30 to 100 years</span>
+    <div class="controls">
+      <button class="btn primary" id="reveal">Reveal the full scan</button>
+      <span class="cap" id="scanhint" style="margin:0">Dots mark the periods you have visited.</span>
+    </div>
+    <canvas id="scanchart" class="chart"></canvas>
+    <div class="cap" id="scancap"><b>Hunting tip:</b> try the low 30s, the 60s, the high 80s.</div>
+  </div>
+
+  <div class="note r"><b>What this exercise shows.</b> The R&sup2; landscape is broad and nearly flat
+     — many periods fit the calibration window about equally well, and 60 is not the winner. On
+     this NOAA snapshot the best long period is ≈87 years; on 2010-vintage HadCRUT3, Benestad
+     et&nbsp;al. found 65.75 beat 60; and L&amp;S11's own supplement concedes that a free fit
+     centers near 65 — they imposed 60 anyway to match the astronomy. A real physical constant
+     doesn't move when you switch thermometer networks, and it doesn't lose to its neighbours on
+     the very data used to establish it. What you just felt with the slider is the sound of a
+     window too short to pin down a rhythm: 100 years of data holds fewer than two beats of a
+     60-year cycle.</div>
+</section>
+
+<nav class="exnav">
+  <a href="ex1-waves.html">&larr; Exercise 1: Waves rebuild anything</a>
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html">&uarr; Case file 01</a>
+  <a href="ex3-phantom-cycles.html">Exercise 3: Cycles from randomness &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Honest labels.</b> The temperature series is real: NOAA NOAAGlobalTemp
+  (GCAG) annual anomalies vs. the 20th-century mean, the same data snapshot as the case file,
+  embedded in this page at build time. The model refitted at every slider position is L&amp;S11's
+  Eq.&nbsp;(1) — long wave (your period) + 20-year wave + straight line, amplitudes and phases free,
+  ordinary least squares on 1850&ndash;1950 — identical to the case file's Exhibit&nbsp;C machinery.
+  Their Table&nbsp;1 reports R&sup2;&nbsp;0.53 at 60 yr on 2010-vintage HadCRUT3; this data gives
+  0.46 at 60 yr. Dataset vintage moves the numbers; that instability is part of the point.</div>
+
+</div>
+<script>
+{{SHARED_JS}}
+const GCAG = {{GCAG_JSON}};   /* [[year, anomaly °C], ...] injected by build.py */
+
+const yrs = GCAG.map(d => d[0]), T = GCAG.map(d => d[1]);
+const calMask = yrs.map(y => y <= 1950);
+const calT = yrs.filter((y, i) => calMask[i]), calY = T.filter((v, i) => calMask[i]);
+const show = yrs.filter(y => y <= 2010);
+const showT = T.slice(0, show.length);
+
+/* full scan, computed once (matches make_figures.py fig 4) */
+const scanP = [], scanR = [];
+for (let P = 30; P <= 100.001; P += 0.25) {
+  const f = fitCycles(calT, calY, [P, 20]);
+  scanP.push(P); scanR.push(f.r2cal);
+}
+const bestIdx = scanR.indexOf(Math.max(...scanR));
+const bestP = scanP[bestIdx], bestR = scanR[bestIdx];
+const r2at60 = scanR[scanP.findIndex(p => Math.abs(p - 60) < 0.01)];
+
+const visited = new Set();
+let revealed = false;
+
+const fc = Chart(document.getElementById("fitchart"), { margin: { ml: 50 } });
+const sc = Chart(document.getElementById("scanchart"), { margin: { ml: 50 } });
+const slider = document.getElementById("pslider");
+
+function drawFit() {
+  const P = +slider.value;
+  visited.add(P);
+  const f = fitCycles(calT, calY, [P, 20]);
+  const model = f.predict(show);
+  fc.begin([1850, 2011], [-0.75, 0.8]);
+  fc.band(1850, 1950);
+  fc.axes({ xticks: [1850, 1875, 1900, 1925, 1950, 1975, 2000], yticks: [-0.6, -0.3, 0, 0.3, 0.6],
+            xlabel: "year", ylabel: "temperature anomaly (°C)" });
+  fc.clipPlot(() => {
+    fc.line(show, showT, { color: C.ink, width: 1.1, alpha: 0.85 });
+    const calN = calT.length;
+    fc.line(calT, model.slice(0, calN), { color: C.claim, width: 2.3 });
+    fc.line(show.slice(calN - 1), model.slice(calN - 1), { color: C.claim, width: 2.3, dash: [6, 4] });
+    /* beat brackets: each full repeat of P inside the window */
+    let n = 0;
+    for (let s = 1850; s + P <= 1950.01; s += P, n++) {
+      const y0 = -0.60;
+      fc.line([s + 1, s + P - 1], [y0, y0], { color: C.rebut, width: 2.5 });
+      fc.text("beat " + (n + 1), s + P / 2, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
+    }
+    if (n === 0) fc.text("not even one full beat fits in the window!", 1900, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
+  });
+  fc.text("fitting window", 1900, 0.74, { color: C.grey, align: "center", font: "10px" });
+
+  document.getElementById("pval").textContent = P.toFixed(2).replace(/\.?0+$/, "") + " yr";
+  document.getElementById("r2val").textContent = f.r2cal.toFixed(3);
+  document.getElementById("beats").textContent = (100 / P).toFixed(2);
+  const d = f.r2cal - r2at60;
+  document.getElementById("delta").textContent = (d >= 0 ? "+" : "") + d.toFixed(3);
+  const cap = document.getElementById("fitcap");
+  if (Math.abs(P - 60) < 0.01)
+    cap.innerHTML = "<b>This is their choice:</b> 60 years — R&sup2; " + f.r2cal.toFixed(3) +
+      ". The window holds " + (100 / P).toFixed(2) + " beats. Now try to beat it.";
+  else if (d > 0.001)
+    cap.innerHTML = "<b>" + P.toFixed(2).replace(/\.?0+$/, "") + " years fits better than 60</b> on the very data used to establish the cycle (+" + d.toFixed(3) + " R&sup2;).";
+  else if (d < -0.05)
+    cap.innerHTML = "Worse than 60 — but look at the fitted curve: still a perfectly presentable wiggle-match. The eye is a poor referee.";
+  else
+    cap.innerHTML = "About as good as 60. Notice how gently R&sup2; changes as you drag — the data barely cares.";
+  drawScan();
+}
+
+function drawScan() {
+  const rLo = Math.min(...scanR), rHi = Math.max(...scanR);
+  const pad = 0.12 * (rHi - rLo);
+  sc.begin([30, 100], [rLo - pad, rHi + pad * 3]);
+  sc.axes({ xticks: [30, 40, 50, 60, 70, 80, 90, 100], yticks: ticks(rLo, rHi, 4),
+            xlabel: "assumed long period (years) — short period held at 20",
+            ylabel: "fit quality R² (1850–1950)", yfmt: v => v.toFixed(2) });
+  sc.clipPlot(() => {
+    if (revealed) {
+      sc.line(scanP, scanR, { color: C.rebut, width: 2 });
+      sc.vline(60, { color: C.claim, dash: [5, 4], width: 1.6 });
+      sc.text("the chosen 60", 60.8, rLo - pad / 2, { color: C.claimDeep, font: "10.5px" });
+      sc.vline(65.75, { color: C.grey, dash: [2, 3] });
+      sc.text("65.75 — beats 60 on HadCRUT3 (Benestad et al.)", 99, rHi + pad * 2.2, { color: C.inkSoft, font: "10px", align: "right" });
+      sc.dots([bestP], [bestR], { color: C.ink, r: 4 });
+      sc.text("best on this data: " + bestP.toFixed(1) + " yr", bestP - 1, bestR + pad, { color: C.ink, align: "right", font: "10.5px" });
+    }
+    const vp = [...visited];
+    const vr = vp.map(p => scanR[Math.round((p - 30) / 0.25)]);
+    sc.dots(vp, vr, { color: revealed ? C.grey : C.rebut, r: 3, alpha: revealed ? 0.55 : 1 });
+    const P = +slider.value;
+    sc.dots([P], [scanR[Math.round((P - 30) / 0.25)]], { color: C.rebutDeep, r: 5 });
+  });
+}
+
+document.getElementById("reveal").addEventListener("click", () => {
+  revealed = true;
+  document.getElementById("scanhint").textContent = "";
+  document.getElementById("scancap").innerHTML =
+    "<b>The landscape.</b> Broad, gentle, and not centred on 60: on this data the best long period " +
+    "is ≈" + bestP.toFixed(1) + " yr (R² " + bestR.toFixed(3) + " vs. " + r2at60.toFixed(3) +
+    " at 60). Benestad et al. found 65.75 beat 60 on HadCRUT3 — and L&S11's own free fit " +
+    "centred near 65. Three datasets, three different “best cycles”: that is what a too-short " +
+    "window sounds like.";
+  drawScan();
+});
+slider.addEventListener("input", drawFit);
+debounceRedraw(drawFit);
+drawFit();
+</script>
+</body>
+</html>

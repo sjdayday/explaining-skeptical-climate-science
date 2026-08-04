@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 5 · Resonance doesn't pick sides — Case File 01</title>
+<style>
+/* Shared design system for Case File 01 exercises — mirrors the case file. */
+:root{
+  --paper:#F7FAFB; --card:#FFFFFF; --ink:#1B2A3A; --ink-soft:#44586C;
+  --claim:#C7772E; --claim-tint:#FBF1E4; --claim-deep:#9A5A1F;
+  --rebut:#0E7C7B; --rebut-tint:#E4F1F0; --rebut-deep:#0A5C5B;
+  --grey:#7C8B99; --hair:#DFE6EC;
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.sheet{max-width:860px;margin:0 auto;padding:0 22px 70px}
+
+header{padding:40px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--grey);
+         text-transform:uppercase;margin-bottom:14px}
+.eyebrow b{color:var(--ink);font-weight:600}
+.crumb{font-family:var(--mono);font-size:12px;margin-bottom:22px}
+.crumb a{color:var(--rebut-deep)}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,40px);
+   line-height:1.1;margin:0 0 14px;letter-spacing:-0.01em}
+.dek{font-family:var(--serif);font-size:18.5px;line-height:1.5;color:var(--ink-soft);
+     max-width:700px;margin:0 0 10px}
+.part p{margin:0 0 16px;max-width:740px}
+h3.sub{font-family:var(--serif);font-size:20px;margin:30px 0 10px;color:var(--rebut-deep)}
+
+a{color:var(--rebut-deep);text-decoration-color:var(--hair);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--rebut)}
+
+/* panels & charts */
+.panel{background:var(--card);border:1px solid var(--hair);border-radius:10px;
+       padding:18px 18px 14px;margin:24px 0}
+.panel .extag{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+       display:inline-block;margin-bottom:12px;padding:3px 9px;border-radius:3px}
+.extag.c{background:var(--claim-tint);color:var(--claim-deep)}
+.extag.r{background:var(--rebut-tint);color:var(--rebut-deep)}
+.extag.k{background:#E8EDF2;color:var(--ink)}
+canvas.chart{width:100%;display:block;border-radius:4px}
+.cap{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:12px}
+.cap b{color:var(--ink)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:14px 0}
+.controls .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+               text-transform:uppercase;color:var(--ink-soft)}
+button.btn{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);
+  background:var(--card);border:1px solid var(--hair);border-radius:8px;
+  padding:8px 14px;cursor:pointer;transition:background .12s,border-color .12s}
+button.btn:hover{border-color:var(--grey)}
+button.btn.primary{background:var(--rebut);border-color:var(--rebut);color:#fff}
+button.btn.primary:hover{background:var(--rebut-deep)}
+button.btn.claim{background:var(--claim-tint);border-color:var(--claim);color:var(--claim-deep)}
+button.btn.on{background:var(--rebut-tint);border-color:var(--rebut);color:var(--rebut-deep)}
+button.btn:disabled{opacity:.45;cursor:default}
+input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer}
+
+/* readouts */
+.readouts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.readout{background:var(--paper);border:1px solid var(--hair);border-radius:8px;
+         padding:10px 14px;min-width:130px;flex:0 1 auto}
+.readout b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;
+           text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px;font-weight:600}
+.readout .val{font-family:var(--mono);font-size:20px;font-weight:600}
+.readout .val small{font-size:12px;color:var(--ink-soft);font-weight:400}
+.readout.c .val{color:var(--claim-deep)} .readout.r .val{color:var(--rebut-deep)}
+
+.note{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--grey);
+      border-radius:8px;padding:14px 18px;font-size:14px;color:var(--ink-soft);margin:22px 0}
+.note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
+.note b{color:var(--ink)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.chip i{width:22px;height:0;border-top:3px solid;border-radius:2px;display:inline-block}
+.chip.c i{border-color:var(--claim)} .chip.r i{border-color:var(--rebut)}
+.chip.k i{border-color:var(--ink)} .chip.g i{border-color:var(--grey)}
+
+/* prev / next navigation */
+.exnav{display:flex;justify-content:space-between;gap:14px;margin-top:50px;
+       border-top:1px solid var(--hair);padding-top:20px;font-size:14px}
+.exnav a{font-weight:600}
+.exnav .home{color:var(--grey)}
+.footnote{margin-top:26px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--hair);
+          padding-top:14px;max-width:760px}
+@media print{body{background:#fff}.sheet{max-width:100%;padding:0}}
+
+#forcechart{height:150px}
+#respchart{height:230px}
+.pushbtn{font-size:16px;padding:10px 22px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 5 of 5</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-5">&larr; Back to the case file (Objection 5)</a></div>
+  <h1>Resonance doesn't pick sides</h1>
+  <p class="dek">To connect distant planets to Earth's thermometers, L&amp;S11 lean on resonance: the
+     climate rings like a struck glass in sympathy with tiny astronomical nudges — while supposedly
+     responding only sluggishly to the far larger push of CO&#8322;. But resonance is a property of the
+     <i>system</i>, not of the pusher it prefers. Here is a resonant system. Push it yourself.</p>
+</header>
+
+<section class="part">
+  <p><b>The game:</b> below is a simulated oscillator with a natural period of 60 years and a
+     gentle ring — a stand-in for the claim's “resonant climate,” the same demonstration Benestad
+     et&nbsp;al. ran in their supporting material. You choose what pushes it. The claim's story
+     needs the first button to work and the others to fail. See what actually happens.</p>
+
+  <div class="panel">
+    <span class="extag r">Simulated oscillator · natural period 60 years</span>
+    <div class="controls">
+      <span class="lbl">The push</span>
+      <button class="btn" id="f-metro">&#129346; Planetary metronome</button>
+      <button class="btn" id="f-noise">&#127922; Random weather</button>
+      <button class="btn" id="f-ramp">&#128200; Greenhouse ramp</button>
+      <button class="btn" id="f-off">Silence</button>
+      <button class="btn claim pushbtn" id="f-push">&#128074; Push now</button>
+    </div>
+    <canvas id="forcechart" class="chart"></canvas>
+    <canvas id="respchart" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip c"><i></i>the push (its own magnified scale — the metronome is a whisper)</span>
+      <span class="chip r"><i></i>the system's response</span>
+    </div>
+    <div class="readouts">
+      <div class="readout"><b>Push type</b><div class="val" id="ftype" style="font-size:15px">planetary metronome</div></div>
+      <div class="readout r"><b>Response rhythm (measured)</b><div class="val" id="period">&mdash;</div></div>
+      <div class="readout r"><b>Response swing</b><div class="val" id="swing">&mdash;</div></div>
+    </div>
+    <p class="cap" id="punch"></p>
+  </div>
+
+  <div class="note r"><b>What this exercise shows.</b> The metronome works — a whisper at the right
+     tempo builds a big swing. But so does everything else. Random, rhythm-free shoves excite the
+     same 60-year ring (a lesson for Exercise&nbsp;3: a 60-year wobble in a record needs no 60-year
+     cause). And the greenhouse ramp passes straight through: the system rides the rising push
+     while it wobbles — trends and wiggles coexist, so finding a wiggle subtracts nothing from
+     CO&#8322;. A wine glass rings at its pitch for the soprano, the cello, and the crowd alike. A
+     climate sensitive enough to amplify planetary whispers cannot also be deaf to CO&#8322;'s
+     shout — yet that double standard is precisely what L&amp;S11's accounting requires. And even
+     this concedes too much: unlike your finger, the planetary “whisper” has no accepted physical
+     mechanism to push with in the first place — the links in their chain (irradiance
+     reconstructions, cosmic-ray cloud seeding) are themselves faulted elsewhere in the same
+     replication study.</div>
+
+  <p>You have now run all five objections with your own hands: waves rebuild anything
+     (Exercise&nbsp;1); a 100-year window can't certify a 60-year rhythm (Exercise&nbsp;2); the
+     fit “discovers” cycles in dice rolls (Exercise&nbsp;3); memorizing the past predicts nothing
+     (Exercise&nbsp;4); and the proposed physics can't pick sides (Exercise&nbsp;5). The case
+     file's Part&nbsp;Three shows what happened when the real future arrived.</p>
+</section>
+
+<nav class="exnav">
+  <a href="ex4-hidden-years.html">&larr; Exercise 4: The hidden years</a>
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html">&uarr; Case file 01</a>
+  <a href="../casefile01-loehle-scafetta-curve-fitting.html#part-three">Part Three: the test nature ran &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Honest labels.</b> Fully <b>schematic</b>: a standard damped harmonic
+  oscillator (natural period 60 “years,” quality factor Q&nbsp;=&nbsp;10) integrated live in your
+  browser — the textbook demonstration Benestad et&nbsp;al. used, not a climate model. The three
+  pushes are drawn on a common magnified scale; the metronome's is the <i>weakest</i>, which is the
+  claim's own premise (planetary nudges are tiny). What transfers to the real debate is the
+  principle: a resonance amplifies any forcing near its frequency and transmits slow trends
+  regardless of their origin — it cannot be selectively deaf to one cause.</div>
+
+</div>
+<script>
+/* Shared utilities for Case File 01 exercises.
+   Mirrors the fitting machinery of src/make_figures.py:
+   design matrix [1, t-1900, sin/cos pairs], ordinary least squares, R²,
+   amplitude of a sin/cos pair. Seeded PRNG so every run is reproducible. */
+"use strict";
+
+/* ---------- palette (keep in sync with _shared.css) ---------- */
+const C = {
+  ink: "#1B2A3A", inkSoft: "#44586C", claim: "#C7772E", claimDeep: "#9A5A1F",
+  claimTint: "#FBF1E4", rebut: "#0E7C7B", rebutDeep: "#0A5C5B",
+  rebutTint: "#E4F1F0", grey: "#7C8B99", hair: "#DFE6EC", band: "#EDF2F6",
+};
+
+/* ---------- seeded randomness ---------- */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function gaussian(rand) {           // Box–Muller
+  let u = 0, v = 0;
+  while (u === 0) u = rand();
+  while (v === 0) v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+/* ---------- small stats ---------- */
+const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length;
+function std(a) {
+  const m = mean(a);
+  return Math.sqrt(a.reduce((s, v) => s + (v - m) * (v - m), 0) / a.length);
+}
+function linfit(x, y) {             // least-squares line: returns [slope, intercept]
+  const mx = mean(x), my = mean(y);
+  let sxy = 0, sxx = 0;
+  for (let i = 0; i < x.length; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) * (x[i] - mx); }
+  const b = sxy / sxx;
+  return [b, my - b * mx];
+}
+function r2(y, yhat) {
+  const m = mean(y);
+  let ssr = 0, sst = 0;
+  for (let i = 0; i < y.length; i++) { ssr += (y[i] - yhat[i]) ** 2; sst += (y[i] - m) ** 2; }
+  return 1 - ssr / sst;
+}
+
+/* ---------- linear algebra: solve A x = b (Gaussian elimination, partial pivot) ---------- */
+function solve(A, b) {
+  const n = A.length;
+  const M = A.map((row, i) => [...row, b[i]]);
+  for (let c = 0; c < n; c++) {
+    let p = c;
+    for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+    [M[c], M[p]] = [M[p], M[c]];
+    const piv = M[c][c];
+    for (let r = c + 1; r < n; r++) {
+      const f = M[r][c] / piv;
+      for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k];
+    }
+  }
+  const x = new Array(n).fill(0);
+  for (let r = n - 1; r >= 0; r--) {
+    let s = M[r][n];
+    for (let k = r + 1; k < n; k++) s -= M[r][k] * x[k];
+    x[r] = s / M[r][r];
+  }
+  return x;
+}
+/* least squares via normal equations: X (rows) n×p, y n → beta p */
+function lstsq(X, y) {
+  const n = X.length, p = X[0].length;
+  const A = Array.from({ length: p }, () => new Array(p).fill(0));
+  const b = new Array(p).fill(0);
+  for (let i = 0; i < n; i++) {
+    const xi = X[i];
+    for (let j = 0; j < p; j++) {
+      b[j] += xi[j] * y[i];
+      for (let k = j; k < p; k++) A[j][k] += xi[j] * xi[k];
+    }
+  }
+  for (let j = 0; j < p; j++) for (let k = 0; k < j; k++) A[j][k] = A[k][j];
+  return solve(A, b);
+}
+
+/* ---------- the L&S11-style model: [1, t-1900, sin/cos per period] ---------- */
+function designRow(t, periods, trend) {
+  const row = [1];
+  if (trend) row.push(t - 1900);
+  for (const P of periods) {
+    const w = 2 * Math.PI / P;
+    row.push(Math.sin(w * t), Math.cos(w * t));
+  }
+  return row;
+}
+function fitCycles(t, y, periods, trend = true) {
+  const X = t.map((ti) => designRow(ti, periods, trend));
+  const beta = lstsq(X, y);
+  const predict = (tt) => tt.map((ti) => {
+    const row = designRow(ti, periods, trend);
+    let s = 0;
+    for (let j = 0; j < row.length; j++) s += row[j] * beta[j];
+    return s;
+  });
+  const amp = (i) => {                      // amplitude of i-th sin/cos pair
+    const k = (trend ? 2 : 1) + 2 * i;
+    return Math.hypot(beta[k], beta[k + 1]);
+  };
+  return { beta, predict, amp, r2cal: r2(y, predict(t)) };
+}
+
+/* ---------- canvas chart helper (devicePixelRatio-aware) ---------- */
+function Chart(canvas, opts = {}) {
+  const M = Object.assign({ ml: 46, mr: 12, mt: 10, mb: 30 }, opts.margin || {});
+  const self = {
+    canvas, ctx: canvas.getContext("2d"),
+    xlim: opts.xlim || [0, 1], ylim: opts.ylim || [0, 1],
+    W: 0, H: 0,
+  };
+  function fit() {
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    }
+    self.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    self.W = w; self.H = h;
+  }
+  self.x = (v) => M.ml + (v - self.xlim[0]) / (self.xlim[1] - self.xlim[0]) * (self.W - M.ml - M.mr);
+  self.y = (v) => self.H - M.mb - (v - self.ylim[0]) / (self.ylim[1] - self.ylim[0]) * (self.H - M.mt - M.mb);
+  self.begin = function (xlim, ylim) {
+    fit();
+    if (xlim) self.xlim = xlim;
+    if (ylim) self.ylim = ylim;
+    self.ctx.clearRect(0, 0, self.W, self.H);
+  };
+  self.clipPlot = function (fn) {
+    const c = self.ctx;
+    c.save(); c.beginPath();
+    c.rect(M.ml, M.mt, self.W - M.ml - M.mr, self.H - M.mt - M.mb);
+    c.clip(); fn(); c.restore();
+  };
+  self.line = function (xs, ys, style = {}) {
+    const c = self.ctx;
+    c.save();
+    c.strokeStyle = style.color || C.ink;
+    c.lineWidth = style.width || 1.5;
+    c.setLineDash(style.dash || []);
+    c.globalAlpha = style.alpha ?? 1;
+    c.lineJoin = "round";
+    c.beginPath();
+    let started = false;
+    for (let i = 0; i < xs.length; i++) {
+      if (!isFinite(ys[i])) { started = false; continue; }
+      const px = self.x(xs[i]), py = self.y(ys[i]);
+      if (!started) { c.moveTo(px, py); started = true; } else c.lineTo(px, py);
+    }
+    c.stroke(); c.restore();
+  };
+  self.dots = function (xs, ys, style = {}) {
+    const c = self.ctx;
+    c.save(); c.fillStyle = style.color || C.ink; c.globalAlpha = style.alpha ?? 1;
+    for (let i = 0; i < xs.length; i++) {
+      c.beginPath(); c.arc(self.x(xs[i]), self.y(ys[i]), style.r || 3, 0, 7); c.fill();
+    }
+    c.restore();
+  };
+  self.band = function (x0, x1, color = C.band) {
+    const c = self.ctx;
+    c.save(); c.fillStyle = color;
+    c.fillRect(self.x(x0), M.mt, self.x(x1) - self.x(x0), self.H - M.mt - M.mb);
+    c.restore();
+  };
+  self.hline = function (v, style = {}) { self.line(self.xlim, [v, v], style); };
+  self.vline = function (v, style = {}) {
+    const c = self.ctx;
+    c.save(); c.strokeStyle = style.color || C.grey; c.lineWidth = style.width || 1;
+    c.setLineDash(style.dash || []);
+    c.beginPath(); c.moveTo(self.x(v), M.mt); c.lineTo(self.x(v), self.H - M.mb); c.stroke();
+    c.restore();
+  };
+  self.text = function (str, xv, yv, style = {}) {
+    const c = self.ctx;
+    c.save();
+    c.fillStyle = style.color || C.inkSoft;
+    c.font = (style.font || "11.5px") + " " + (style.family || "-apple-system,'Segoe UI',Roboto,sans-serif");
+    c.textAlign = style.align || "left";
+    c.textBaseline = style.baseline || "alphabetic";
+    c.fillText(str, style.px ? xv : self.x(xv), style.px ? yv : self.y(yv));
+    c.restore();
+  };
+  self.axes = function (o = {}) {
+    const c = self.ctx;
+    c.save();
+    c.strokeStyle = C.hair; c.lineWidth = 1; c.fillStyle = C.inkSoft;
+    c.font = "11px -apple-system,'Segoe UI',Roboto,sans-serif";
+    const xt = o.xticks || [], yt = o.yticks || [];
+    for (const v of yt) {
+      const py = self.y(v);
+      c.globalAlpha = 0.9; c.beginPath(); c.moveTo(M.ml, py); c.lineTo(self.W - M.mr, py); c.stroke();
+      c.globalAlpha = 1; c.textAlign = "right"; c.textBaseline = "middle";
+      c.fillText(o.yfmt ? o.yfmt(v) : String(v), M.ml - 6, py);
+    }
+    for (const v of xt) {
+      const px = self.x(v);
+      c.textAlign = "center"; c.textBaseline = "top";
+      c.fillText(o.xfmt ? o.xfmt(v) : String(v), px, self.H - M.mb + 6);
+      c.globalAlpha = 0.55; c.beginPath(); c.moveTo(px, self.H - M.mb); c.lineTo(px, self.H - M.mb + 3);
+      c.strokeStyle = C.grey; c.stroke(); c.strokeStyle = C.hair; c.globalAlpha = 1;
+    }
+    c.strokeStyle = C.grey; c.beginPath();
+    c.moveTo(M.ml, M.mt); c.lineTo(M.ml, self.H - M.mb); c.lineTo(self.W - M.mr, self.H - M.mb); c.stroke();
+    if (o.xlabel) {
+      c.textAlign = "center"; c.textBaseline = "bottom"; c.fillStyle = C.inkSoft;
+      c.fillText(o.xlabel, M.ml + (self.W - M.ml - M.mr) / 2, self.H - 2);
+    }
+    if (o.ylabel) {
+      c.translate(11, M.mt + (self.H - M.mt - M.mb) / 2); c.rotate(-Math.PI / 2);
+      c.textAlign = "center"; c.textBaseline = "middle";
+      c.fillText(o.ylabel, 0, 0);
+    }
+    c.restore();
+  };
+  return self;
+}
+
+/* nice tick positions */
+function ticks(lo, hi, n = 6) {
+  const span = hi - lo, step0 = span / n;
+  const mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  let step = mag;
+  for (const m of [1, 2, 2.5, 5, 10]) if (step0 / (m * mag) <= 1) { step = m * mag; break; }
+  const t = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) t.push(Math.round(v * 1e9) / 1e9);
+  return t;
+}
+
+function debounceRedraw(fn) {
+  let raf = null;
+  const go = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = null; fn(); }); };
+  window.addEventListener("resize", go);
+  return go;
+}
+
+
+/* damped driven oscillator:  x'' = -w^2 x - 2 z w x' + F(t) */
+const P0 = 60, W0 = 2 * Math.PI / P0, ZETA = 0.05;
+const DT = 0.05, YRS_PER_SEC = 42, SAMPLE = 0.25, SPANV = 300;
+let t = 0, x = 0, v = 0, mode = "metro", fNoise = 0, impulse = 0;
+let rand = mulberry32(2026);
+const hist = [];           // {t, F, x} every SAMPLE years
+
+/* the ramp climbs for 240 years then holds (a stabilized-forcing scenario),
+   so the display stays sane no matter how long the page runs */
+const FSCALE = { metro: 0.00022, noiseSig: 0.00095, noiseA: 0.995, ramp: 2.6e-5, rampYears: 240 };
+
+function forcing() {
+  let F = 0;
+  if (mode === "metro") F = FSCALE.metro * Math.sin(W0 * t);
+  else if (mode === "noise") {
+    fNoise = FSCALE.noiseA * fNoise + FSCALE.noiseSig * Math.sqrt(1 - FSCALE.noiseA ** 2) * gaussian(rand);
+    F = fNoise;
+  } else if (mode === "ramp") F = FSCALE.ramp * Math.min(Math.max(0, t - tModeStart), FSCALE.rampYears);
+  return F;
+}
+let tModeStart = 0;
+
+function stepSim(dtWall) {
+  let n = Math.round(dtWall * YRS_PER_SEC / DT);
+  n = Math.min(n, 400);
+  for (let i = 0; i < n; i++) {
+    const F = forcing() + impulse;
+    impulse = 0;
+    v += (-W0 * W0 * x - 2 * ZETA * W0 * v + F) * DT;
+    x += v * DT;
+    t += DT;
+    if (hist.length === 0 || t - hist[hist.length - 1].t >= SAMPLE - 1e-9) {
+      hist.push({ t, F, x });
+      if (hist.length > Math.ceil(SPANV / SAMPLE) + 8) hist.shift();
+    }
+  }
+}
+
+const fcv = Chart(document.getElementById("forcechart"), { margin: { ml: 50, mb: 6, mt: 8 } });
+const rcv = Chart(document.getElementById("respchart"), { margin: { ml: 50, mb: 30, mt: 6 } });
+
+function measure() {
+  /* rhythm: mean spacing of upward zero-crossings of the detrended response */
+  const recent = hist.filter(h => h.t > t - 240);
+  if (recent.length < 40) return { per: null, swing: 0 };
+  const xs = recent.map(h => h.x);
+  const tsm = recent.map(h => h.t);
+  const [sl, ic] = linfit(tsm, xs);
+  const d = xs.map((v2, i) => v2 - (sl * tsm[i] + ic));
+  const cross = [];
+  for (let i = 1; i < d.length; i++)
+    if (d[i - 1] < 0 && d[i] >= 0) cross.push(tsm[i]);
+  let per = null;
+  if (cross.length >= 3) {
+    const gaps = cross.slice(1).map((c, i) => c - cross[i]);
+    per = mean(gaps);
+  }
+  const swing = (Math.max(...d) - Math.min(...d)) / 2;
+  return { per, swing };
+}
+
+let lastWall = null, frames = 0;
+function frame(wall) {
+  if (lastWall !== null) stepSim(Math.min(0.1, (wall - lastWall) / 1000));
+  lastWall = wall;
+  frames++;
+
+  const t0 = Math.max(0, t - SPANV);
+  const ts = hist.map(h => h.t), Fs = hist.map(h => h.F), xs = hist.map(h => h.x);
+
+  const fmax = Math.max(0.0004, ...Fs.map(Math.abs)) * 1.2;
+  fcv.begin([t0, Math.max(SPANV, t)], [-fmax, fmax]);
+  fcv.axes({ xticks: [], yticks: [] });
+  fcv.clipPlot(() => {
+    for (let g = Math.ceil(t0 / 60) * 60; g <= t; g += 60) fcv.vline(g, { color: C.hair });
+    fcv.hline(0, { color: C.hair });
+    fcv.line(ts, Fs, { color: C.claim, width: 1.5 });
+  });
+  fcv.text("the push", t0 + 4, fmax * 0.72, { color: C.claimDeep, font: "10.5px" });
+
+  const xmax = Math.max(0.15, ...xs.map(Math.abs)) * 1.15;
+  rcv.begin([t0, Math.max(SPANV, t)], [-xmax, xmax]);
+  rcv.axes({ xticks: ticks(t0, Math.max(SPANV, t), 6).map(Math.round), yticks: [],
+             xlabel: "simulated year" });
+  rcv.clipPlot(() => {
+    for (let g = Math.ceil(t0 / 60) * 60; g <= t; g += 60) rcv.vline(g, { color: C.hair });
+    rcv.hline(0, { color: C.hair });
+    rcv.line(ts, xs, { color: C.rebut, width: 2 });
+  });
+  rcv.text("the response  (faint gridlines every 60 years)", t0 + 4, xmax * 0.85, { color: C.rebutDeep, font: "10.5px" });
+
+  if (frames % 20 === 0) {
+    const { per, swing } = measure();
+    /* only report a rhythm when there is a real oscillation to measure */
+    document.getElementById("period").textContent = (per && swing > 0.02) ? "≈" + per.toFixed(0) + " yr" : "—";
+    document.getElementById("swing").textContent = swing > 0.005 ? "±" + swing.toFixed(2) : "—";
+  }
+  requestAnimationFrame(frame);
+}
+
+const PUNCH = {
+  metro: "<b>The claim's mechanism, working as advertised:</b> a whisper — look how small the amber push is — repeated at the system's own tempo, builds a big 60-year swing. Resonance is real. Now try the other buttons; the claim needs them to fail.",
+  noise: "<b>No rhythm in, rhythm out.</b> These shoves are pure dice — no 60-year cause anywhere — yet the response wobbles at roughly 60 years, because that is the system's own tone. A 60-year wobble in a record is evidence of a resonant system, not of a 60-year pusher.",
+  ramp: "<b>The shout gets through.</b> A steadily growing push — the shape of greenhouse forcing — and the system rides it upward while still wobbling. The resonance does not filter it out. Trends and wiggles coexist; finding the wiggle subtracts nothing from the trend.",
+  off: "<b>Silence.</b> The ring fades at the system's own 60-year tempo — its memory of every push, whoever pushed.",
+  push: "<b>That's your finger, not a planet.</b> Tap roughly every 60 years (a couple of gridlines apart) and you can pump the swing as well as any orbital alignment — resonance answers to tempo, not to identity.",
+};
+function setMode(m, label) {
+  /* fresh start for each demonstration: reset clock, oscillator, and traces */
+  mode = m; t = 0; tModeStart = 0; x = 0; v = 0; fNoise = 0; hist.length = 0;
+  for (const id of ["f-metro", "f-noise", "f-ramp", "f-off"])
+    document.getElementById(id).classList.toggle("on", { "f-metro": "metro", "f-noise": "noise", "f-ramp": "ramp", "f-off": "off" }[id] === m);
+  document.getElementById("ftype").textContent = label;
+  document.getElementById("punch").innerHTML = PUNCH[m];
+}
+document.getElementById("f-metro").addEventListener("click", () => setMode("metro", "planetary metronome"));
+document.getElementById("f-noise").addEventListener("click", () => setMode("noise", "random weather"));
+document.getElementById("f-ramp").addEventListener("click", () => setMode("ramp", "greenhouse ramp"));
+document.getElementById("f-off").addEventListener("click", () => setMode("off", "silence"));
+document.getElementById("f-push").addEventListener("click", () => {
+  impulse = 0.055; document.getElementById("punch").innerHTML = PUNCH.push;
+});
+
+setMode("metro", "planetary metronome");
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

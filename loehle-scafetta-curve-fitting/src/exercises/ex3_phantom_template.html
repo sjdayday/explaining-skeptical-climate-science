@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 3 · Cycles from pure randomness — Case File 01</title>
+<style>
+{{SHARED_CSS}}
+#slicechart{height:280px}
+#histchart{height:250px}
+.bigamp{font-size:26px !important}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 3 of 5</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-3">&larr; Back to the case file (Objection 3)</a></div>
+  <h1>The method finds cycles in pure randomness</h1>
+  <p class="dek">This is the rebuttal's centerpiece, and you are about to run it with your own hands.
+     Below is a 10,000-year artificial world built from hundreds of waves with <i>random</i> strengths
+     and timings — structured noise with no special 60-year cause. Slice off 160 years (the length of
+     the real record) and run L&amp;S11's exact fit on it. See what it “discovers.”</p>
+</header>
+
+<section class="part">
+  <p><b>The game:</b> draw slices. Each press takes the next 160-year piece of the same random
+     series and fits the full L&amp;S11 model — a 60-year wave, a 20-year wave, a straight line.
+     If the fit were an honest cycle-detector, it should report “no 60-year cycle here.”
+     Count how many times it does.</p>
+
+  <div class="panel">
+    <span class="extag r">Synthetic data · the stress test, live</span>
+    <div class="controls">
+      <button class="btn primary" id="draw">Draw the next 160-year slice</button>
+      <button class="btn" id="runall">Run all 62 slices</button>
+      <button class="btn" id="reroll">&#127922; New random universe</button>
+      <span class="lbl" id="seedlbl"></span>
+    </div>
+    <canvas id="slicechart" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip g"><i></i>random data (no 60-year cause)</span>
+      <span class="chip r"><i></i>the “cycles” L&amp;S11's fit reports</span>
+    </div>
+    <div class="readouts">
+      <div class="readout r"><b>This slice's “60-yr cycle”</b><div class="val bigamp" id="thisamp">&mdash;</div></div>
+      <div class="readout"><b>True 60-yr content of the series</b><div class="val" id="trueamp"></div></div>
+      <div class="readout c"><b>Same fit on the REAL record</b><div class="val" id="realamp"></div></div>
+    </div>
+    <p class="cap" id="slicecap"><b>Press the button.</b> The series is scaled so its wiggliness
+      matches the real detrended temperature record — amplitudes are directly comparable.</p>
+  </div>
+
+  <h3 class="sub">The tally</h3>
+  <div class="panel">
+    <span class="extag r">Every slice you have drawn</span>
+    <canvas id="histchart" class="chart"></canvas>
+    <div class="cap" id="histcap"></div>
+  </div>
+
+  <div class="note r"><b>What this exercise shows.</b> Every slice “contains” a 60-year cycle —
+     the fit has never once come back empty, because it can't: give it a wave to fit and it will
+     fit a wave. The reported strengths swing wildly from slice to slice and sit far above the
+     series' true 60-year content, and the strongest slices rival the real climate record. A
+     smoke detector that goes off in every empty room tells you nothing when it goes off in
+     yours. L&amp;S11's supplement tested only the easy direction — <i>if</i> a true cycle
+     exists, can the fit recover it? This experiment tests the direction that matters: when
+     <i>no</i> cycle exists, does the fit stay silent? It does not.</div>
+</section>
+
+<nav class="exnav">
+  <a href="ex2-rhythm.html">&larr; Exercise 2: Two and a half beats</a>
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html">&uarr; Case file 01</a>
+  <a href="ex4-hidden-years.html">Exercise 4: The hidden years &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Honest labels.</b> The sliced series is <b>synthetic</b>, generated in your
+  browser from the seed shown above (reproducible; “new universe” advances the seed): ~400 waves
+  with periods spread from 3 to 3,000 years, random strengths and phases — the recipe of the case
+  file's Exhibit&nbsp;D, after Benestad et&nbsp;al.'s supporting material — standardized to match the
+  real record's detrended 1850&ndash;2010 variability (NOAA data embedded at build time). The fit is
+  L&amp;S11's Eq.&nbsp;(1): fixed 60- and 20-year periods, free amplitudes and phases, straight line,
+  least squares. Because this page draws its own random numbers, its exact values differ from
+  Exhibit&nbsp;D's Python run — as they should: the wild slice-to-slice instability <i>is</i> the
+  finding, and you can verify it survives any seed you roll.</div>
+
+</div>
+<script>
+{{SHARED_JS}}
+const GCAG = {{GCAG_JSON}};   /* [[year, anomaly °C], ...] injected by build.py */
+
+/* ---- real-record references (same estimator as the exhibit) ---- */
+const yrs = GCAG.map(d => d[0]), T = GCAG.map(d => d[1]);
+const m160 = yrs.map(y => y >= 1850 && y <= 2010);
+const rT = yrs.filter((y, i) => m160[i]), rY = T.filter((v, i) => m160[i]);
+const [rsl, ric] = linfit(rT, rY);
+const obsDetrStd = std(rY.map((v, i) => v - (rsl * rT[i] + ric)));
+const ampReal = fitCycles(rT, rY, [60, 20]).amp(0);
+
+/* ---- the synthetic universe ---- */
+const N = 10000, K = 400, SEG = 160, NSEG = Math.floor(N / SEG);
+let seed = 42, syn = null, trueAmp = 0, drawn = [], nextSlice = 0;
+
+function buildUniverse() {
+  const rand = mulberry32(seed);
+  const per = [], amp = [], pha = [];
+  for (let k = 0; k < K; k++) {
+    per.push(Math.exp(Math.log(3) + rand() * (Math.log(3000) - Math.log(3))));
+    amp.push(rand());
+    pha.push(rand() * 2 * Math.PI);
+  }
+  syn = new Float64Array(N);
+  for (let k = 0; k < K; k++) {
+    const w = 2 * Math.PI / per[k];
+    for (let i = 0; i < N; i++) syn[i] += amp[k] * Math.sin(w * i + pha[k]);
+  }
+  const arr = Array.from(syn);
+  const m = mean(arr), s = std(arr);
+  for (let i = 0; i < N; i++) syn[i] = (syn[i] - m) / s * obsDetrStd;
+  /* true 60-yr content: same fit applied to the whole 10,000-year series */
+  const tsAll = Array.from({ length: N }, (_, i) => i);
+  trueAmp = fitCycles(tsAll, Array.from(syn), [60, 20]).amp(0);
+  drawn = []; nextSlice = 0;
+  document.getElementById("seedlbl").textContent = "seed " + seed;
+  document.getElementById("trueamp").textContent = trueAmp.toFixed(3) + " °C";
+  document.getElementById("realamp").textContent = ampReal.toFixed(3) + " °C";
+}
+
+const scv = Chart(document.getElementById("slicechart"), { margin: { ml: 50 } });
+const hcv = Chart(document.getElementById("histchart"), { margin: { ml: 50, mb: 34 } });
+
+let current = null;
+function drawSlice() {
+  if (nextSlice >= NSEG) { document.getElementById("draw").disabled = true; return; }
+  const i0 = nextSlice * SEG;
+  const ts = Array.from({ length: SEG }, (_, i) => i0 + i);
+  const ys = Array.from(syn.slice(i0, i0 + SEG));
+  const f = fitCycles(ts, ys, [60, 20]);
+  current = { n: nextSlice + 1, ts, ys, fit: f.predict(ts), a: f.amp(0) };
+  drawn.push(current.a);
+  nextSlice++;
+  render();
+}
+
+function render() {
+  if (current) {
+    const { ts, ys, fit, n, a } = current;
+    const lo = Math.min(...ys), hi = Math.max(...ys), pad = 0.15 * (hi - lo);
+    scv.begin([0, SEG], [lo - pad, hi + pad]);
+    scv.axes({ xticks: [0, 40, 80, 120, 160], yticks: ticks(lo, hi, 4),
+               xlabel: "“year” within slice " + n + " of " + NSEG, ylabel: "value (°C)",
+               yfmt: v => v.toFixed(1) });
+    scv.clipPlot(() => {
+      scv.line(ts.map(t => t - ts[0]), ys, { color: C.grey, width: 1.1 });
+      scv.line(ts.map(t => t - ts[0]), fit, { color: C.rebut, width: 2.4 });
+    });
+    document.getElementById("thisamp").textContent = a.toFixed(3) + " °C";
+    const ratio = a / trueAmp, pct = Math.round(100 * a / ampReal);
+    const cap = document.getElementById("slicecap");
+    if (drawn.length === 1)
+      cap.innerHTML = "<b>First slice, first “discovery.”</b> Pure randomness, and the fit reports a 60-year cycle of " +
+        a.toFixed(3) + " °C — " + ratio.toFixed(1) + "× the series' true 60-year content, " + pct + "% of what the same fit finds in the real climate record.";
+    else
+      cap.innerHTML = "<b>Slice " + n + ":</b> “cycle” of " + a.toFixed(3) + " °C (" + ratio.toFixed(1) +
+        "× the true content" + (a > ampReal ? "; <b>stronger than the real record's</b>" : "; " + pct + "% of the real record's") + "). " +
+        drawn.length + " slices drawn, " + drawn.length + " “cycles” found, 0 refusals.";
+  }
+  /* histogram */
+  const binW = 0.01, maxA = Math.max(0.16, ampReal * 1.3, ...drawn) + binW;
+  const nb = Math.ceil(maxA / binW);
+  const bins = new Array(nb).fill(0);
+  for (const a of drawn) bins[Math.min(nb - 1, Math.floor(a / binW))]++;
+  const peak = Math.max(4, ...bins);
+  hcv.begin([0, maxA], [0, peak * 1.25]);
+  hcv.axes({ xticks: ticks(0, maxA, 7), yticks: ticks(0, peak, 4).filter(v => Number.isInteger(v)),
+             xlabel: "fitted “60-year cycle” amplitude (°C)", ylabel: "number of slices",
+             xfmt: v => v.toFixed(2) });
+  hcv.clipPlot(() => {
+    const c = hcv.ctx;
+    c.fillStyle = C.rebut;
+    for (let b = 0; b < nb; b++) {
+      if (!bins[b]) continue;
+      const x0 = hcv.x(b * binW) + 1, x1 = hcv.x((b + 1) * binW) - 1;
+      c.globalAlpha = 0.85;
+      c.fillRect(x0, hcv.y(bins[b]), Math.max(2, x1 - x0), hcv.y(0) - hcv.y(bins[b]));
+    }
+    c.globalAlpha = 1;
+    hcv.vline(trueAmp, { color: C.ink, width: 2 });
+    hcv.text("true 60-yr content", trueAmp + 0.003, peak * 1.16, { color: C.ink, font: "10.5px" });
+    hcv.vline(ampReal, { color: C.claim, width: 2, dash: [6, 4] });
+    hcv.text("the REAL record", ampReal + 0.003, peak * 1.02, { color: C.claimDeep, font: "10.5px" });
+  });
+  const hc = document.getElementById("histcap");
+  if (drawn.length === 0)
+    hc.innerHTML = "The dark line is the series' <b>true</b> 60-year content — what an honest detector would report every time. The amber dashed line is what the same fit finds in the real temperature record.";
+  else {
+    const m = mean(drawn), infl = m / trueAmp, over = drawn.filter(a => a > ampReal).length;
+    hc.innerHTML = "<b>" + drawn.length + " slices:</b> reported “cycles” from " +
+      Math.min(...drawn).toFixed(3) + " to " + Math.max(...drawn).toFixed(3) + " °C, average " + m.toFixed(3) +
+      " °C — <b>" + infl.toFixed(0) + "× the true content</b> (dark line)." +
+      (over ? " " + over + " slice" + (over > 1 ? "s" : "") + " of pure noise beat the real record (amber)." : "") +
+      " If the fit were honest about this series, every bar would sit on the dark line.";
+  }
+}
+
+document.getElementById("draw").addEventListener("click", drawSlice);
+document.getElementById("runall").addEventListener("click", () => {
+  const step = () => { if (nextSlice < NSEG) { drawSlice(); setTimeout(step, 45); } };
+  step();
+});
+document.getElementById("reroll").addEventListener("click", () => {
+  seed++; buildUniverse();
+  current = null;
+  document.getElementById("draw").disabled = false;
+  document.getElementById("thisamp").textContent = "—";
+  document.getElementById("slicecap").innerHTML = "<b>New universe (seed " + seed + ").</b> Same recipe, fresh dice. Draw slices.";
+  scv.begin([0, SEG], [-1, 1]);
+  scv.axes({ xticks: [0, 40, 80, 120, 160], yticks: [], xlabel: "“year” within slice" });
+  render();
+});
+debounceRedraw(render);
+buildUniverse();
+drawSlice();
+</script>
+</body>
+</html>

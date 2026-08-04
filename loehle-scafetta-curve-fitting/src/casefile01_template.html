@@ -92,6 +92,13 @@
   .note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
   .note b{color:var(--ink)}
 
+  /* hands-on exercise links */
+  .trybox{background:var(--rebut-tint);border:1px dashed var(--rebut);border-radius:8px;
+          padding:12px 16px;margin:20px 0;font-size:14.5px;max-width:700px}
+  .trybox .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+             color:var(--rebut-deep);display:block;margin-bottom:3px}
+  .trybox a{font-weight:600}
+
   blockquote.pull{font-family:var(--serif);font-size:21px;line-height:1.45;color:var(--ink);
        border-left:3px solid var(--claim);margin:26px 0;padding:4px 0 4px 20px}
   blockquote.pull cite{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
@@ -287,9 +294,11 @@
 
   <p>Benestad and colleagues re‑ran L&amp;S11’s analysis as part of their 2016 replication study
      of 38 contrarian papers, filing it under the heading <i>curve‑fitting</i>. Their objections
-     stack up from mathematics to physics.</p>
+     stack up from mathematics to physics. Each one comes with a hands‑on exercise — look for
+     the “try it yourself” boxes — where you can run the objection’s argument with your own
+     hands, in the browser.</p>
 
-  <div class="rpoint">
+  <div class="rpoint" id="objection-1">
     <span class="tag">Objection 1</span>
     <h3>Waves are a language, not a cause</h3>
     <p>A mathematical fact known since Fourier: <b>any</b> wiggly record — stock prices, your
@@ -299,7 +308,11 @@
        as discovery.</p>
   </div>
 
-  <div class="rpoint">
+  <div class="trybox"><span class="t">Try it yourself · Exercise 1</span>
+    <a href="exercises/ex1-waves.html">Rebuild anything out of waves</a> — a stock chart, a mountain
+    skyline, twenty centuries of European population, or pure dice. The rebuild never refuses.</div>
+
+  <div class="rpoint" id="objection-2">
     <span class="tag">Objection 2</span>
     <h3>Two and a half beats don’t make a rhythm</h3>
     <p>The whole record holds 160 years — fewer than three repeats of a 60‑year cycle, and the
@@ -324,7 +337,11 @@
       networks.</figcaption>
   </figure>
 
-  <div class="rpoint">
+  <div class="trybox"><span class="t">Try it yourself · Exercise 2</span>
+    <a href="exercises/ex2-rhythm.html">Turn the period dial</a> — refit their model live on the
+    real data and hunt for the period that beats 60. It won’t take you long.</div>
+
+  <div class="rpoint" id="objection-3">
     <span class="tag">Objection 3</span>
     <h3>The method finds cycles in pure randomness</h3>
     <p>This is the rebuttal’s centerpiece. Build a 10,000‑year artificial series out of hundreds
@@ -348,7 +365,12 @@
       “cycles” — pure noise, looking every bit as convincing as Exhibit&nbsp;B.</figcaption>
   </figure>
 
-  <div class="rpoint">
+  <div class="trybox"><span class="t">Try it yourself · Exercise 3</span>
+    <a href="exercises/ex3-phantom-cycles.html">Slice random universes</a> — draw 160‑year slices
+    of seeded noise, run their exact fit, and count how many times it comes back empty. (Spoiler:
+    zero.)</div>
+
+  <div class="rpoint" id="objection-4">
     <span class="tag">Objection 4</span>
     <h3>Flexible models must face data they’ve never seen — this one didn’t</h3>
     <p>With enough adjustable parts, a model fits whatever it’s tuned to; the physicists’ joke,
@@ -360,7 +382,12 @@
        is data that arrived after publication. Hold that thought for Part Three.</p>
   </div>
 
-  <div class="rpoint">
+  <div class="trybox"><span class="t">Try it yourself · Exercise 4</span>
+    <a href="exercises/ex4-hidden-years.html">Play the overfitting game</a> — crank the wave knob,
+    memorize the past to your heart’s content, then lift the curtain on 2011–2025 and take your
+    grade.</div>
+
+  <div class="rpoint" id="objection-5">
     <span class="tag">Objection 5</span>
     <h3>The physics contradicts itself</h3>
     <p>To connect distant planets to Earth’s thermometers, the paper leans on <i>resonance</i> —
@@ -384,6 +411,10 @@
        each other more than they cite independent physics.</p>
   </div>
 
+  <div class="trybox"><span class="t">Try it yourself · Exercise 5</span>
+    <a href="exercises/ex5-resonance.html">Push a resonant system</a> — with a planetary metronome,
+    with dice, with a greenhouse ramp, with your own finger. See which pushes it “prefers.”</div>
+
   <div class="note r"><b>The verdict in the study’s taxonomy.</b> Benestad et&nbsp;al. file
      L&amp;S11 under logic type&nbsp;B — the machinery is applied, but the premises are wrong —
      with the shorthand label <i>curve fitting</i>: an over‑fit set of waves, no proper
@@ -393,7 +424,7 @@
 </section>
 
 <!-- ================================================================ PART 3 -->
-<section class="part aftermath">
+<section class="part aftermath" id="part-three">
   <div class="partlabel"><span class="no">PART THREE</span></div>
   <h2>The test nature ran anyway</h2>
   <div class="partrule"></div>

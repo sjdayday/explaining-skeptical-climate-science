@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercise 2 · Two and a half beats — Case File 01</title>
+<style>
+/* Shared design system for Case File 01 exercises — mirrors the case file. */
+:root{
+  --paper:#F7FAFB; --card:#FFFFFF; --ink:#1B2A3A; --ink-soft:#44586C;
+  --claim:#C7772E; --claim-tint:#FBF1E4; --claim-deep:#9A5A1F;
+  --rebut:#0E7C7B; --rebut-tint:#E4F1F0; --rebut-deep:#0A5C5B;
+  --grey:#7C8B99; --hair:#DFE6EC;
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.sheet{max-width:860px;margin:0 auto;padding:0 22px 70px}
+
+header{padding:40px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--grey);
+         text-transform:uppercase;margin-bottom:14px}
+.eyebrow b{color:var(--ink);font-weight:600}
+.crumb{font-family:var(--mono);font-size:12px;margin-bottom:22px}
+.crumb a{color:var(--rebut-deep)}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,40px);
+   line-height:1.1;margin:0 0 14px;letter-spacing:-0.01em}
+.dek{font-family:var(--serif);font-size:18.5px;line-height:1.5;color:var(--ink-soft);
+     max-width:700px;margin:0 0 10px}
+.part p{margin:0 0 16px;max-width:740px}
+h3.sub{font-family:var(--serif);font-size:20px;margin:30px 0 10px;color:var(--rebut-deep)}
+
+a{color:var(--rebut-deep);text-decoration-color:var(--hair);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--rebut)}
+
+/* panels & charts */
+.panel{background:var(--card);border:1px solid var(--hair);border-radius:10px;
+       padding:18px 18px 14px;margin:24px 0}
+.panel .extag{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+       display:inline-block;margin-bottom:12px;padding:3px 9px;border-radius:3px}
+.extag.c{background:var(--claim-tint);color:var(--claim-deep)}
+.extag.r{background:var(--rebut-tint);color:var(--rebut-deep)}
+.extag.k{background:#E8EDF2;color:var(--ink)}
+canvas.chart{width:100%;display:block;border-radius:4px}
+.cap{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:12px}
+.cap b{color:var(--ink)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:14px 0}
+.controls .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+               text-transform:uppercase;color:var(--ink-soft)}
+button.btn{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);
+  background:var(--card);border:1px solid var(--hair);border-radius:8px;
+  padding:8px 14px;cursor:pointer;transition:background .12s,border-color .12s}
+button.btn:hover{border-color:var(--grey)}
+button.btn.primary{background:var(--rebut);border-color:var(--rebut);color:#fff}
+button.btn.primary:hover{background:var(--rebut-deep)}
+button.btn.claim{background:var(--claim-tint);border-color:var(--claim);color:var(--claim-deep)}
+button.btn.on{background:var(--rebut-tint);border-color:var(--rebut);color:var(--rebut-deep)}
+button.btn:disabled{opacity:.45;cursor:default}
+input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer}
+
+/* readouts */
+.readouts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.readout{background:var(--paper);border:1px solid var(--hair);border-radius:8px;
+         padding:10px 14px;min-width:130px;flex:0 1 auto}
+.readout b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;
+           text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px;font-weight:600}
+.readout .val{font-family:var(--mono);font-size:20px;font-weight:600}
+.readout .val small{font-size:12px;color:var(--ink-soft);font-weight:400}
+.readout.c .val{color:var(--claim-deep)} .readout.r .val{color:var(--rebut-deep)}
+
+.note{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--grey);
+      border-radius:8px;padding:14px 18px;font-size:14px;color:var(--ink-soft);margin:22px 0}
+.note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
+.note b{color:var(--ink)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.chip i{width:22px;height:0;border-top:3px solid;border-radius:2px;display:inline-block}
+.chip.c i{border-color:var(--claim)} .chip.r i{border-color:var(--rebut)}
+.chip.k i{border-color:var(--ink)} .chip.g i{border-color:var(--grey)}
+
+/* prev / next navigation */
+.exnav{display:flex;justify-content:space-between;gap:14px;margin-top:50px;
+       border-top:1px solid var(--hair);padding-top:20px;font-size:14px}
+.exnav a{font-weight:600}
+.exnav .home{color:var(--grey)}
+.footnote{margin-top:26px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--hair);
+          padding-top:14px;max-width:760px}
+@media print{body{background:#fff}.sheet{max-width:100%;padding:0}}
+
+#fitchart{height:320px}
+#scanchart{height:260px}
+.periodval{font-family:var(--mono);font-size:26px;font-weight:700;color:var(--rebut-deep);min-width:110px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 2 of 5</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-2">&larr; Back to the case file (Objection 2)</a></div>
+  <h1>Two and a half beats don't make a rhythm</h1>
+  <p class="dek">L&amp;S11 pinned their long cycle at exactly 60 years, on astronomical grounds. But their
+     calibration window — 1850&ndash;1950 — holds fewer than two repeats of such a cycle. If 60 were a real
+     constant of nature, it should fit the data <i>better</i> than its neighbours. Turn the dial and see.</p>
+</header>
+
+<section class="part">
+  <p><b>The game:</b> you control the long period. Every position of the slider refits the full
+     L&amp;S11 model — your wave, plus the 20-year wave, plus a straight line — to the real NOAA
+     temperature record's 1850&ndash;1950 window, live. Watch the fit quality (R&sup2;). Hunt for
+     the period that fits best. Is it 60?</p>
+
+  <div class="panel">
+    <span class="extag k">Real data · NOAA global temperature, fitted live</span>
+    <div class="controls">
+      <span class="lbl">Long period</span>
+      <input type="range" id="pslider" min="30" max="100" value="60" step="0.25">
+      <span class="periodval" id="pval">60.0 yr</span>
+    </div>
+    <canvas id="fitchart" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip k"><i></i>observed temperature (NOAA)</span>
+      <span class="chip c"><i></i>model fitted 1850&ndash;1950</span>
+      <span class="chip c"><i style="border-top-style:dashed"></i>same curve, extended</span>
+    </div>
+    <div class="readouts">
+      <div class="readout r"><b>Fit quality R&sup2; (1850&ndash;1950)</b><div class="val" id="r2val"></div></div>
+      <div class="readout"><b>Full beats in the window</b><div class="val" id="beats"></div></div>
+      <div class="readout"><b>vs. R&sup2; at 60 yr</b><div class="val" id="delta"></div></div>
+    </div>
+    <div class="cap" id="fitcap"></div>
+  </div>
+
+  <h3 class="sub">Your search, mapped</h3>
+  <p>Every period you have tried leaves a dot below. Explore a while — then reveal the whole
+     landscape.</p>
+
+  <div class="panel">
+    <span class="extag r">The period scan · every long period from 30 to 100 years</span>
+    <div class="controls">
+      <button class="btn primary" id="reveal">Reveal the full scan</button>
+      <span class="cap" id="scanhint" style="margin:0">Dots mark the periods you have visited.</span>
+    </div>
+    <canvas id="scanchart" class="chart"></canvas>
+    <div class="cap" id="scancap"><b>Hunting tip:</b> try the low 30s, the 60s, the high 80s.</div>
+  </div>
+
+  <div class="note r"><b>What this exercise shows.</b> The R&sup2; landscape is broad and nearly flat
+     — many periods fit the calibration window about equally well, and 60 is not the winner. On
+     this NOAA snapshot the best long period is ≈87 years; on 2010-vintage HadCRUT3, Benestad
+     et&nbsp;al. found 65.75 beat 60; and L&amp;S11's own supplement concedes that a free fit
+     centers near 65 — they imposed 60 anyway to match the astronomy. A real physical constant
+     doesn't move when you switch thermometer networks, and it doesn't lose to its neighbours on
+     the very data used to establish it. What you just felt with the slider is the sound of a
+     window too short to pin down a rhythm: 100 years of data holds fewer than two beats of a
+     60-year cycle.</div>
+</section>
+
+<nav class="exnav">
+  <a href="ex1-waves.html">&larr; Exercise 1: Waves rebuild anything</a>
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html">&uarr; Case file 01</a>
+  <a href="ex3-phantom-cycles.html">Exercise 3: Cycles from randomness &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Honest labels.</b> The temperature series is real: NOAA NOAAGlobalTemp
+  (GCAG) annual anomalies vs. the 20th-century mean, the same data snapshot as the case file,
+  embedded in this page at build time. The model refitted at every slider position is L&amp;S11's
+  Eq.&nbsp;(1) — long wave (your period) + 20-year wave + straight line, amplitudes and phases free,
+  ordinary least squares on 1850&ndash;1950 — identical to the case file's Exhibit&nbsp;C machinery.
+  Their Table&nbsp;1 reports R&sup2;&nbsp;0.53 at 60 yr on 2010-vintage HadCRUT3; this data gives
+  0.46 at 60 yr. Dataset vintage moves the numbers; that instability is part of the point.</div>
+
+</div>
+<script>
+/* Shared utilities for Case File 01 exercises.
+   Mirrors the fitting machinery of src/make_figures.py:
+   design matrix [1, t-1900, sin/cos pairs], ordinary least squares, R²,
+   amplitude of a sin/cos pair. Seeded PRNG so every run is reproducible. */
+"use strict";
+
+/* ---------- palette (keep in sync with _shared.css) ---------- */
+const C = {
+  ink: "#1B2A3A", inkSoft: "#44586C", claim: "#C7772E", claimDeep: "#9A5A1F",
+  claimTint: "#FBF1E4", rebut: "#0E7C7B", rebutDeep: "#0A5C5B",
+  rebutTint: "#E4F1F0", grey: "#7C8B99", hair: "#DFE6EC", band: "#EDF2F6",
+};
+
+/* ---------- seeded randomness ---------- */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function gaussian(rand) {           // Box–Muller
+  let u = 0, v = 0;
+  while (u === 0) u = rand();
+  while (v === 0) v = rand();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+}
+
+/* ---------- small stats ---------- */
+const mean = (a) => a.reduce((s, v) => s + v, 0) / a.length;
+function std(a) {
+  const m = mean(a);
+  return Math.sqrt(a.reduce((s, v) => s + (v - m) * (v - m), 0) / a.length);
+}
+function linfit(x, y) {             // least-squares line: returns [slope, intercept]
+  const mx = mean(x), my = mean(y);
+  let sxy = 0, sxx = 0;
+  for (let i = 0; i < x.length; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) * (x[i] - mx); }
+  const b = sxy / sxx;
+  return [b, my - b * mx];
+}
+function r2(y, yhat) {
+  const m = mean(y);
+  let ssr = 0, sst = 0;
+  for (let i = 0; i < y.length; i++) { ssr += (y[i] - yhat[i]) ** 2; sst += (y[i] - m) ** 2; }
+  return 1 - ssr / sst;
+}
+
+/* ---------- linear algebra: solve A x = b (Gaussian elimination, partial pivot) ---------- */
+function solve(A, b) {
+  const n = A.length;
+  const M = A.map((row, i) => [...row, b[i]]);
+  for (let c = 0; c < n; c++) {
+    let p = c;
+    for (let r = c + 1; r < n; r++) if (Math.abs(M[r][c]) > Math.abs(M[p][c])) p = r;
+    [M[c], M[p]] = [M[p], M[c]];
+    const piv = M[c][c];
+    for (let r = c + 1; r < n; r++) {
+      const f = M[r][c] / piv;
+      for (let k = c; k <= n; k++) M[r][k] -= f * M[c][k];
+    }
+  }
+  const x = new Array(n).fill(0);
+  for (let r = n - 1; r >= 0; r--) {
+    let s = M[r][n];
+    for (let k = r + 1; k < n; k++) s -= M[r][k] * x[k];
+    x[r] = s / M[r][r];
+  }
+  return x;
+}
+/* least squares via normal equations: X (rows) n×p, y n → beta p */
+function lstsq(X, y) {
+  const n = X.length, p = X[0].length;
+  const A = Array.from({ length: p }, () => new Array(p).fill(0));
+  const b = new Array(p).fill(0);
+  for (let i = 0; i < n; i++) {
+    const xi = X[i];
+    for (let j = 0; j < p; j++) {
+      b[j] += xi[j] * y[i];
+      for (let k = j; k < p; k++) A[j][k] += xi[j] * xi[k];
+    }
+  }
+  for (let j = 0; j < p; j++) for (let k = 0; k < j; k++) A[j][k] = A[k][j];
+  return solve(A, b);
+}
+
+/* ---------- the L&S11-style model: [1, t-1900, sin/cos per period] ---------- */
+function designRow(t, periods, trend) {
+  const row = [1];
+  if (trend) row.push(t - 1900);
+  for (const P of periods) {
+    const w = 2 * Math.PI / P;
+    row.push(Math.sin(w * t), Math.cos(w * t));
+  }
+  return row;
+}
+function fitCycles(t, y, periods, trend = true) {
+  const X = t.map((ti) => designRow(ti, periods, trend));
+  const beta = lstsq(X, y);
+  const predict = (tt) => tt.map((ti) => {
+    const row = designRow(ti, periods, trend);
+    let s = 0;
+    for (let j = 0; j < row.length; j++) s += row[j] * beta[j];
+    return s;
+  });
+  const amp = (i) => {                      // amplitude of i-th sin/cos pair
+    const k = (trend ? 2 : 1) + 2 * i;
+    return Math.hypot(beta[k], beta[k + 1]);
+  };
+  return { beta, predict, amp, r2cal: r2(y, predict(t)) };
+}
+
+/* ---------- canvas chart helper (devicePixelRatio-aware) ---------- */
+function Chart(canvas, opts = {}) {
+  const M = Object.assign({ ml: 46, mr: 12, mt: 10, mb: 30 }, opts.margin || {});
+  const self = {
+    canvas, ctx: canvas.getContext("2d"),
+    xlim: opts.xlim || [0, 1], ylim: opts.ylim || [0, 1],
+    W: 0, H: 0,
+  };
+  function fit() {
+    const dpr = window.devicePixelRatio || 1;
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    if (canvas.width !== Math.round(w * dpr) || canvas.height !== Math.round(h * dpr)) {
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    }
+    self.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    self.W = w; self.H = h;
+  }
+  self.x = (v) => M.ml + (v - self.xlim[0]) / (self.xlim[1] - self.xlim[0]) * (self.W - M.ml - M.mr);
+  self.y = (v) => self.H - M.mb - (v - self.ylim[0]) / (self.ylim[1] - self.ylim[0]) * (self.H - M.mt - M.mb);
+  self.begin = function (xlim, ylim) {
+    fit();
+    if (xlim) self.xlim = xlim;
+    if (ylim) self.ylim = ylim;
+    self.ctx.clearRect(0, 0, self.W, self.H);
+  };
+  self.clipPlot = function (fn) {
+    const c = self.ctx;
+    c.save(); c.beginPath();
+    c.rect(M.ml, M.mt, self.W - M.ml - M.mr, self.H - M.mt - M.mb);
+    c.clip(); fn(); c.restore();
+  };
+  self.line = function (xs, ys, style = {}) {
+    const c = self.ctx;
+    c.save();
+    c.strokeStyle = style.color || C.ink;
+    c.lineWidth = style.width || 1.5;
+    c.setLineDash(style.dash || []);
+    c.globalAlpha = style.alpha ?? 1;
+    c.lineJoin = "round";
+    c.beginPath();
+    let started = false;
+    for (let i = 0; i < xs.length; i++) {
+      if (!isFinite(ys[i])) { started = false; continue; }
+      const px = self.x(xs[i]), py = self.y(ys[i]);
+      if (!started) { c.moveTo(px, py); started = true; } else c.lineTo(px, py);
+    }
+    c.stroke(); c.restore();
+  };
+  self.dots = function (xs, ys, style = {}) {
+    const c = self.ctx;
+    c.save(); c.fillStyle = style.color || C.ink; c.globalAlpha = style.alpha ?? 1;
+    for (let i = 0; i < xs.length; i++) {
+      c.beginPath(); c.arc(self.x(xs[i]), self.y(ys[i]), style.r || 3, 0, 7); c.fill();
+    }
+    c.restore();
+  };
+  self.band = function (x0, x1, color = C.band) {
+    const c = self.ctx;
+    c.save(); c.fillStyle = color;
+    c.fillRect(self.x(x0), M.mt, self.x(x1) - self.x(x0), self.H - M.mt - M.mb);
+    c.restore();
+  };
+  self.hline = function (v, style = {}) { self.line(self.xlim, [v, v], style); };
+  self.vline = function (v, style = {}) {
+    const c = self.ctx;
+    c.save(); c.strokeStyle = style.color || C.grey; c.lineWidth = style.width || 1;
+    c.setLineDash(style.dash || []);
+    c.beginPath(); c.moveTo(self.x(v), M.mt); c.lineTo(self.x(v), self.H - M.mb); c.stroke();
+    c.restore();
+  };
+  self.text = function (str, xv, yv, style = {}) {
+    const c = self.ctx;
+    c.save();
+    c.fillStyle = style.color || C.inkSoft;
+    c.font = (style.font || "11.5px") + " " + (style.family || "-apple-system,'Segoe UI',Roboto,sans-serif");
+    c.textAlign = style.align || "left";
+    c.textBaseline = style.baseline || "alphabetic";
+    c.fillText(str, style.px ? xv : self.x(xv), style.px ? yv : self.y(yv));
+    c.restore();
+  };
+  self.axes = function (o = {}) {
+    const c = self.ctx;
+    c.save();
+    c.strokeStyle = C.hair; c.lineWidth = 1; c.fillStyle = C.inkSoft;
+    c.font = "11px -apple-system,'Segoe UI',Roboto,sans-serif";
+    const xt = o.xticks || [], yt = o.yticks || [];
+    for (const v of yt) {
+      const py = self.y(v);
+      c.globalAlpha = 0.9; c.beginPath(); c.moveTo(M.ml, py); c.lineTo(self.W - M.mr, py); c.stroke();
+      c.globalAlpha = 1; c.textAlign = "right"; c.textBaseline = "middle";
+      c.fillText(o.yfmt ? o.yfmt(v) : String(v), M.ml - 6, py);
+    }
+    for (const v of xt) {
+      const px = self.x(v);
+      c.textAlign = "center"; c.textBaseline = "top";
+      c.fillText(o.xfmt ? o.xfmt(v) : String(v), px, self.H - M.mb + 6);
+      c.globalAlpha = 0.55; c.beginPath(); c.moveTo(px, self.H - M.mb); c.lineTo(px, self.H - M.mb + 3);
+      c.strokeStyle = C.grey; c.stroke(); c.strokeStyle = C.hair; c.globalAlpha = 1;
+    }
+    c.strokeStyle = C.grey; c.beginPath();
+    c.moveTo(M.ml, M.mt); c.lineTo(M.ml, self.H - M.mb); c.lineTo(self.W - M.mr, self.H - M.mb); c.stroke();
+    if (o.xlabel) {
+      c.textAlign = "center"; c.textBaseline = "bottom"; c.fillStyle = C.inkSoft;
+      c.fillText(o.xlabel, M.ml + (self.W - M.ml - M.mr) / 2, self.H - 2);
+    }
+    if (o.ylabel) {
+      c.translate(11, M.mt + (self.H - M.mt - M.mb) / 2); c.rotate(-Math.PI / 2);
+      c.textAlign = "center"; c.textBaseline = "middle";
+      c.fillText(o.ylabel, 0, 0);
+    }
+    c.restore();
+  };
+  return self;
+}
+
+/* nice tick positions */
+function ticks(lo, hi, n = 6) {
+  const span = hi - lo, step0 = span / n;
+  const mag = Math.pow(10, Math.floor(Math.log10(step0)));
+  let step = mag;
+  for (const m of [1, 2, 2.5, 5, 10]) if (step0 / (m * mag) <= 1) { step = m * mag; break; }
+  const t = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi + 1e-9; v += step) t.push(Math.round(v * 1e9) / 1e9);
+  return t;
+}
+
+function debounceRedraw(fn) {
+  let raf = null;
+  const go = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = null; fn(); }); };
+  window.addEventListener("resize", go);
+  return go;
+}
+
+const GCAG = [[1850,-0.4265],[1851,-0.2635],[1852,-0.2241],[1853,-0.2623],[1854,-0.2936],[1855,-0.2914],[1856,-0.3281],[1857,-0.4659],[1858,-0.3968],[1859,-0.292],[1860,-0.4071],[1861,-0.4637],[1862,-0.5548],[1863,-0.3828],[1864,-0.4941],[1865,-0.3922],[1866,-0.4002],[1867,-0.3994],[1868,-0.3631],[1869,-0.3185],[1870,-0.3278],[1871,-0.3734],[1872,-0.3095],[1873,-0.3212],[1874,-0.3654],[1875,-0.3667],[1876,-0.4108],[1877,-0.0824],[1878,0.0103],[1879,-0.2887],[1880,-0.3032],[1881,-0.213],[1882,-0.2721],[1883,-0.3276],[1884,-0.4744],[1885,-0.4581],[1886,-0.4082],[1887,-0.4883],[1888,-0.3726],[1889,-0.2504],[1890,-0.5003],[1891,-0.3975],[1892,-0.5066],[1893,-0.4949],[1894,-0.4787],[1895,-0.4418],[1896,-0.2786],[1897,-0.2547],[1898,-0.474],[1899,-0.3443],[1900,-0.2302],[1901,-0.2872],[1902,-0.4374],[1903,-0.5352],[1904,-0.5971],[1905,-0.4059],[1906,-0.3154],[1907,-0.4995],[1908,-0.5066],[1909,-0.5329],[1910,-0.5221],[1911,-0.5398],[1912,-0.4761],[1913,-0.4635],[1914,-0.2595],[1915,-0.1906],[1916,-0.4202],[1917,-0.5439],[1918,-0.426],[1919,-0.3324],[1920,-0.3044],[1921,-0.2414],[1922,-0.3381],[1923,-0.3146],[1924,-0.3085],[1925,-0.2796],[1926,-0.1221],[1927,-0.2258],[1928,-0.2084],[1929,-0.3903],[1930,-0.1699],[1931,-0.1058],[1932,-0.15],[1933,-0.3283],[1934,-0.177],[1935,-0.2129],[1936,-0.171],[1937,-0.016],[1938,-0.0129],[1939,-0.0418],[1940,0.0738],[1941,0.0344],[1942,-0.0005],[1943,0.0064],[1944,0.1446],[1945,0.0429],[1946,-0.1227],[1947,-0.096],[1948,-0.1292],[1949,-0.1539],[1950,-0.2397],[1951,-0.0719],[1952,0.0108],[1953,0.077],[1954,-0.1175],[1955,-0.1987],[1956,-0.265],[1957,-0.0349],[1958,-0.0165],[1959,-0.0465],[1960,-0.1134],[1961,-0.0144],[1962,-0.0588],[1963,-0.0314],[1964,-0.3021],[1965,-0.2023],[1966,-0.1454],[1967,-0.1157],[1968,-0.164],[1969,-0.0278],[1970,-0.084],[1971,-0.2041],[1972,-0.0902],[1973,0.0525],[1974,-0.1687],[1975,-0.106],[1976,-0.2108],[1977,0.1051],[1978,0.0055],[1979,0.0881],[1980,0.1915],[1981,0.247],[1982,0.031],[1983,0.2208],[1984,0.046],[1985,0.046],[1986,0.0923],[1987,0.2382],[1988,0.2776],[1989,0.1749],[1990,0.355],[1991,0.3338],[1992,0.12],[1993,0.1611],[1994,0.2274],[1995,0.3711],[1996,0.2708],[1997,0.4151],[1998,0.572],[1999,0.318],[2000,0.3255],[2001,0.4835],[2002,0.5372],[2003,0.5383],[2004,0.4624],[2005,0.6023],[2006,0.5663],[2007,0.5855],[2008,0.4592],[2009,0.59],[2010,0.6736],[2011,0.5326],[2012,0.5715],[2013,0.6186],[2014,0.6679],[2015,0.818],[2016,0.9248],[2017,0.8365],[2018,0.7532],[2019,0.8873],[2020,0.9162],[2021,0.7673],[2022,0.8018],[2023,1.1098],[2024,1.1695],[2025,1.0498]];   /* [[year, anomaly °C], ...] injected by build.py */
+
+const yrs = GCAG.map(d => d[0]), T = GCAG.map(d => d[1]);
+const calMask = yrs.map(y => y <= 1950);
+const calT = yrs.filter((y, i) => calMask[i]), calY = T.filter((v, i) => calMask[i]);
+const show = yrs.filter(y => y <= 2010);
+const showT = T.slice(0, show.length);
+
+/* full scan, computed once (matches make_figures.py fig 4) */
+const scanP = [], scanR = [];
+for (let P = 30; P <= 100.001; P += 0.25) {
+  const f = fitCycles(calT, calY, [P, 20]);
+  scanP.push(P); scanR.push(f.r2cal);
+}
+const bestIdx = scanR.indexOf(Math.max(...scanR));
+const bestP = scanP[bestIdx], bestR = scanR[bestIdx];
+const r2at60 = scanR[scanP.findIndex(p => Math.abs(p - 60) < 0.01)];
+
+const visited = new Set();
+let revealed = false;
+
+const fc = Chart(document.getElementById("fitchart"), { margin: { ml: 50 } });
+const sc = Chart(document.getElementById("scanchart"), { margin: { ml: 50 } });
+const slider = document.getElementById("pslider");
+
+function drawFit() {
+  const P = +slider.value;
+  visited.add(P);
+  const f = fitCycles(calT, calY, [P, 20]);
+  const model = f.predict(show);
+  fc.begin([1850, 2011], [-0.75, 0.8]);
+  fc.band(1850, 1950);
+  fc.axes({ xticks: [1850, 1875, 1900, 1925, 1950, 1975, 2000], yticks: [-0.6, -0.3, 0, 0.3, 0.6],
+            xlabel: "year", ylabel: "temperature anomaly (°C)" });
+  fc.clipPlot(() => {
+    fc.line(show, showT, { color: C.ink, width: 1.1, alpha: 0.85 });
+    const calN = calT.length;
+    fc.line(calT, model.slice(0, calN), { color: C.claim, width: 2.3 });
+    fc.line(show.slice(calN - 1), model.slice(calN - 1), { color: C.claim, width: 2.3, dash: [6, 4] });
+    /* beat brackets: each full repeat of P inside the window */
+    let n = 0;
+    for (let s = 1850; s + P <= 1950.01; s += P, n++) {
+      const y0 = -0.60;
+      fc.line([s + 1, s + P - 1], [y0, y0], { color: C.rebut, width: 2.5 });
+      fc.text("beat " + (n + 1), s + P / 2, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
+    }
+    if (n === 0) fc.text("not even one full beat fits in the window!", 1900, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
+  });
+  fc.text("fitting window", 1900, 0.74, { color: C.grey, align: "center", font: "10px" });
+
+  document.getElementById("pval").textContent = P.toFixed(2).replace(/\.?0+$/, "") + " yr";
+  document.getElementById("r2val").textContent = f.r2cal.toFixed(3);
+  document.getElementById("beats").textContent = (100 / P).toFixed(2);
+  const d = f.r2cal - r2at60;
+  document.getElementById("delta").textContent = (d >= 0 ? "+" : "") + d.toFixed(3);
+  const cap = document.getElementById("fitcap");
+  if (Math.abs(P - 60) < 0.01)
+    cap.innerHTML = "<b>This is their choice:</b> 60 years — R&sup2; " + f.r2cal.toFixed(3) +
+      ". The window holds " + (100 / P).toFixed(2) + " beats. Now try to beat it.";
+  else if (d > 0.001)
+    cap.innerHTML = "<b>" + P.toFixed(2).replace(/\.?0+$/, "") + " years fits better than 60</b> on the very data used to establish the cycle (+" + d.toFixed(3) + " R&sup2;).";
+  else if (d < -0.05)
+    cap.innerHTML = "Worse than 60 — but look at the fitted curve: still a perfectly presentable wiggle-match. The eye is a poor referee.";
+  else
+    cap.innerHTML = "About as good as 60. Notice how gently R&sup2; changes as you drag — the data barely cares.";
+  drawScan();
+}
+
+function drawScan() {
+  const rLo = Math.min(...scanR), rHi = Math.max(...scanR);
+  const pad = 0.12 * (rHi - rLo);
+  sc.begin([30, 100], [rLo - pad, rHi + pad * 3]);
+  sc.axes({ xticks: [30, 40, 50, 60, 70, 80, 90, 100], yticks: ticks(rLo, rHi, 4),
+            xlabel: "assumed long period (years) — short period held at 20",
+            ylabel: "fit quality R² (1850–1950)", yfmt: v => v.toFixed(2) });
+  sc.clipPlot(() => {
+    if (revealed) {
+      sc.line(scanP, scanR, { color: C.rebut, width: 2 });
+      sc.vline(60, { color: C.claim, dash: [5, 4], width: 1.6 });
+      sc.text("the chosen 60", 60.8, rLo - pad / 2, { color: C.claimDeep, font: "10.5px" });
+      sc.vline(65.75, { color: C.grey, dash: [2, 3] });
+      sc.text("65.75 — beats 60 on HadCRUT3 (Benestad et al.)", 99, rHi + pad * 2.2, { color: C.inkSoft, font: "10px", align: "right" });
+      sc.dots([bestP], [bestR], { color: C.ink, r: 4 });
+      sc.text("best on this data: " + bestP.toFixed(1) + " yr", bestP - 1, bestR + pad, { color: C.ink, align: "right", font: "10.5px" });
+    }
+    const vp = [...visited];
+    const vr = vp.map(p => scanR[Math.round((p - 30) / 0.25)]);
+    sc.dots(vp, vr, { color: revealed ? C.grey : C.rebut, r: 3, alpha: revealed ? 0.55 : 1 });
+    const P = +slider.value;
+    sc.dots([P], [scanR[Math.round((P - 30) / 0.25)]], { color: C.rebutDeep, r: 5 });
+  });
+}
+
+document.getElementById("reveal").addEventListener("click", () => {
+  revealed = true;
+  document.getElementById("scanhint").textContent = "";
+  document.getElementById("scancap").innerHTML =
+    "<b>The landscape.</b> Broad, gentle, and not centred on 60: on this data the best long period " +
+    "is ≈" + bestP.toFixed(1) + " yr (R² " + bestR.toFixed(3) + " vs. " + r2at60.toFixed(3) +
+    " at 60). Benestad et al. found 65.75 beat 60 on HadCRUT3 — and L&S11's own free fit " +
+    "centred near 65. Three datasets, three different “best cycles”: that is what a too-short " +
+    "window sounds like.";
+  drawScan();
+});
+slider.addEventListener("input", drawFit);
+debounceRedraw(drawFit);
+drawFit();
+</script>
+</body>
+</html>

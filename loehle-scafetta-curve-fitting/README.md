@@ -15,12 +15,14 @@ then the post-publication scorecard.
 | Path | What it is |
 |---|---|
 | `casefile01-loehle-scafetta-curve-fitting.html` | The explainer — a single self-contained file (figures embedded); open in any browser, print-friendly. |
+| `exercises/` | Five interactive exercise pages, one per objection (self-contained HTML + vanilla JS; real NOAA data embedded at build time). Linked from the “try it yourself” boxes in the explainer. |
 | `CLAUDE.md` | Standing instructions and current state for Claude Code sessions in this repo (conventions, build, key numbers). |
 | `NOTES.md` | Working notes: review of the original paper, accuracy audit, draft changelog. |
 | `sources/` | The three primary documents (see `sources/README.md` — two are zip archives despite `.pdf` names). |
 | `src/make_figures.py` | Generates all five figures. Replicates the L&S11 fit on real NOAA data and reproduces the Benestad et al. synthetic-noise experiment. |
 | `src/casefile01_template.html` | Document source with `{{FIGn}}` placeholders. |
-| `src/build.py` | Regenerates figures and assembles the final HTML. |
+| `src/exercises/` | Exercise templates (`exN_*_template.html`) plus shared design-system CSS and math/chart JS, assembled by the build. |
+| `src/build.py` | Regenerates figures, assembles the explainer, and builds the exercise pages. |
 | `data/annual.csv` | NOAA NOAAGlobalTemp (GCAG) + NASA GISTEMP annual global anomalies, snapshot used for the current build. |
 | `figures/` | Rendered PNGs (also embedded in the HTML). |
 
@@ -31,7 +33,21 @@ cd src
 python3 build.py        # needs numpy, pandas, matplotlib
 ```
 
-Deterministic: the synthetic-noise experiment uses a fixed seed (42).
+If your system Python lacks the dependencies, a repo-local venv works
+(gitignored):
+
+```bash
+python3 -m venv ../../.venv && ../../.venv/bin/pip install numpy pandas matplotlib
+../../.venv/bin/python3 build.py
+```
+
+Deterministic: the synthetic-noise experiment uses a fixed seed (42). Outputs:
+the explainer HTML, `figures/*.png`, and `exercises/*.html`. The exercise
+pages embed the same `data/annual.csv` snapshot (injected as JSON at build
+time); their in-browser fits reproduce the Python numbers exactly, except the
+Exercise 3 noise experiment, which draws its own seeded random numbers in the
+browser (recipe identical, RNG different — the page's footnote discloses
+this).
 
 ## Data provenance
 

@@ -56,6 +56,40 @@ that draft 2 now incorporates:
 
 ## Draft changelog
 
+### Draft 2.1 (2026-08-04) — interactive exercises
+- Added five interactive exercise pages under `exercises/`, one per objection,
+  linked from “try it yourself” boxes in Part Two (anchors `#objection-1`…`-5`
+  added; Part Three got `#part-three`):
+  1. `ex1-waves.html` — Fourier rebuild of arbitrary graphs (synthetic stock
+     walk, fractal skyline, European population 0–2025 CE from McEvedy & Jones
+     1978/UN estimates on a log scale, seeded random graphs); wave-budget
+     slider; every graph's own “60-unit wave” shown with its amplitude.
+     Decomposition runs on a mirrored copy to avoid wrap-around edge
+     artifacts.
+  2. `ex2-rhythm.html` — live period dial 30–100 yr refitting Eq. (1) on the
+     1850–1950 window; beat brackets; visited-period trail; “reveal the full
+     scan” with markers at 60 / 65.75 (Benestad) / best-on-this-data.
+     In-browser fit reproduces the Python numbers exactly (R² 0.457 at 60,
+     0.592 at 87.5).
+  3. `ex3-phantom-cycles.html` — the Benestad synthetic experiment live:
+     seeded 10,000-yr structured noise (seed shown, re-rollable), 62 slices,
+     running histogram vs. true content and the real record's 0.118 °C
+     (1850–2010 estimator). Browser RNG ≠ numpy, so values differ from
+     Exhibit D per seed; instability is the finding (footnote discloses).
+  4. `ex4-hidden-years.html` — overfitting game: line + k harmonics fitted
+     1850–2010, curtain over 2011–2025, train-R² vs. future-RMSE meters, the
+     “scissors” chart across all 25 knob positions; L&S11-recipe misses
+     (≈0.34 °C avg, ≈0.7 °C in 2024) computed live and match Exhibit E.
+  5. `ex5-resonance.html` — damped oscillator (60-yr period, Q=10) with four
+     pushes: resonant metronome, random weather noise, greenhouse ramp
+     (climbs 240 yr then holds so the display stays bounded), manual impulse.
+     Noise forcing measures ≈60-yr response rhythm — the Objection 3 tie-in.
+- Build: `src/exercises/` templates + `_shared.css`/`_shared.js` (palette,
+  seeded PRNG, least squares identical to make_figures.py, canvas charts);
+  `build.py` step 3 injects shared assets + GCAG JSON.
+- All pages carry “honest labels” footnotes (real vs. synthetic vs. schematic,
+  seeds, method equivalences), per the working conventions.
+
 ### Draft 2 (2026-08-04)
 - Checked against the original preprint (now in project files).
 - Part 1: two-stage fit; model equation displayed; free-fit ≈65 note;
