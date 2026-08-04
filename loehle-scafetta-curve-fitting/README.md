@@ -15,7 +15,9 @@ then the post-publication scorecard.
 | Path | What it is |
 |---|---|
 | `casefile01-loehle-scafetta-curve-fitting.html` | The explainer — a single self-contained file (figures embedded); open in any browser, print-friendly. |
+| `CLAUDE.md` | Standing instructions and current state for Claude Code sessions in this repo (conventions, build, key numbers). |
 | `NOTES.md` | Working notes: review of the original paper, accuracy audit, draft changelog. |
+| `sources/` | The three primary documents (see `sources/README.md` — two are zip archives despite `.pdf` names). |
 | `src/make_figures.py` | Generates all five figures. Replicates the L&S11 fit on real NOAA data and reproduces the Benestad et al. synthetic-noise experiment. |
 | `src/casefile01_template.html` | Document source with `{{FIGn}}` placeholders. |
 | `src/build.py` | Regenerates figures and assembles the final HTML. |
