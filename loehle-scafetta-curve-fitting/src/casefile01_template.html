@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File 01 — The 60-Year Cycle That Wasn't</title>
+<style>
+  :root{
+    --paper:#F7FAFB; --card:#FFFFFF; --ink:#1B2A3A; --ink-soft:#44586C;
+    --claim:#C7772E; --claim-tint:#FBF1E4; --claim-deep:#9A5A1F;
+    --rebut:#0E7C7B; --rebut-tint:#E4F1F0; --rebut-deep:#0A5C5B;
+    --grey:#7C8B99; --hair:#DFE6EC;
+    --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:780px;margin:0 auto;padding:0 22px 90px}
+
+  /* ---------- header ---------- */
+  header{padding:58px 0 8px;position:relative}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--grey);
+           text-transform:uppercase;margin-bottom:18px}
+  .eyebrow b{color:var(--ink);font-weight:600}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,52px);
+     line-height:1.06;margin:0 0 18px;letter-spacing:-0.01em}
+  .dek{font-family:var(--serif);font-size:20px;line-height:1.5;color:var(--ink-soft);
+       max-width:640px;margin:0 0 26px}
+  .wavemark{position:absolute;right:-10px;top:30px;opacity:.5;pointer-events:none}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;border-top:1px solid var(--hair);
+        border-bottom:1px solid var(--hair);padding:13px 0;font-size:13px;color:var(--ink-soft)}
+  .meta span b{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;display:block;
+               text-transform:uppercase;margin-bottom:2px}
+  .meta .c b{color:var(--claim-deep)} .meta .r b{color:var(--rebut-deep)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:16px 0 0;font-size:12.5px;color:var(--ink-soft)}
+  .chip{display:inline-flex;align-items:center;gap:7px}
+  .chip i{width:22px;height:0;border-top:3px solid;border-radius:2px;display:inline-block}
+  .chip.c i{border-color:var(--claim)} .chip.r i{border-color:var(--rebut)} .chip.k i{border-color:var(--ink)}
+
+  /* ---------- dossier ---------- */
+  .dossier{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:40px 0 8px;
+           border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:var(--card)}
+  .dossier>div{padding:22px 24px 24px}
+  .dossier .claimside{background:var(--claim-tint);border-right:1px solid var(--hair)}
+  .dossier .rebutside{background:var(--rebut-tint)}
+  .dossier h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+              margin:0 0 10px}
+  .claimside h3{color:var(--claim-deep)} .rebutside h3{color:var(--rebut-deep)}
+  .dossier p{margin:0;font-size:15px;line-height:1.58}
+  @media(max-width:620px){.dossier{grid-template-columns:1fr}
+    .dossier .claimside{border-right:none;border-bottom:1px solid var(--hair)}}
+
+  /* ---------- parts ---------- */
+  .part{margin-top:64px}
+  .partlabel{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .partlabel .no{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--grey)}
+  h2{font-family:var(--serif);font-size:30px;line-height:1.15;margin:0 0 6px;letter-spacing:-0.005em}
+  .part.claim h2{color:var(--claim-deep)} .part.rebut h2{color:var(--rebut-deep)}
+  .partrule{height:3px;border-radius:2px;margin:10px 0 26px;background:var(--hair)}
+  .part.claim .partrule{background:linear-gradient(90deg,var(--claim) 0 120px,var(--hair) 120px)}
+  .part.rebut .partrule{background:linear-gradient(90deg,var(--rebut) 0 120px,var(--hair) 120px)}
+  .part.aftermath .partrule{background:linear-gradient(90deg,var(--ink) 0 120px,var(--hair) 120px)}
+
+  h3.sub{font-family:var(--serif);font-size:20.5px;margin:34px 0 10px}
+  .part p{margin:0 0 16px;max-width:700px}
+  .part.claim h3.sub{color:var(--claim-deep)} .part.rebut h3.sub{color:var(--rebut-deep)}
+
+  /* rebuttal numbered points */
+  .rpoint{border-left:3px solid var(--rebut);padding:2px 0 2px 18px;margin:30px 0 22px}
+  .rpoint .tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--rebut-deep);
+               text-transform:uppercase;display:block;margin-bottom:4px}
+  .rpoint h3{font-family:var(--serif);font-size:20.5px;margin:0 0 10px}
+
+  /* ---------- figures ---------- */
+  figure{margin:30px 0 34px;background:var(--card);border:1px solid var(--hair);
+         border-radius:10px;padding:18px 18px 14px}
+  figure img{width:100%;height:auto;display:block;border-radius:4px}
+  .extag{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+         display:inline-block;margin-bottom:10px;padding:3px 9px;border-radius:3px}
+  .claim .extag, .extag.c{background:var(--claim-tint);color:var(--claim-deep)}
+  .rebut .extag, .extag.r{background:var(--rebut-tint);color:var(--rebut-deep)}
+  .extag.k{background:#E8EDF2;color:var(--ink)}
+  figcaption{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:12px}
+  figcaption b{color:var(--ink)}
+
+  .note{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--grey);
+        border-radius:8px;padding:14px 18px;font-size:14px;color:var(--ink-soft);margin:22px 0}
+  .note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
+  .note b{color:var(--ink)}
+
+  blockquote.pull{font-family:var(--serif);font-size:21px;line-height:1.45;color:var(--ink);
+       border-left:3px solid var(--claim);margin:26px 0;padding:4px 0 4px 20px}
+  blockquote.pull cite{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+       color:var(--grey);margin-top:10px;font-style:normal;text-transform:uppercase}
+
+  /* ---------- table ---------- */
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0 8px;background:var(--card);
+        border:1px solid var(--hair);border-radius:10px;overflow:hidden}
+  th,td{padding:11px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--hair)}
+  tr:last-child td{border-bottom:none}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+           background:#F1F5F8;color:var(--ink-soft)}
+  thead th.cc{color:var(--claim-deep)} thead th.rr{color:var(--rebut-deep)}
+  td.q{font-weight:600;width:24%;font-size:13.5px}
+
+  /* ---------- lists ---------- */
+  ul.points{padding-left:0;list-style:none;margin:14px 0}
+  ul.points li{position:relative;padding:0 0 0 26px;margin:0 0 12px;max-width:700px}
+  ul.points li::before{content:"—";position:absolute;left:0;color:var(--rebut);font-weight:700}
+  dl{margin:10px 0}
+  dt{font-weight:650;margin-top:14px}
+  dd{margin:2px 0 0 0;color:var(--ink-soft);font-size:15px}
+
+  .footer{margin-top:70px;border-top:1px solid var(--hair);padding-top:22px;
+          font-size:13px;color:var(--ink-soft)}
+  .footer h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+             color:var(--ink);margin:22px 0 8px}
+  .footer p{margin:0 0 10px;max-width:720px}
+  a{color:var(--rebut-deep);text-decoration-color:var(--hair);text-underline-offset:3px}
+  a:hover{text-decoration-color:var(--rebut)}
+
+  @media print{
+    body{background:#fff;font-size:11.5pt}
+    .sheet{max-width:100%;padding:0}
+    figure,.dossier,.note,table{break-inside:avoid;box-shadow:none}
+    .wavemark{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <svg class="wavemark" width="220" height="130" viewBox="0 0 220 130" aria-hidden="true">
+    <text x="110" y="98" text-anchor="middle" font-family="Georgia,serif" font-size="118"
+          font-weight="700" fill="none" stroke="#C7772E" stroke-opacity="0.28" stroke-width="1.5">60</text>
+    <path d="M0,65 C 18,30 37,30 55,65 S 92,100 110,65 S 147,30 165,65 S 202,100 220,65"
+          fill="none" stroke="#0E7C7B" stroke-width="2.5" stroke-opacity="0.55"/>
+  </svg>
+  <div class="eyebrow">Skeptic papers under the microscope · <b>Case file 01</b> · Curve fitting</div>
+  <h1>The 60‑Year Cycle<br>That Wasn't</h1>
+  <p class="dek">How a 2011 paper turned two waves and a straight line into the claim that humans
+     cause only half of global warming — and how replication took the argument apart.</p>
+  <div class="meta">
+    <span class="c"><b>The claim</b>Loehle &amp; Scafetta (2011), <i>The Open Atmospheric Science Journal</i></span>
+    <span class="r"><b>The rebuttal</b>Benestad et&nbsp;al. (2016), <i>Theor.&nbsp;Appl.&nbsp;Climatol.</i>, supporting material, “Curve‑fitting”</span>
+    <span><b>Status</b>Draft 2 · checked against the original paper</span>
+  </div>
+  <div class="legend" aria-label="Color key used throughout">
+    <span class="chip c"><i></i>the claim &amp; its model</span>
+    <span class="chip r"><i></i>the rebuttal’s demonstrations</span>
+    <span class="chip k"><i></i>observed temperatures</span>
+  </div>
+</header>
+
+<div class="dossier">
+  <div class="claimside">
+    <h3>The claim, in one breath</h3>
+    <p>Global temperature is mostly two natural cycles — 60 and 20 years long, astronomical in
+       origin — riding a gentle natural recovery from the Little Ice Age. Subtract the cycles and
+       the human contribution is a modest ramp, about half of what the IPCC says — at most.
+       Climate sensitivity falls to roughly 1–1.5&nbsp;°C per CO₂ doubling, and the 21st century
+       should warm by only ~0.6&nbsp;°C above 2000 — less than 1&nbsp;°C in total.</p>
+  </div>
+  <div class="rebutside">
+    <h3>The rebuttal, in one breath</h3>
+    <p>That is curve fitting, not discovery. Any wiggly record can be rebuilt from waves; 160 years
+       is far too short to establish a 60‑year rhythm; the same method finds equally convincing
+       “cycles” in pure randomness; the proposed physics contradicts itself; and the paper’s
+       forecast has since failed against real temperatures.</p>
+  </div>
+</div>
+
+<!-- ================================================================ PART 1 -->
+<section class="part claim">
+  <div class="partlabel"><span class="no">PART ONE</span></div>
+  <h2>The original argument, given its best shot</h2>
+  <div class="partrule"></div>
+
+  <p>In July 2011, ecologist Craig Loehle and physicist Nicola Scafetta published
+     “Climate Change Attribution Using Empirical Decomposition of Climatic Data” in
+     <i>The Open Atmospheric Science Journal</i> — a broad open‑access outlet rather than a
+     specialist climate journal. The paper became a fixture of skeptic media because it offered
+     something rare: a simple, checkable model with a concrete forecast.</p>
+
+  <h3 class="sub">The intuition</h3>
+  <p>Look at the global temperature record and you can see a slow heartbeat: warmth around the
+     1940s, a cool spell around the 1970s, warmth again around 2000. Scafetta’s earlier work argued
+     that rhythms of roughly 60 and 20 years arise from the motion of the giant planets, which
+     subtly shifts the Sun; ocean cycles like the Atlantic Multidecadal Oscillation seem to keep
+     similar time. And here is the argument’s engine: before 1950, human influence was too small
+     to matter much — the authors lean on mainstream sources for this, citing attribution work
+     placing the emergence of a dominant human signal around 1950–1960 and noting that earlier
+     greenhouse forcing was largely offset by aerosols. So a model trained <b>only on pre‑1950
+     data</b> should capture pure nature — and whatever it fails to explain afterwards is the
+     human share.</p>
+
+  <figure>
+    <span class="extag">Exhibit A · The recipe</span>
+    <img src="{{FIG1}}" alt="Schematic: a 60-year wave plus a 20-year wave plus a gentle straight line sum to a curve resembling the global temperature record.">
+    <figcaption><b>Three ingredients.</b> The model is a 60‑year wave and a 20‑year wave (periods
+      fixed in advance; their heights and timing left free for the fitting procedure to choose)
+      plus a straight line. Schematic values, for illustration.</figcaption>
+  </figure>
+
+  <h3 class="sub">What they did</h3>
+  <p>Their model is one line of mathematics:</p>
+  <p style="font-family:var(--mono);font-size:14px;background:var(--card);border:1px solid var(--hair);
+     border-radius:8px;padding:12px 16px;overflow-x:auto">
+     y(t) = A·cos[2π(t−T₁)/60] + B·cos[2π(t−T₂)/20] + C·(t−1900) + D</p>
+  <p>The periods are pinned at exactly 60 and 20 years — imported from Scafetta’s earlier
+     analysis of the solar system’s motion — while the heights (A,&nbsp;B), timings
+     (T₁,&nbsp;T₂), and the line (C,&nbsp;D) are left for least‑squares fitting to choose. A
+     detail worth filing away: the authors mention that letting the data pick the long period
+     freely gives a value <i>close to</i> 60, and their own supplement’s free fit centers near
+     65 years; they imposed 60 anyway, on astronomical grounds.</p>
+  <p>They fitted in two stages. Stage one fitted the equation to the <b>entire</b> HadCRUT3
+     record, 1850–2010 — and judged the result deficient: the leftovers weren’t random, drifting
+     upward late in the record. Rather than discard the model, they read that drift as the
+     fingerprint of post‑war human warming, and refitted using data <b>up to 1950 only</b>. Two
+     things about the refit impressed readers. First, the extended curve kept time with reality:
+     the 1940s bump, the 1970s dip, the crest around 2000, even the apparent “plateau” of the
+     2000s. Second, the leftover — observation minus model — now formed a clean straight ramp:
+     fitted over 1951–2010, it rises at 0.66&nbsp;±&nbsp;0.08&nbsp;°C per century and crosses
+     zero in 1942. That ramp, they said, is us: emissions, urbanization, land‑use change.</p>
+
+  <figure>
+    <span class="extag">Exhibit B · Their procedure, re‑run on real data</span>
+    <img src="{{FIG2}}" alt="Top: observed global temperature 1850-2010 with the cycles-plus-line model fitted to 1850-1950 and extended to 2010; the wiggles align. Bottom: the residual with a straight ramp from the 1940s.">
+    <figcaption><b>We repeated the procedure ourselves</b> on NOAA’s current global series
+      (anomalies vs. the 20th‑century average). Top: the model (amber) is fitted only inside the
+      shaded window, then extended (dashed). The wiggles do line up. Bottom: the leftover forms a
+      ramp — ours rises at ≈0.81&nbsp;°C/century and crosses zero around 1947; theirs
+      (2010‑vintage HadCRUT3) at 0.66&nbsp;±&nbsp;0.08 crossing 1942. The replication agreement
+      is otherwise striking: 60‑year amplitude 0.100&nbsp;°C here vs. their
+      0.121&nbsp;±&nbsp;0.016; 20‑year 0.043 vs. 0.041&nbsp;±&nbsp;0.016; 60‑year peak ≈1997
+      vs. their 1998.6&nbsp;±&nbsp;1.2; fit R²&nbsp;0.46 vs. 0.53. Same machinery, same picture
+      — and a ~20% swing in the “human ramp” from nothing but the choice of thermometer
+      dataset. File that away.</figcaption>
+  </figure>
+
+  <h3 class="sub">The supporting cast</h3>
+  <p>The paper doesn’t rest on the 160‑year fit alone. A full section marshals independent
+     sightings of a roughly‑60‑year rhythm: a Caribbean seabed record whose best‑fit period is
+     61.5&nbsp;±&nbsp;4 years; a tree‑ring reconstruction of the Pacific Decadal Oscillation at
+     59.5&nbsp;±&nbsp;4; a 500‑year Mediterranean temperature reconstruction; ocean fish‑stock
+     cycles; the global sea‑level record; even cosmogenic isotopes in ice. The proposed clock is
+     the solar system itself — Jupiter and Saturn’s alignments repeat on a ~60‑year beat,
+     nudging the Sun, whose activity (they argue, via a solar‑irradiance proxy model of their
+     own construction, plus possible cosmic‑ray effects on clouds) then paces Earth’s climate
+     and also supplies the gentle pre‑1950 warming line.</p>
+
+  <h3 class="sub">What they concluded</h3>
+  <p>The accounting, in their telling: about 50&nbsp;±&nbsp;10% of the ~0.8&nbsp;°C of warming
+     from 1850 to 2010 is natural — Little‑Ice‑Age recovery plus cycles. Of the ~0.5&nbsp;°C
+     warming from 1970 to 2000 that alarmed the world, roughly 0.3&nbsp;°C is just the two
+     cycles swinging together from their 1970 minima to their 2000 maxima — about 60% of it.
+     The mid‑century cooling needs no sulfate‑aerosol explanation; it was the 60‑year cycle’s
+     downswing, and they note the residuals show no aerosol‑shaped dip. Even the modest human
+     ramp, they add, is an <b>upper limit</b>, since poorly corrected urban‑heat and land‑use
+     contamination may account for part of it (here they cite, among others, McKitrick &amp;
+     Michaels — a paper that sits elsewhere on the same list of 38 this series examines).
+     Climate sensitivity lands near 1–1.5&nbsp;°C per CO₂ doubling — a third to half of the
+     IPCC’s best estimate, hinting, they say, at a slight negative feedback. And since the cycle
+     peaked around 2000 and now descends, human warming stays masked until about 2040; their
+     model, extended to 2100, tops out near 0.6&nbsp;°C above 2000 — against the ~3&nbsp;°C
+     they attribute to IPCC projections. In the abstract’s words, climate
+     “may warm less than 1&nbsp;°C by 2100.” They even claim the first receipts: the flat
+     2000s, which IPCC‑class models hadn’t predicted, was already in their curve.</p>
+
+  <div class="note c"><b>Why it persuaded people.</b> It looked like science at its best: fit the
+     past, predict the future, keep the math simple enough for anyone to check. It seemed to
+     “predict” the 2000s slowdown while mainstream models were being mocked for missing it. And it
+     carried a comforting bottom line. To see what’s wrong with it, you have to look at the
+     machinery — which is exactly what the rebuttal did.</div>
+</section>
+
+<!-- ================================================================ PART 2 -->
+<section class="part rebut">
+  <div class="partlabel"><span class="no">PART TWO</span></div>
+  <h2>The rebuttal: five ways the machinery fails</h2>
+  <div class="partrule"></div>
+
+  <p>Benestad and colleagues re‑ran L&amp;S11’s analysis as part of their 2016 replication study
+     of 38 contrarian papers, filing it under the heading <i>curve‑fitting</i>. Their objections
+     stack up from mathematics to physics.</p>
+
+  <div class="rpoint">
+    <span class="tag">Objection 1</span>
+    <h3>Waves are a language, not a cause</h3>
+    <p>A mathematical fact known since Fourier: <b>any</b> wiggly record — stock prices, your
+       heartbeat, a mountain skyline — can be rebuilt as a sum of waves. The rebuild always
+       succeeds. So succeeding tells you nothing about what caused the wiggles. Writing a melody
+       down in notes doesn’t mean a piano composed it. L&amp;S11’s fit is bookkeeping presented
+       as discovery.</p>
+  </div>
+
+  <div class="rpoint">
+    <span class="tag">Objection 2</span>
+    <h3>Two and a half beats don’t make a rhythm</h3>
+    <p>The whole record holds 160 years — fewer than three repeats of a 60‑year cycle, and the
+       calibration window holds fewer than two. You cannot establish a rhythm from two beats.
+       The tell: other periods fit the same data just as well — or better. Benestad et&nbsp;al.
+       found that 65.75‑ and 21.5‑year waves fit HadCRUT3 <b>better</b> than 60 and 20. Strikingly,
+       L&amp;S11’s own paper concedes the point: they note that a free fit lands only “close to”
+       60, and the free‑fit target in their own supplement centers near <b>65</b> years — they
+       imposed 60 anyway to match the astronomy. On NOAA’s data we find the best “long cycle”
+       is ~87 years. When the discovered constant of nature changes every time you change the
+       dataset — or disagrees with your own free fit — you haven’t discovered a constant of
+       nature.</p>
+  </div>
+
+  <figure>
+    <span class="extag">Exhibit C · Is 60 special?</span>
+    <img src="{{FIG4}}" alt="Goodness of fit versus assumed long period on the 1850-1950 calibration window: a broad curve where 60 years is not the best value; roughly 87 years fits better.">
+    <figcaption><b>Scanning the dial.</b> We refitted the model for every long period from 30 to
+      100 years (short period held at 20). On the 1850–1950 window, 60 years is not even the best
+      choice — and the “best” value disagrees with the one Benestad et&nbsp;al. found on a
+      different dataset. A real physical cycle doesn’t move when you switch thermometer
+      networks.</figcaption>
+  </figure>
+
+  <div class="rpoint">
+    <span class="tag">Objection 3</span>
+    <h3>The method finds cycles in pure randomness</h3>
+    <p>This is the rebuttal’s centerpiece. Build a 10,000‑year artificial series out of hundreds
+       of waves with <b>random</b> strengths and timings — structured noise with no special
+       60‑year cause. Slice it into 160‑year pieces, the length of the real record, and run
+       L&amp;S11’s fit on each slice. Every slice “finds” a 60‑year cycle. The apparent strength
+       swings wildly from slice to slice, is inflated far above the series’ true 60‑year content
+       (about four‑fold in Benestad et&nbsp;al.’s version; about an order of magnitude in ours —
+       the exact factor depends on the noise recipe), and the strongest slices rival the real
+       climate record. A smoke detector that goes off in every empty room tells you nothing when
+       it goes off in yours.</p>
+  </div>
+
+  <figure>
+    <span class="extag">Exhibit D · The stress test</span>
+    <img src="{{FIG3}}" alt="Top: apparent 60-year cycle strength in each 160-year slice of a random series varies widely, far above the true value, with the strongest slices near the real record's value. Bottom: two slices of random data with convincing-looking fitted cycles.">
+    <figcaption><b>Phantom cycles.</b> Top: each dot is the “60‑year cycle” the fit reports in one
+      160‑year slice of the same random series (scaled to the real record’s variability). The
+      true 60‑year content of the whole series is the dark line near zero; a few slices reach the
+      strength found in the real record (amber dashed). Bottom: two slices with their fitted
+      “cycles” — pure noise, looking every bit as convincing as Exhibit&nbsp;B.</figcaption>
+  </figure>
+
+  <div class="rpoint">
+    <span class="tag">Objection 4</span>
+    <h3>Flexible models must face data they’ve never seen — this one didn’t</h3>
+    <p>With enough adjustable parts, a model fits whatever it’s tuned to; the physicists’ joke,
+       attributed to John von Neumann, is that with four parameters you can fit an elephant.
+       Benestad et&nbsp;al.’s charge is that L&amp;S11 never properly evaluated their model
+       against independent data: the wiggle‑match through 2010 reuses the era that shaped the
+       model’s human ramp, and the pre‑1950 “nature‑only” premise quietly assumes the very
+       conclusion (a small early human effect) the paper set out to prove. The only clean test
+       is data that arrived after publication. Hold that thought for Part Three.</p>
+  </div>
+
+  <div class="rpoint">
+    <span class="tag">Objection 5</span>
+    <h3>The physics contradicts itself</h3>
+    <p>To connect distant planets to Earth’s thermometers, the paper leans on <i>resonance</i> —
+       the climate supposedly rings like a struck glass in sympathy with tiny astronomical
+       nudges, while responding only sluggishly (a “slight negative feedback”) to the far larger
+       energy push of added CO₂. But resonance is a property of the <b>system</b>, not of the
+       forcing it prefers: a wine glass rings at its pitch for any sound at that pitch — the
+       soprano, the cello, the crowd. Benestad et&nbsp;al. demonstrate with a simulated oscillator
+       that a resonant system gets excited by noisy or trending pushes of any origin, greenhouse
+       forcing included. A climate sensitive enough to amplify planetary whispers could not also
+       be deaf to CO₂’s shout. And that exposes the deepest flaw — the <b>false dichotomy</b>:
+       even if 20‑ and 60‑year wiggles are real (similar ocean variability appears in climate
+       models too), wiggles ride on top of trends. Finding a wiggle subtracts nothing from CO₂.
+       The paper never tested the greenhouse explanation it claimed to displace. One more
+       structural weakness: the causal chain runs planets&nbsp;→ solar activity&nbsp;→ irradiance
+       and cosmic‑ray/cloud effects&nbsp;→ climate, and nearly every link is borrowed from
+       contested sources — a solar‑irradiance history built on the solar‑cycle‑length idea, the
+       disputed ACRIM satellite composite, and cosmic‑ray cloud seeding. The first and last of
+       those are themselves examined and faulted elsewhere in the same replication study
+       (the Friis‑Christensen &amp; Lassen and Svensmark papers). The claim’s foundations cite
+       each other more than they cite independent physics.</p>
+  </div>
+
+  <div class="note r"><b>The verdict in the study’s taxonomy.</b> Benestad et&nbsp;al. file
+     L&amp;S11 under logic type&nbsp;B — the machinery is applied, but the premises are wrong —
+     with the shorthand label <i>curve fitting</i>: an over‑fit set of waves, no proper
+     evaluation, implausible physics, and relevant literature ignored. Their analysis is
+     reproducible via the open R package <code>replicationDemos</code>
+     (function <code>LoehleScafetta2011()</code>).</div>
+</section>
+
+<!-- ================================================================ PART 3 -->
+<section class="part aftermath">
+  <div class="partlabel"><span class="no">PART THREE</span></div>
+  <h2>The test nature ran anyway</h2>
+  <div class="partrule"></div>
+
+  <p>Every forecast eventually meets the future. L&amp;S11’s model says the 60‑year cycle has
+     been in its downswing since ~2000, holding temperatures nearly flat — our faithful re‑run
+     of their full model rises just 0.05&nbsp;°C between 2000 and 2030 — on the way to less than
+     1&nbsp;°C of warming for the whole century. Here is what the planet did instead.</p>
+
+  <figure>
+    <span class="extag k">Exhibit E · After publication</span>
+    <img src="{{FIG5}}" alt="Observed global temperature through 2025 climbs steeply away from the flat L&S11-style model; by 2024 observations are about 0.7 degrees C above the model's path.">
+    <figcaption><b>The out‑of‑sample test.</b> The amber dashed curve is the full L&amp;S11‑style
+      model (cycles calibrated 1850–1950, plus the fitted straight “human ramp”), given its best
+      possible shot on NOAA’s data. Since publication, observations have run on average
+      0.34&nbsp;°C above the model’s path; by 2024 the gap reached ≈0.7&nbsp;°C (an El&nbsp;Niño
+      year — but even the cool La&nbsp;Niña years of 2021–22 sat ~0.3&nbsp;°C above the model).
+      In barely a decade, the world used up most of the warming the paper had budgeted for the
+      entire century.</figcaption>
+  </figure>
+
+  <p>This is the punchline the rebuttal predicted in advance: a curve fitted to wiggles has no
+     reason to keep working once the wiggles stop cooperating. The 2000s “plateau” that made the
+     model look prophetic turned out to be exactly the kind of temporary fluctuation the
+     mainstream literature said it was. The budget arithmetic is brutal: the paper’s published
+     ceiling for the <b>entire century</b> was about 0.6&nbsp;°C of warming above 2000. Comparing
+     decade averages to smooth out El&nbsp;Niño swings, the world warmed 0.47&nbsp;°C between
+     1996–2005 and 2016–2025 — roughly three‑quarters of that hundred‑year allowance, spent in
+     the first two decades, with individual recent years already past the ceiling.</p>
+</section>
+
+<!-- ================================================================ table -->
+<section class="part">
+  <div class="partlabel"><span class="no">SIDE BY SIDE</span></div>
+  <h2>The two arguments at a glance</h2>
+  <div class="partrule"></div>
+  <table>
+    <thead><tr><th></th><th class="cc">Loehle &amp; Scafetta 2011</th><th class="rr">Benestad et&nbsp;al. 2016</th></tr></thead>
+    <tbody>
+      <tr><td class="q">What are the wiggles?</td>
+          <td>Real 60‑ &amp; 20‑year cycles of astronomical origin.</td>
+          <td>What wave‑fitting always produces; other periods fit as well or better, and random data yields the same “cycles.”</td></tr>
+      <tr><td class="q">The human share?</td>
+          <td>At most a ramp of ≈0.66&nbsp;°C/century emerging in 1942 — about half the IPCC’s
+              attribution, possibly less if urban‑heat contamination inflates it; sensitivity
+              ~1–1.5&nbsp;°C per doubling.</td>
+          <td>An artifact of assuming pre‑1950 warming was natural and calling the leftover “human” — the premise smuggles in the conclusion.</td></tr>
+      <tr><td class="q">The physics?</td>
+          <td>Planets pace the Sun; a resonant climate follows (via irradiance and perhaps cosmic rays/clouds); CO₂ meets a slight negative feedback.</td>
+          <td>Self‑contradictory: a resonant system amplifies any matching or trending push, greenhouse forcing included — and the chain’s links are themselves contested.</td></tr>
+      <tr><td class="q">The forecast?</td>
+          <td>Warming masked by the cycle until ~2040; ≈0.6&nbsp;°C above 2000 by 2100, vs. the ~3&nbsp;°C they attribute to IPCC projections.</td>
+          <td>Curve fits have no predictive warrant — and two decades of observations have already consumed ~¾ of that century budget.</td></tr>
+      <tr><td class="q">What would count as proof?</td>
+          <td>The model’s match to 1951–2010.</td>
+          <td>Only genuine out‑of‑sample skill, tested against data the model never touched. It failed that test.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ================================================================ comeback -->
+<section class="part">
+  <div class="partlabel"><span class="no">ANTICIPATING THE COMEBACKS</span></div>
+  <h2>Three defenses, three answers</h2>
+  <div class="partrule"></div>
+
+  <h3 class="sub">“But it predicted the plateau!”</h3>
+  <p>The strongest defense is that the 1951–2010 wiggle‑match was a successful
+     prediction — the paper itself claims the post‑2000 flattening as evidence in hand. Two
+     answers. First, matching the phase of one or two wiggles is weak evidence: the random
+     slices in Exhibit&nbsp;D produce phase‑coherent, convincing‑looking wiggles all the time,
+     and a fit anchored on the 1940s bump and 1970s dip is halfway to “predicting” a 2000s
+     crest by arithmetic alone. Second, the model’s decisive, no‑excuses prediction — the flat
+     decades after 2010 — is the one that failed. When a model’s successes are the flexible
+     parts and its failures are the rigid parts, that is the signature of curve fitting.</p>
+
+  <h3 class="sub">“But they validated the method in their supplement!”</h3>
+  <p>They did anticipate the too‑short‑record objection. Their Supplemental Information&nbsp;1
+     takes the fitted cycles‑plus‑line curve as a <i>true</i> signal, sprinkles white noise on
+     top, refits on 1850–1950 a thousand times, and shows the period is recovered
+     (64.1&nbsp;±&nbsp;2.6 years against a target of 64.9). But notice what that tests:
+     <b>if</b> the world really is two fixed cycles plus a line plus white noise, the fit can
+     find them. It says nothing about the reverse risk — that the fit “finds” cycles when none
+     exist. Real climate noise isn’t white; it’s structured, with slow wandering built in. Feed
+     the same fit structured randomness containing <i>no</i> fixed cycle — Exhibit&nbsp;D — and
+     it reports convincing 60‑year cycles anyway. A validation that assumes the conclusion
+     cannot defend it. (Note, too, the quiet detail: their own validation target sits near 65
+     years, not 60.)</p>
+
+  <h3 class="sub">“But proxy records show 60‑year cycles for centuries!”</h3>
+  <p>The paper’s supporting studies show quasi‑oscillations in the 50–80‑year range, in
+     particular regions, waxing and waning in strength — which is exactly what slow, structured
+     natural variability looks like. That is not a fixed global clock. The wider contrarian
+     cycle literature, surveyed in Benestad et&nbsp;al.’s Table&nbsp;S2, reports “dominant”
+     periods from 6 to 2,804 years — claims that cannot all be true and are rarely reconciled
+     with one another. And the deepest answer doesn’t change: ocean oscillations of similar
+     size appear in standard climate models as internal variability, no planets required — and
+     even a genuine quasi‑cycle would ride on top of the greenhouse trend, subtracting nothing
+     from it.</p>
+</section>
+
+<!-- ================================================================ talking points -->
+<section class="part">
+  <div class="partlabel"><span class="no">FOR CONVERSATIONS</span></div>
+  <h2>Five lines that carry the argument</h2>
+  <div class="partrule"></div>
+  <ul class="points">
+    <li>Any wiggly line can be rebuilt out of waves — the rebuild always works, so it proves nothing about causes.</li>
+    <li>160 years contains two and a half “60‑year cycles.” You can’t establish a rhythm from two and a half beats.</li>
+    <li>Run their exact method on random noise and it finds 60‑year cycles there too — often just as strong.</li>
+    <li>A climate that resonates to planetary whispers can’t be deaf to CO₂’s shout — resonance doesn’t pick sides.</li>
+    <li>Their ceiling for the whole century was about 0.6&nbsp;°C above 2000 — and the first two decades spent three‑quarters of it.</li>
+  </ul>
+</section>
+
+<!-- ================================================================ glossary -->
+<section class="part">
+  <div class="partlabel"><span class="no">PLAIN WORDS</span></div>
+  <h2>Glossary</h2>
+  <div class="partrule"></div>
+  <dl>
+    <dt>Curve fitting / overfitting</dt>
+    <dd>Tuning a flexible formula until it hugs past data. The tighter the hug with the more knobs,
+        the less it says about the future — it has memorized, not understood.</dd>
+    <dt>Sinusoid (wave, harmonic)</dt>
+    <dd>The smooth, endlessly repeating up‑and‑down curve of pure rhythm. Fourier’s theorem:
+        stack enough of them and you can reproduce any finite record exactly.</dd>
+    <dt>Residual</dt>
+    <dd>What’s left of the data after subtracting a model. L&amp;S11’s entire human‑contribution
+        estimate is a straight line drawn through a residual.</dd>
+    <dt>Out‑of‑sample test</dt>
+    <dd>Checking a model against data it never saw during tuning. The only honest exam for a
+        flexible model — and the one nature administered after 2011.</dd>
+    <dt>R² (“R‑squared”)</dt>
+    <dd>A 0‑to‑1 score for how much of the data’s variation a model soaks up. High R² on the
+        training data is cheap; high R² on unseen data is the real currency.</dd>
+    <dt>Resonance</dt>
+    <dd>A system’s tendency to respond strongly to pushes near its natural frequency — like a
+        playground swing. It responds to <i>any</i> push at that tempo, whoever is pushing.</dd>
+    <dt>False dichotomy</dt>
+    <dd>“It’s natural cycles, therefore it isn’t CO₂.” Wiggles and trends coexist; demonstrating
+        one does not subtract the other.</dd>
+    <dt>Attribution</dt>
+    <dd>The science of assigning causes to observed climate change — properly done with physics
+        and multiple independent lines of evidence, not by labeling leftovers.</dd>
+  </dl>
+</section>
+
+<!-- ================================================================ footer -->
+<div class="footer">
+  <h4>Methods &amp; honesty notes</h4>
+  <p>This draft has been checked line‑by‑line against the original preprint (arXiv:1206.5845,
+     now in the project files). Exhibits B, C and E re‑run the L&amp;S11 procedure — their
+     Eq.&nbsp;(1), periods fixed at 60 and 20 years, amplitudes and phases free, linear term,
+     calibration 1850–1950 — on NOAA’s NOAAGlobalTemp annual anomalies, 1850–2025, relative to
+     the 20th‑century average. Our ordinary‑least‑squares sine/cosine formulation is
+     algebraically equivalent to their fixed‑period cosine fit. Dataset vintage explains the
+     numerical differences: our 60‑yr amplitude 0.100&nbsp;°C vs. their 0.121&nbsp;±&nbsp;0.016;
+     20‑yr 0.043 vs. 0.041&nbsp;±&nbsp;0.016; cycle peaks ≈1997/1998 vs. their 1998.6/1999.7;
+     calibration R² 0.46 vs. 0.53; residual ramp 0.81&nbsp;°C/century crossing ~1947 vs. their
+     0.66&nbsp;±&nbsp;0.08 (fitted 1950–2010) crossing 1942. Exhibit D reproduces the supporting
+     material’s synthetic experiment: a 10,000‑year sum of ~400 waves with random strengths and
+     timings, scaled to the real record’s detrended variability, sliced into 62 pieces of 160
+     years; the inflation factor (ours ~14×, theirs ~4×) depends on the noise recipe — the
+     instability is the finding, not the exact factor. This differs deliberately from the
+     paper’s own Supplemental test, which adds <i>white</i> noise to an assumed‑true cycle and
+     therefore only measures recovery‑given‑truth, not the false‑alarm rate. All figures were
+     generated for this project; the script, template and data ship alongside this document so
+     every number can be rebuilt — in the same spirit of open replication the rebuttal
+     championed.</p>
+  <h4>Sources</h4>
+  <p>C.&nbsp;Loehle &amp; N.&nbsp;Scafetta (2011), “Climate Change Attribution Using Empirical
+     Decomposition of Climatic Data,” <i>The Open Atmospheric Science Journal</i> 5:74–86,
+     doi:10.2174/1874282301105010074 (preprint arXiv:1206.5845 in project files; Table&nbsp;1,
+     Figs.&nbsp;1–5, Supplemental Information&nbsp;1–2 cited above). ·
+     R.E.&nbsp;Benestad, D.&nbsp;Nuccitelli, S.&nbsp;Lewandowsky, K.&nbsp;Hayhoe, H.O.&nbsp;Hygen,
+     R.&nbsp;van&nbsp;Dorland &amp; J.&nbsp;Cook (2016), “Learning from mistakes in climate
+     research,” <i>Theoretical and Applied Climatology</i> 126:699–703,
+     doi:10.1007/s00704-015-1597-5, and its supporting material, section “Curve‑fitting” and
+     Table&nbsp;S2, with the open R package <code>replicationDemos</code>
+     (<code>LoehleScafetta2011()</code>). ·
+     Temperature data: NOAA NCEI NOAAGlobalTemp via the open “datasets/global‑temp” mirror.</p>
+  <p style="margin-top:18px;color:var(--grey)">Case file 01 · draft 2 · prepared for the
+     “skeptic papers &amp; rebuttals” explainer project · next candidates: the discarded ice‑core
+     data (Humlum et&nbsp;al. 2011) and the statistics mix‑up (Douglass et&nbsp;al. 2007).</p>
+</div>
+
+</div>
+</body>
+</html>
