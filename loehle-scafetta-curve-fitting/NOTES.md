@@ -89,6 +89,11 @@ that draft 2 now incorporates:
   `build.py` step 3 injects shared assets + GCAG JSON.
 - All pages carry “honest labels” footnotes (real vs. synthetic vs. schematic,
   seeds, method equivalences), per the working conventions.
+- Ex 1 addendum: a second chart, x-aligned under the target, shows the waves
+  themselves at true size — waves already in the rebuild in light gray, waves
+  just added by the slider in light blue, the near-60-unit wave always in
+  amber (with its strength rank reported); the magnified 60-unit panel below
+  is unchanged.
 
 ### Draft 2 (2026-08-04)
 - Checked against the original preprint (now in project files).

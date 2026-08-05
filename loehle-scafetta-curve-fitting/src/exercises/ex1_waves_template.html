@@ -8,9 +8,11 @@
 {{SHARED_CSS}}
 .presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
 #main{height:330px}
+#waves{height:200px;margin-top:14px}
 #wave60{height:150px}
 .punch{font-family:var(--serif);font-size:17px;color:var(--ink);margin:10px 0 2px}
 .punch b{color:var(--claim-deep)}
+.chip.b i{border-color:#5B9BC4}
 </style>
 </head>
 <body>
@@ -49,6 +51,13 @@
       <span class="chip k"><i></i><span id="targetlabel">the target graph</span></span>
       <span class="chip c"><i></i>rebuilt from a line + <span id="kcount">0</span> waves</span>
     </div>
+    <canvas id="waves" class="chart"></canvas>
+    <div class="legend">
+      <span class="chip g"><i></i>waves already in the rebuild</span>
+      <span class="chip b"><i></i>just added by the slider</span>
+      <span class="chip c"><i></i>the 60-unit wave, always drawn</span>
+    </div>
+    <div class="cap" id="wavescap"></div>
     <div class="readouts">
       <div class="readout"><b>Waves used</b><div class="val" id="kval">0</div></div>
       <div class="readout c"><b>How well it hugs (R&sup2;)</b><div class="val" id="r2val">&mdash;</div></div>
@@ -208,10 +217,18 @@ function rebuild(D, k) {
 
 /* ---------------- UI ---------------- */
 const main = Chart(document.getElementById("main"), { margin: { ml: 56 } });
+const wvc = Chart(document.getElementById("waves"), { margin: { ml: 56, mb: 26, mt: 8 } });
 const w60c = Chart(document.getElementById("wave60"), { margin: { ml: 56, mb: 26 } });
 const slider = document.getElementById("kslider");
 const playBtn = document.getElementById("play");
 let playTimer = null;
+let lastShownK = 0;          // waves already on the waves chart (they turn gray)
+const BLUE = "#5B9BC4";
+
+function waveVals(cp) {
+  const w = 2 * Math.PI * cp.m / S.N2;
+  return S.series.xs.map((_, i) => cp.a * Math.cos(w * i) + cp.b * Math.sin(w * i));
+}
 
 function fmtPop(v) { const p = Math.pow(10, v); return p >= 100 ? Math.round(p) : p.toFixed(0); }
 
@@ -232,6 +249,31 @@ function draw() {
     main.line(series.xs, series.ys, { color: C.ink, width: 1.4, alpha: 0.9 });
     main.line(series.xs, rec, { color: C.claim, width: 2.2 });
   });
+  // ---- the waves themselves, aligned under the target ----
+  const strongest = S.order.length ? S.order[0].amp : 1;
+  const wmax = strongest * 1.18;
+  wvc.begin(main.xlim, [-wmax, wmax]);
+  wvc.axes({ xticks: ticks(main.xlim[0], main.xlim[1], 7), yticks: [] });
+  wvc.clipPlot(() => {
+    wvc.hline(0, { color: C.hair });
+    for (let j = 0; j < k && j < S.order.length; j++) {
+      const isNew = j >= lastShownK;
+      wvc.line(series.xs, waveVals(S.order[j]),
+               isNew ? { color: BLUE, width: 1.6, alpha: 0.95 }
+                     : { color: C.grey, width: 1, alpha: 0.4 });
+    }
+    wvc.line(series.xs, waveVals(S.near60), { color: C.claimDeep, width: 2 });
+  });
+  wvc.text("the waves in the rebuild, drawn at true size — strongest first", main.xlim[0] + (main.xlim[1] - main.xlim[0]) * 0.02, wmax * 0.82, { color: C.inkSoft, font: "10.5px" });
+  const rank60 = S.order.indexOf(S.near60) + 1;
+  const used60 = rank60 <= k;
+  document.getElementById("wavescap").innerHTML =
+    (k === 0 ? "No waves in the rebuild yet — but the amber 60-unit wave is already in the inventory, waiting. " :
+     "Each new wave is a smaller correction than the last — that is why the rebuild converges. ") +
+    "The 60-unit wave ranks <b>#" + rank60 + "</b> of " + S.order.length + " by strength" +
+    (used60 ? ", so the rebuild is already using it." : ", so the rebuild hasn't needed it yet — it is drawn here anyway, at true size.");
+  lastShownK = k;
+
   const R2 = r2(series.ys, rec);
   document.getElementById("kval").textContent = k;
   document.getElementById("kcount").textContent = k;
@@ -264,6 +306,7 @@ function setSeries(gen) {
   stopPlay();
   S = decompose(gen());
   slider.value = 0;
+  lastShownK = 0;
   draw();
 }
 function stopPlay() {
