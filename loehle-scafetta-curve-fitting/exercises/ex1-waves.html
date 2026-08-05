@@ -143,7 +143,7 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
     <div class="legend">
       <span class="chip g"><i></i>waves already in the rebuild</span>
       <span class="chip b"><i></i>just added by the slider</span>
-      <span class="chip c"><i></i>the 60-unit wave, always drawn</span>
+      <span class="chip c"><i style="border-top-style:dashed"></i>the 60-unit wave — dashed until the rebuild uses it</span>
     </div>
     <div class="cap" id="wavescap"></div>
     <div class="readouts">
@@ -588,24 +588,34 @@ function draw() {
   const wmax = strongest * 1.18;
   wvc.begin(main.xlim, [-wmax, wmax]);
   wvc.axes({ xticks: ticks(main.xlim[0], main.xlim[1], 7), yticks: [] });
+  const rank60 = S.order.indexOf(S.near60) + 1;
+  const used60 = rank60 <= k;
   wvc.clipPlot(() => {
     wvc.hline(0, { color: C.hair });
     for (let j = 0; j < k && j < S.order.length; j++) {
+      if (S.order[j] === S.near60) continue;   // drawn separately, on top
       const isNew = j >= lastShownK;
       wvc.line(series.xs, waveVals(S.order[j]),
                isNew ? { color: BLUE, width: 1.6, alpha: 0.95 }
                      : { color: C.grey, width: 1, alpha: 0.4 });
     }
-    wvc.line(series.xs, waveVals(S.near60), { color: C.claimDeep, width: 2 });
+    wvc.line(series.xs, waveVals(S.near60),
+             used60 ? { color: C.claimDeep, width: 2 }
+                    : { color: C.claimDeep, width: 1.6, dash: [6, 4] });
   });
   wvc.text("the waves in the rebuild, drawn at true size — strongest first", main.xlim[0] + (main.xlim[1] - main.xlim[0]) * 0.02, wmax * 0.82, { color: C.inkSoft, font: "10.5px" });
-  const rank60 = S.order.indexOf(S.near60) + 1;
-  const used60 = rank60 <= k;
+  const kmax = +slider.max;
+  let line60;
+  if (used60)
+    line60 = "By strength (amplitude), the amber 60-unit wave ranks <b>#" + rank60 + "</b>, so it joined the rebuild at slider position " + rank60 + " — it is drawn solid now.";
+  else if (rank60 <= kmax)
+    line60 = "By strength (amplitude), the amber 60-unit wave ranks <b>#" + rank60 + "</b> — drag the slider to " + rank60 + " and watch it join the rebuild (dashed until then).";
+  else
+    line60 = "By strength (amplitude), the amber 60-unit wave ranks <b>#" + rank60 + "</b> — beyond this slider's reach of " + kmax + ", so the rebuild here never needs it. It stays dashed, at true size.";
   document.getElementById("wavescap").innerHTML =
-    (k === 0 ? "No waves in the rebuild yet — but the amber 60-unit wave is already in the inventory, waiting. " :
+    (k === 0 ? "No waves in the rebuild yet. " :
      "Each new wave is a smaller correction than the last — that is why the rebuild converges. ") +
-    "The 60-unit wave ranks <b>#" + rank60 + "</b> of " + S.order.length + " by strength" +
-    (used60 ? ", so the rebuild is already using it." : ", so the rebuild hasn't needed it yet — it is drawn here anyway, at true size.");
+    "The mathematics breaks this graph into " + S.order.length + " waves in all; the slider adds up to " + kmax + " of them, strongest first. " + line60;
   lastShownK = k;
 
   const R2 = r2(series.ys, rec);
