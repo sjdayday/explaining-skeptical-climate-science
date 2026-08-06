@@ -577,6 +577,104 @@
   </dl>
 </section>
 
+<!-- ================================================================ going deeper -->
+<section class="part" id="going-deeper">
+  <div class="partlabel"><span class="no">GOING DEEPER</span></div>
+  <h2>Concepts &amp; sources, explained elsewhere</h2>
+  <div class="partrule"></div>
+  <p>The case file and its exercises lean on a handful of ideas that others have explained
+     beautifully. Nothing here is required — but each link repays the minutes it asks.
+     (External links verified August&nbsp;2026.)</p>
+  <dl>
+    <dt>Any wiggly line can be rebuilt from waves (Fourier analysis)</dt>
+    <dd>The mathematical fact behind Objection&nbsp;1 and Exercise&nbsp;1.
+        <a href="https://www.jezzamon.com/fourier/" target="_blank" rel="noopener">An Interactive
+        Introduction to Fourier Transforms</a> (Jez Swanson) ·
+        <a href="https://www.youtube.com/watch?v=r6sGWTCMz2k" target="_blank" rel="noopener">“But
+        what is a Fourier series?”</a> (3Blue1Brown, video) ·
+        <a href="https://en.wikipedia.org/wiki/Fourier_series" target="_blank" rel="noopener">Fourier
+        series</a> (Wikipedia)</dd>
+    <dt>Least squares — how the fitting actually works</dt>
+    <dd>The machinery inside every fit in this case file: pick the wave heights and timings that
+        minimize the summed squared misses.
+        <a href="https://www.mathsisfun.com/data/least-squares-regression.html" target="_blank"
+        rel="noopener">A worked example you can follow by hand</a> (Math&nbsp;is&nbsp;Fun) ·
+        <a href="https://www.youtube.com/watch?v=PaFPbb66DxQ" target="_blank" rel="noopener">“The
+        Main Ideas of Fitting a Line to Data”</a> (StatQuest, video) ·
+        <a href="https://en.wikipedia.org/wiki/Least_squares" target="_blank" rel="noopener">Least
+        squares</a> (Wikipedia)</dd>
+    <dt>R&sup2; — the 0-to-1 fit score</dt>
+    <dd>Quoted throughout: their 0.53, our 0.46, Exercise&nbsp;2's dial, Exercise&nbsp;4's amber
+        meter.
+        <a href="https://www.youtube.com/watch?v=2AQKmw14mHM" target="_blank" rel="noopener">“R-squared,
+        Clearly Explained”</a> (StatQuest, video) ·
+        <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination" target="_blank"
+        rel="noopener">Coefficient of determination</a> (Wikipedia)</dd>
+    <dt>The thermometer records</dt>
+    <dd>L&amp;S11 fitted 2010-vintage <a href="https://www.metoffice.gov.uk/hadobs/hadcrut3/"
+        target="_blank" rel="noopener">HadCRUT3</a> (Met&nbsp;Office; background at
+        <a href="https://en.wikipedia.org/wiki/HadCRUT" target="_blank" rel="noopener">Wikipedia</a>),
+        since superseded. This case file re-runs everything on NOAA's
+        <a href="https://www.ncei.noaa.gov/products/land-based-station/noaa-global-temp"
+        target="_blank" rel="noopener">NOAAGlobalTemp</a>, fetched via the open
+        <a href="https://github.com/datasets/global-temp" target="_blank"
+        rel="noopener">datasets/global-temp</a> mirror. That the “discovered” best period moves
+        between these records is itself part of the argument (Objection&nbsp;2).</dd>
+    <dt>Where “60 and 20 years” come from</dt>
+    <dd>The periods are not fitted — they are imported from planetary astronomy. Jupiter and
+        Saturn realign about every 19.86 years (the
+        <a href="https://en.wikipedia.org/wiki/Great_conjunction" target="_blank"
+        rel="noopener">great conjunction</a>), and three such beats return the conjunction to
+        nearly the same region of sky in ≈60 years.
+        <a href="https://arxiv.org/abs/1005.4639" target="_blank" rel="noopener">Scafetta
+        (2010)</a> argued that global temperature shares spectral peaks near those periods with
+        the Sun's wobble around the solar system's centre of mass, and that ocean rhythms like
+        the <a href="https://en.wikipedia.org/wiki/Atlantic_multidecadal_oscillation"
+        target="_blank" rel="noopener">Atlantic Multidecadal Oscillation</a> keep similar time.
+        L&amp;S11 adopt 60 and 20 on that authority; everything else in Eq.&nbsp;(1) — heights,
+        timings, line — is least-squares bookkeeping. Whether the data independently prefer
+        those periods is exactly what Objection&nbsp;2 and Exercise&nbsp;2 test; whether the
+        proposed physical link could work is Objection&nbsp;5.</dd>
+    <dt>Overfitting, and the four-parameter elephant</dt>
+    <dd>Objection&nbsp;4's charge, and Exercise&nbsp;4's game.
+        <a href="https://en.wikipedia.org/wiki/Overfitting" target="_blank"
+        rel="noopener">Overfitting</a> (Wikipedia) ·
+        <a href="https://en.wikipedia.org/wiki/Von_Neumann%27s_elephant" target="_blank"
+        rel="noopener">Von Neumann's elephant</a> (Wikipedia — the joke has since been carried
+        out, four complex parameters and all)</dd>
+    <dt>Resonance</dt>
+    <dd>Objection&nbsp;5's physics.
+        <a href="https://en.wikipedia.org/wiki/Resonance" target="_blank"
+        rel="noopener">Resonance</a> (Wikipedia) ·
+        <a href="https://en.wikipedia.org/wiki/Harmonic_oscillator" target="_blank"
+        rel="noopener">Harmonic oscillator</a> (Wikipedia — the equation Exercise&nbsp;5
+        integrates live in your browser)</dd>
+  </dl>
+
+  <h3 class="sub">The primary documents</h3>
+  <dl>
+    <dt>The claim</dt>
+    <dd>Loehle &amp; Scafetta (2011), “Climate Change Attribution Using Empirical Decomposition
+        of Climatic Data,” <i>The Open Atmospheric Science Journal</i>:
+        <a href="https://doi.org/10.2174/1874282301105010074" target="_blank"
+        rel="noopener">published article</a> ·
+        <a href="https://arxiv.org/abs/1206.5845" target="_blank" rel="noopener">arXiv
+        preprint</a> — the version this project ships in its <code>sources/</code> folder.</dd>
+    <dt>The rebuttal</dt>
+    <dd>Benestad et&nbsp;al. (2016), “Learning from mistakes in climate research,”
+        <i>Theoretical and Applied Climatology</i>:
+        <a href="https://doi.org/10.1007/s00704-015-1597-5" target="_blank"
+        rel="noopener">open-access article</a>. Its <b>supporting material</b> — the
+        “Curve-fitting” section this case file examines, plus Table&nbsp;S2 — downloads from
+        the same page; page archives of both ship in <code>sources/</code>.</dd>
+    <dt>The rebuttal's code</dt>
+    <dd><a href="https://github.com/brasmus/replicationDemos" target="_blank"
+        rel="noopener">replicationDemos</a>, Benestad's open R package; its function
+        <code>LoehleScafetta2011()</code> re-runs the analysis behind the “Curve-fitting”
+        section.</dd>
+  </dl>
+</section>
+
 <!-- ================================================================ footer -->
 <div class="footer">
   <h4>Methods &amp; honesty notes</h4>

@@ -56,6 +56,24 @@ that draft 2 now incorporates:
 
 ## Draft changelog
 
+### Draft 2.2 (2026-08-06) — “Going deeper” links
+- New case-file section (id `#going-deeper`, before the footer): curated
+  external explainers for the concepts the document assumes — Fourier
+  rebuilds (Jez Swanson interactive; 3Blue1Brown video; Wikipedia), least
+  squares (Math is Fun worked example; StatQuest; Wikipedia), R² (StatQuest;
+  Wikipedia), the thermometer records (Met Office HadCRUT3; NOAA
+  NOAAGlobalTemp; datasets/global-temp mirror), the astronomical provenance
+  of the 60/20-yr periods (great conjunction ≈19.86 yr, three beats ≈60;
+  Scafetta 2010, arXiv:1005.4639; AMO), overfitting (+ Von Neumann's
+  elephant), and resonance (+ harmonic oscillator).
+- Primary documents subsection: L&S11 published DOI + arXiv preprint,
+  Benestad et al. 2016 open-access DOI (supporting material on the same
+  page), and the replicationDemos R package — corrected home:
+  github.com/brasmus/replicationDemos.
+- Each exercise footnote gains a matching “Learn more” line plus a link back
+  to `#going-deeper`.
+- All external links verified live 2026-08-06 (WebSearch/WebFetch).
+
 ### Draft 2.1 (2026-08-04) — interactive exercises
 - Added five interactive exercise pages under `exercises/`, one per objection,
   linked from “try it yourself” boxes in Part Two (anchors `#objection-1`…`-5`
