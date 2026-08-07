@@ -24,21 +24,28 @@ ROOT = HERE.parent
 
 print("1/3  Generating figures ...")
 runpy.run_path(str(HERE / "make_figures.py"), run_name="__main__")
+runpy.run_path(str(HERE / "extract_ls11_figures.py"), run_name="__main__")
 
 print("2/3  Assembling HTML ...")
 tpl = (HERE / "casefile01_template.html").read_text()
 figures = {
-    1: "fig1_recipe",
-    2: "fig2_replication_2011",
-    3: "fig3_phantom_cycles",
-    4: "fig4_period_scan",
-    5: "fig5_aftermath",
+    "FIG1": "fig1_recipe",
+    "FIG2": "fig2_replication_2011",
+    "FIG3": "fig3_phantom_cycles",
+    "FIG4": "fig4_period_scan",
+    "FIG5": "fig5_aftermath",
+    "LS11FIG1": "ls11_fig1",
+    "LS11FIG2": "ls11_fig2",
+    "LS11FIG3": "ls11_fig3",
+    "LS11FIG4": "ls11_fig4",
+    "LS11FIG5": "ls11_fig5",
+    "LS11FIGSUP1": "ls11_figsup1",
 }
-for i, name in figures.items():
+for key, name in figures.items():
     png = (ROOT / "figures" / f"{name}.png").read_bytes()
-    tpl = tpl.replace("{{FIG%d}}" % i,
+    tpl = tpl.replace("{{%s}}" % key,
                       "data:image/png;base64," + base64.b64encode(png).decode())
-assert "{{FIG" not in tpl, "unreplaced figure placeholder"
+assert "{{FIG" not in tpl and "{{LS11" not in tpl, "unreplaced figure placeholder"
 
 out = ROOT / "casefile01-loehle-scafetta-curve-fitting.html"
 out.write_text(tpl)

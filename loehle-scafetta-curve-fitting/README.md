@@ -20,6 +20,7 @@ then the post-publication scorecard.
 | `NOTES.md` | Working notes: review of the original paper, accuracy audit, draft changelog. |
 | `sources/` | The three primary documents (see `sources/README.md` — two are zip archives despite `.pdf` names). |
 | `src/make_figures.py` | Generates all five figures. Replicates the L&S11 fit on real NOAA data and reproduces the Benestad et al. synthetic-noise experiment. |
+| `src/extract_ls11_figures.py` | Crops L&S11's own figures (Figs. 1–5 and Fig. Sup. 1) from the arXiv preprint PDF for the explainer's "Working from the source paper to the rebuttal" section. |
 | `src/casefile01_template.html` | Document source with `{{FIGn}}` placeholders. |
 | `src/exercises/` | Exercise templates (`exN_*_template.html`) plus shared design-system CSS and math/chart JS, assembled by the build. |
 | `src/build.py` | Regenerates figures, assembles the explainer, and builds the exercise pages. |
@@ -30,14 +31,14 @@ then the post-publication scorecard.
 
 ```bash
 cd src
-python3 build.py        # needs numpy, pandas, matplotlib
+python3 build.py        # needs numpy, pandas, matplotlib, pymupdf
 ```
 
 If your system Python lacks the dependencies, a repo-local venv works
 (gitignored):
 
 ```bash
-python3 -m venv ../../.venv && ../../.venv/bin/pip install numpy pandas matplotlib
+python3 -m venv ../../.venv && ../../.venv/bin/pip install numpy pandas matplotlib pymupdf
 ../../.venv/bin/python3 build.py
 ```
 

@@ -56,6 +56,31 @@ that draft 2 now incorporates:
 
 ## Draft changelog
 
+### Draft 3.1 (2026-08-07) — "Working from the source paper to the rebuttal"
+- New case-file section (id `#from-the-source`, between IN BRIEF and the
+  Glossary) for readers who start from L&S11 itself: nine "stations" in the
+  paper's reading order, each quoting verbatim the passage where a challenged
+  method choice is made (cited by section and arXiv-preprint page), showing
+  the figure that results where there is one, and linking to the objection
+  and exercise that address it. Stations: (1) mechanism as speculation, §2
+  p. 5 → Obj 5/Ex 5; (2) the 1950 dividing line assumed, §2 p. 6 → Obj 4/
+  Ex 4; (3) periods imported + free fit "quite close", §2 pp. 6–7 → Obj 1–2/
+  Ex 1–2; (4) failed full fit → refit to 1950, §2 p. 7 (their Figs. 1–2) →
+  Obj 1/2/4; (5) residual = human share + "very unlikely ... by chance", §2
+  p. 8 (their Fig. 3) → Obj 3/Ex 3; (6) "cannot be simply random noise ...
+  factoring it out", §3 p. 12 (their Fig. 4) → Obj 3 + proxy defense; (7)
+  the forecast, §6 pp. 15–16 and §8 p. 20 (their Fig. 5) → Part Three/Ex 4;
+  (8) ACRIM/solar-cycle-length reliance, §7 p. 17 + SI §b → Obj 5; (9) the
+  white-noise validation, SI §a p. 38 (their Fig. Sup. 1, target 64.93 yr) →
+  validation defense/Obj 3.
+- New `src/extract_ls11_figures.py` (dep: pymupdf) crops the six figures
+  unaltered from the preprint PDF at 2× (axis labels and printed legends
+  preserved); build.py runs it and injects {{LS11FIG*}} placeholders. Built
+  HTML grows to ≈2.4 MB.
+- Anchors added: `#exhibit-b`, `#defense-plateau`, `#defense-validation`,
+  `#defense-proxies`. Copyright note in-section: quotes/figures © the
+  authors, reproduced for commentary and criticism.
+
 ### Draft 3 (2026-08-07) — neutral-tone rework of the case-file prose
 - Same register as the exercise pass, applied to the main document. Notable
   changes: dek no longer says replication "took the argument apart" (now

@@ -35,7 +35,7 @@ review, the accuracy audit, the draft changelog, and open items.
 ## Build
 
 ```bash
-cd src && python3 build.py     # deps: numpy, pandas, matplotlib
+cd src && python3 build.py     # deps: numpy, pandas, matplotlib, pymupdf
 ```
 
 (On this machine the system python3 lacks the deps; use the gitignored repo

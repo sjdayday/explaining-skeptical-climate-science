@@ -99,6 +99,22 @@
              color:var(--rebut-deep);display:block;margin-bottom:3px}
   .trybox a{font-weight:600}
 
+  /* source-paper walk-through */
+  .srcstep{margin:36px 0}
+  .srcstep .loc{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+                color:var(--claim-deep);background:var(--claim-tint);padding:3px 9px;border-radius:3px;
+                display:inline-block;margin-bottom:6px}
+  .srcstep h3{font-family:var(--serif);font-size:20px;margin:4px 0 10px}
+  blockquote.src{font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink);
+                 background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--claim);
+                 border-radius:8px;margin:12px 0;padding:12px 16px;max-width:700px}
+  blockquote.src cite{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+                      color:var(--grey);margin-top:8px;font-style:normal}
+  .maps{font-size:14px;margin:12px 0 0;padding:10px 14px;background:var(--rebut-tint);
+        border:1px dashed var(--rebut);border-radius:8px;max-width:700px}
+  .maps b{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+          color:var(--rebut-deep)}
+
   blockquote.pull{font-family:var(--serif);font-size:21px;line-height:1.45;color:var(--ink);
        border-left:3px solid var(--claim);margin:26px 0;padding:4px 0 4px 20px}
   blockquote.pull cite{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;
@@ -236,7 +252,7 @@
      and crosses zero in 1942. That ramp, they argued, is the human contribution: emissions,
      urbanization, land‑use change.</p>
 
-  <figure>
+  <figure id="exhibit-b">
     <span class="extag">Exhibit B · Their procedure, re‑run on real data</span>
     <img src="{{FIG2}}" alt="Top: observed global temperature 1850-2010 with the cycles-plus-line model fitted to 1850-1950 and extended to 2010; the wiggles align. Bottom: the residual with a straight ramp from the 1940s.">
     <figcaption><b>We repeated the procedure ourselves</b> on NOAA’s current global series
@@ -497,7 +513,7 @@
   <h2>Three defenses, three answers</h2>
   <div class="partrule"></div>
 
-  <h3 class="sub">“But it predicted the plateau!”</h3>
+  <h3 class="sub" id="defense-plateau">“But it predicted the plateau!”</h3>
   <p>The strongest defense is that the 1951–2010 wiggle‑match was a successful
      prediction — the paper itself claims the post‑2000 flattening as evidence in hand. Two
      answers. First, matching the phase of one or two wiggles is weak evidence: the random
@@ -507,7 +523,7 @@
      decades after 2010 — is the one that failed. When a model’s successes are the flexible
      parts and its failures are the rigid parts, that is the signature of curve fitting.</p>
 
-  <h3 class="sub">“But they validated the method in their supplement!”</h3>
+  <h3 class="sub" id="defense-validation">“But they validated the method in their supplement!”</h3>
   <p>They did anticipate the too‑short‑record objection. Their Supplemental Information&nbsp;1
      takes the fitted cycles‑plus‑line curve as a <i>true</i> signal, sprinkles white noise on
      top, refits on 1850–1950 a thousand times, and shows the period is recovered
@@ -520,7 +536,7 @@
      cannot defend it. (Note also that their own validation target sits near 65
      years, not 60.)</p>
 
-  <h3 class="sub">“But proxy records show 60‑year cycles for centuries!”</h3>
+  <h3 class="sub" id="defense-proxies">“But proxy records show 60‑year cycles for centuries!”</h3>
   <p>The paper’s supporting studies show quasi‑oscillations in the 50–80‑year range, in
      particular regions, waxing and waning in strength — which is exactly what slow, structured
      natural variability looks like. That is not a fixed global clock. The wider contrarian
@@ -544,6 +560,251 @@
     <li>A climate that amplifies small planetary pushes cannot be insensitive to the larger push from CO₂ — resonance does not select among causes.</li>
     <li>Their ceiling for the whole century was about 0.6&nbsp;°C above 2000 — and the first two decades used three‑quarters of it.</li>
   </ul>
+</section>
+
+<!-- ================================================================ from the source -->
+<section class="part" id="from-the-source">
+  <div class="partlabel"><span class="no">FROM THE SOURCE</span></div>
+  <h2>Working from the source paper to the rebuttal</h2>
+  <div class="partrule"></div>
+
+  <p>This section is for readers who start from L&amp;S11 itself and want to know, passage by
+     passage, where the rebuttal engages it. The stations below follow the paper in reading
+     order. Each quotes the passage in which a challenged method choice is made, shows the
+     figure that results from the choice where there is one, and points to the objection and
+     exercise that address it. Quotations and page numbers refer to the arXiv preprint
+     (1206.5845v1, the copy in this project's <code>sources/</code> folder); its section
+     numbering matches the published article. The paper's figures are reproduced unaltered
+     (cropped from the preprint's pages, text and labelling as printed) for commentary.</p>
+
+  <div class="srcstep">
+    <span class="loc">Station 1 · §2, Decomposition Analysis · p. 5</span>
+    <h3>The mechanism is acknowledged as speculation</h3>
+    <blockquote class="src">“The physical mechanisms responsible for the cycles are not
+      understood yet and, therefore, are not included in the current climate models. However,
+      it is reasonable to speculate that planetary tides and solar angular motion affect solar
+      activity [Scafetta, 2010; Wolff and Patrone, 2010]. Changes of solar activity then
+      influence the Earth's climate through changes of direct total solar irradiance, the sun's
+      magnetic field and the solar wind. Very likely, solar activity changes influence also the
+      intensity of cosmic rays reaching the Earth &hellip; The latter influences the generation
+      of clouds which modulate terrestrial albedo and, consequently, the climate.”
+      <cite>L&amp;S11, §2, preprint p. 5</cite></blockquote>
+    <p>The causal chain — planets → solar activity → irradiance and cosmic rays/clouds →
+       climate — is introduced here as a speculation, before any fitting is done. The rebuttal
+       examines both the chain's internal logic (a resonant climate would respond to any
+       matching push, not only this one) and its links, several of which are faulted elsewhere
+       in the same replication study.</p>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-5">Objection 5</a> ·
+      <a href="exercises/ex5-resonance.html">Exercise 5, the resonance sandbox</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 2 · §2 · p. 6</span>
+    <h3>The dividing line at 1950 is assumed</h3>
+    <blockquote class="src">“A key to the analysis is the assumption that anthropogenic
+      forcings may be the predominant forcing during the second half of the 20th century with a
+      net forcing of about 1.6 W/m&sup2; since 1950 [e.g., Hegerl et al., 2001; Thompson et al.,
+      2009]. &hellip; Before about 1950 (although we estimate a more precise date) the climate
+      effect of elevated greenhouse gases was no doubt small [IPCC, 2007].”
+      <cite>L&amp;S11, §2, preprint p. 6</cite></blockquote>
+    <p>Everything downstream depends on this line: the model is calibrated on the pre‑1950
+       years as if they were purely natural, and whatever it later fails to explain is, by
+       construction, labelled anthropogenic. The rebuttal's point is not that the 1950 date is
+       indefensible — the paper cites mainstream sources for it — but that treating the
+       pre‑1950 fit as “nature captured” assumes the small early human effect the paper set
+       out to establish.</p>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-4">Objection 4</a> ·
+      <a href="exercises/ex4-hidden-years.html">Exercise 4, the hidden years</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 3 · §2 · pp. 6–7</span>
+    <h3>The periods are imported, and the rest is left free</h3>
+    <blockquote class="src">“Given the strong periodicity in the solar signal detected by
+      Scafetta [2010], we used this model, with two cycles of lengths 60 and 20 years, plus a
+      linear term. A free fit of the Hadley HadCRUT3 global surface temperature data found
+      cycles quite close to this, but we use the Scafetta solar periodicities plus a linear
+      trend. &hellip; The model was fit by nonlinear least squares estimation using Mathematica
+      functions, with phase and amplitude free but period fixed as above.”
+      <cite>L&amp;S11, §2, preprint pp. 6–7</cite></blockquote>
+    <p>Two method choices happen here. First, the model family: waves plus a line, which can
+       match any wiggly record given free amplitudes and phases — so a good match carries no
+       information about causes. Second, the periods: fixed at 60 and 20 on astronomical
+       grounds, with the paper noting that the data's own free fit lands only “quite close to”
+       them (the supplement's free‑fit target is ≈65 years, and other periods fit the
+       calibration window as well or better).</p>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-1">Objection 1</a> ·
+      <a href="exercises/ex1-waves.html">Exercise 1, waves rebuild anything</a> ·
+      <a href="#objection-2">Objection 2</a> ·
+      <a href="exercises/ex2-rhythm.html">Exercise 2, the period dial</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 4 · §2 · p. 7</span>
+    <h3>The failed full fit becomes the refit to 1950</h3>
+    <blockquote class="src">“When fit to the entire 160 year period, the model &hellip;
+      performs only decently (Fig. 1a). However, the nonrandom residual signal over the entire
+      period (Fig. 1b) reveals that the model is deficient. Since this mis-specification could
+      result from not including anthropogenic effects that could have accelerated the warming
+      since 1950, the model was refit using the data only up to 1950 (Fig. 2a).”
+      <cite>L&amp;S11, §2, preprint p. 7</cite></blockquote>
+    <p>This is the paper's pivotal move. The full‑record fit fails; instead of reading the
+       failure as evidence against the cycles‑plus‑line model, the authors attribute it to a
+       missing human term and refit on the shorter window. Alternative readings — a different
+       period would fit better, or no fixed cycle exists at all — are not tested at this
+       point. The two figures below are the direct product of this choice.</p>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure 1 · reproduced from the preprint</span>
+      <img src="{{LS11FIG1}}" alt="L&S11 Figure 1: model fitted to the entire 1850-2010 record, and residuals showing a systematic drift.">
+      <figcaption><b>Their Figure 1</b> (preprint p. 31) — the fit to the entire record, and the
+        residuals the authors call “clear model mis-specification” (their legend, p. 30). This
+        is the failure that motivates the refit.</figcaption>
+    </figure>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure 2 · reproduced from the preprint</span>
+      <img src="{{LS11FIG2}}" alt="L&S11 Figure 2: model fitted to 1850-1950 only and extended, with residuals rising after about 1942.">
+      <figcaption><b>Their Figure 2</b> (preprint p. 32) — the refit to 1850–1950 with the
+        model extended, and residuals that “after about 1942” show “a clear upward linear trend
+        which may be associated to anthropogenic warming” (their legend, p. 30). The case
+        file's <a href="#exhibit-b">Exhibit&nbsp;B</a> re-creates this figure on current NOAA
+        data.</figcaption>
+    </figure>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-1">Objection 1</a> ·
+      <a href="#objection-2">Objection 2</a> ·
+      <a href="#objection-4">Objection 4</a> ·
+      <a href="exercises/ex2-rhythm.html">Exercise 2</a> ·
+      <a href="exercises/ex4-hidden-years.html">Exercise 4</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 5 · §2 · p. 8</span>
+    <h3>The residual becomes the human share, and chance is ruled out</h3>
+    <blockquote class="src">“A linear fit to the residuals since 1950 (Fig. 3) has a slope of
+      0.66 +/- 0.08&nbsp;°C/century (R&sup2; = 0.59) and begins (&gt;0) in 1942. &hellip; It is
+      very unlikely that the 60 and 20-year cycles would match the pattern of temperature over
+      this period by chance; thus, the empirical model calibrated on the temperature data
+      before 1950 has the capability of forecasting the multidecadal oscillations of the
+      temperature after 1942.”
+      <cite>L&amp;S11, §2, preprint p. 8</cite></blockquote>
+    <p>Two claims are made: the leftover ramp is the human contribution, and the wiggle‑match
+       after 1950 is too good to be chance — therefore the model can forecast. The second
+       claim is testable, and the rebuttal tests it: 160‑year slices of structured randomness,
+       fitted the same way, produce equally convincing matches routinely.</p>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure 3 · reproduced from the preprint</span>
+      <img src="{{LS11FIG3}}" alt="L&S11 Figure 3: full reconstruction combining the fitted cycles with the residual linear trend, and the model's components.">
+      <figcaption><b>Their Figure 3</b> (preprint p. 33) — the “full reconstruction model,”
+        Eq.&nbsp;(1) fitted 1850–1950 “plus the additional residual upward linear trend
+        (=anthropogenic modulation) since 1942,” with the components shown separately (their
+        legend, p. 30). The residual‑turned‑ramp in panel (b) is the paper's entire human
+        attribution.</figcaption>
+    </figure>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-3">Objection 3</a> ·
+      <a href="exercises/ex3-phantom-cycles.html">Exercise 3, cycles from randomness</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 6 · §3, Multi-secular evidence · p. 12</span>
+    <h3>The cycle is declared non-random, and factored out</h3>
+    <blockquote class="src">“Given that this ~60 year periodic climate pattern has such a long
+      empirical history with some evidence for links to solar activity and solar system
+      oscillations, it cannot be attributed to human activity and cannot be simply random
+      noise. Therefore, we are justified in factoring it out of the historical record in order
+      to discern the human influence on climate.”
+      <cite>L&amp;S11, §3, preprint p. 12</cite></blockquote>
+    <p>The multi‑secular records surveyed in §3 show quasi‑oscillations in the 50–80‑year
+       range, in particular regions, waxing and waning — which is also what slow structured
+       variability looks like. The rebuttal's synthetic experiment shows that “cannot be simply
+       random noise” is exactly what the fit cannot establish; and even a genuine quasi‑cycle
+       would ride on top of the greenhouse trend rather than replace it.</p>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure 4 · reproduced from the preprint</span>
+      <img src="{{LS11FIG4}}" alt="L&S11 Figure 4: Cariaco Basin G. bulloides record and tree-ring PDO reconstruction, each with a fitted sinusoid near 60 years.">
+      <figcaption><b>Their Figure 4</b> (preprint p. 34) — the Cariaco Basin
+        <i>G.&nbsp;bulloides</i> record (best sinusoidal fit 61.5&nbsp;±&nbsp;4 yr) and the
+        tree‑ring PDO reconstruction (59.5&nbsp;±&nbsp;4 yr), the paper's strongest
+        multi‑secular evidence (their legend, p. 30).</figcaption>
+    </figure>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-3">Objection 3</a> ·
+      <a href="exercises/ex3-phantom-cycles.html">Exercise 3</a> ·
+      <a href="#defense-proxies">the “proxy records” defense, answered</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 7 · §6, 21st century forecast · pp. 15–16, and §8 · p. 20</span>
+    <h3>The forecast is issued</h3>
+    <blockquote class="src">“The result (Fig. 5) is a continued warming with oscillations to a
+      high in 2100 of about 0.6&nbsp;°C above 2000 values. &hellip; Moreover, the full
+      anthropogenic effect of 0.66&nbsp;°C/century would be masked by the natural multidecadal
+      20 and 60-year cycles until 2040.”
+      <cite>L&amp;S11, §6, preprint pp. 15–16</cite></blockquote>
+    <blockquote class="src">“Moreover, because the 60-year natural cycle will be in its cooling
+      phase for the next 20 years, global temperatures will probably not increase for the next
+      few decades in spite of the important role of human emissions.”
+      <cite>L&amp;S11, §8, preprint p. 20</cite></blockquote>
+    <p>This is the paper's concrete, checkable output: near‑flat temperatures for decades, and
+       about 0.6&nbsp;°C above 2000 by 2100. Part Three compares it with what the planet did
+       between 2011 and 2025: warming of ~0.47&nbsp;°C between decade averages, about
+       three‑quarters of the century allowance in two decades.</p>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure 5 · reproduced from the preprint</span>
+      <img src="{{LS11FIG5}}" alt="L&S11 Figure 5: the model extrapolated to 2100, oscillating to about 0.6 degrees C above 2000 values.">
+      <figcaption><b>Their Figure 5</b> (preprint p. 35) — the forecast to 2100: the fitted
+        model (dashed) continued forward, with the natural component alone below (their legend,
+        p. 30). The case file's Exhibit&nbsp;E re-runs this model against observations through
+        2025.</figcaption>
+    </figure>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#part-three">Part Three, the
+      out-of-sample test</a> · <a href="exercises/ex4-hidden-years.html">Exercise 4</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 8 · §7, Solar activity · p. 17, and SI §b</span>
+    <h3>The solar history rests on contested records</h3>
+    <blockquote class="src">“The latter 30-year pattern since 1980 is perfectly compatible with
+      the ACRIM total solar irradiance satellite measurements that shows an increase from 1980
+      to 2000 and a decrease from 2000 to 2010 [Scafetta and Willson, 2009]. This is an
+      important result because some solar scientists currently believe that ACRIM trend is
+      instrumental and not of solar origin (Frohlich, 2006; Lockwood and Frohlich, 2008).”
+      <cite>L&amp;S11, §7, preprint p. 17</cite></blockquote>
+    <p>The solar side of the argument depends on the disputed ACRIM satellite composite and,
+       in Supplementary Information §b, on the authors' own revision of a solar‑cycle‑length
+       irradiance model in the Friis‑Christensen &amp; Lassen lineage — a line of work
+       examined and faulted elsewhere in the same replication study, as is the cosmic‑ray
+       cloud mechanism (Svensmark) cited at Station&nbsp;1.</p>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#objection-5">Objection 5</a></div>
+  </div>
+
+  <div class="srcstep">
+    <span class="loc">Station 9 · Supplementary Information §a · SI p. 2 (preprint p. 38)</span>
+    <h3>The validation assumes the cycle it defends</h3>
+    <blockquote class="src">“We take the model from Fig. 1 as the target. A sample set is
+      obtained by randomly adding white noise to this model with variance derived from Fig. 1b
+      (sd = 0.13&nbsp;°C). &hellip; Repeating this 1000 times, the mean estimated period is
+      64.11 yr vs. 64.93 for the target, with sd = 2.63 yr. Thus, clearly the proposed
+      estimation method works sufficiently well even on a 100 yr calibration period.”
+      <cite>L&amp;S11, Supplementary Information §a, preprint p. 38</cite></blockquote>
+    <p>The test assumes the world really is cycles plus a line plus white noise, and confirms
+       the fit can recover the cycle in that case. It does not test the reverse risk — whether
+       the fit reports cycles when none exist, which is what happens under structured noise.
+       Note also the target period: 64.93 years, not 60.</p>
+    <figure>
+      <span class="extag c">L&amp;S11 Figure Sup. 1 · reproduced from the preprint</span>
+      <img src="{{LS11FIGSUP1}}" alt="L&S11 supplementary figure: an assumed-true cycle with white noise added, and the model fit recovering it.">
+      <figcaption><b>Their Figure Sup. 1</b> (preprint p. 38, with its printed legend) — one
+        realization of the white-noise validation: an assumed-true cycle, noise added, the fit
+        recovering it. Compare the structured-noise version in Exhibit&nbsp;D, where no cycle
+        exists and the fit reports one anyway.</figcaption>
+    </figure>
+    <div class="maps"><b>Addressed in</b> &nbsp;<a href="#defense-validation">the “they
+      validated it” defense, answered</a> · <a href="#objection-3">Objection 3</a> ·
+      <a href="exercises/ex3-phantom-cycles.html">Exercise 3</a></div>
+  </div>
+
+  <div class="note"><b>Copyright note.</b> The quoted passages and reproduced figures are
+     L&amp;S11's, © the authors, excerpted here for the purpose of commentary and criticism,
+     with locations given so every quotation can be checked against the source in
+     <code>sources/</code>.</div>
 </section>
 
 <!-- ================================================================ glossary -->
