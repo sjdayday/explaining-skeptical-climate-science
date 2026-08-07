@@ -1,0 +1,96 @@
+Craig Loehle, "Comments on Agnotology" — SC C253, 13 June 2013
+Interactive comment on "Agnotology: learning from mistakes" by R. E. Benestad et al.
+Earth Syst. Dynam. Discuss., 4, C253–C256, 2013. CC BY 3.0.
+Source: https://esd.copernicus.org/preprints/4/C253/2013/esdd-4-C253-2013.pdf
+[Extracted text; journal banner matter removed.]
+
+Critique of Benestad et al. Craig Loehle, National Council for Air and Stream
+Improvement, Inc. This paper makes two fundamental assumptions that are false. The
+first is that the science of climate change is "settled" and that this consensus cannot
+be questioned. The second, which therefore follows, is that anyone questioning this
+consensus does so willfully and malevolently (intentionally promoting ignorance). We
+can distinguish between weak consensus and strong consensus. Weak consensus is
+"humans are having some impact on the climate," a statement with which every one
+of those critiqued in this paper doubtless agrees, but it is a meaningless statement in
+terms of either science or policy. A small amount of warming would be "some" effect
+but would both contradict the models and not be alarming. The models assume that
+essentially all of the warming since 1950 is due to human action. If half or more of
+this is natural then the models are seriously wrong. Confusing "some" effect with an
+effect as large as IPCC claims is how Cook got the 97% figure in his recent study.
+Strong consensus implies that the IPCC documents are as fixed in stone, as
+scientifically solid, as Maxwell's equations or Einstein's laws. Yet no two models
+produce the same output for global temperature histories or future warming, ocean
+currents, polar ice, cloud patterns, ENSO, the polar vortex, the Gulf Stream, or global
+or regional precipitation (to name just a few), nor do any of the models match actual
+historic data for these items in anything like a precise manner. If this is a consensus
+that must not be questioned, it is a very curious and sloppy one. The second
+assumption is pernicious. It asserts that anyone who disagrees with this (sloppy)
+consensus in any particular is not merely wrong, but willfully wrong; that is, is engaged
+in disinformation or propaganda. "Agnotology" is thus just a fancy way of saying
+"denier." Overall, the manuscript is simply a litany of complaints about papers the
+authors don't like. Yet in no case do the authors bother to truly refute anything, they
+simply argue that this or that "might" have a problem or uses a method they
+disapprove of. They are essentially requiring the reader to take their word for it that
+these papers are wrong. But science, to paraphrase the Royal Society's motto, "takes
+no man's word" for anything. Everything should be demonstrated. I do not recognize
+these or any other scientists as having the authority to dismiss mine or any work on
+their say-so. Too many big names (of which I do not even include these authors) have
+been wrong in the past. Einstein never accepted quantum theory. For decades it was
+insisted that an infectious agent could not cause cancer, but now several cancers
+(e.g., cervical) are known to be caused by viruses. James Hansen insists that the
+whole scientific community (including the IPCC) and all the models are wrong about
+future sea level rise--why don't the authors criticize him? In the general case, disputes
+in science can and do go on for many decades. Which line of hominid led to humans?
+Is string theory valid? If so, which version? Is Freudian analysis useful? What is the
+purpose of junk DNA? Is back surgery better than physical therapy? Bayesians will
+never agree with frequentists, nor experimentalists with modelers. To prematurely
+claim consensus is a clever shortcut simply designed to shut up one's opponents. That
+is, it is a political ploy. Because they are dismissing papers that have been published,
+they are further setting themselves as higher authorities than the peer-review system.
+As an experienced scientist, I have more publications (143) than most (maybe all) of
+the authors. This only matters if one wants to make claims of authority, as these
+authors do, but I do point out that ALL of the works being criticized here are authored
+by well-published scientists, not hacks. The standard in science is that refutation of a
+point requires a coherent argument, not merely handwaving that something "might" be
+confounded (as their arguments about spectral analysis). The authors repeatedly
+object to results in papers for which "a clear physical basis is lacking" or "not based on
+physics." Science proceeds by first attempting to detect regularities in nature. The
+"physical explanation" usually follows. When Newton proposed his laws of motion he
+could not provide a physical explanation, and we still lack a fundamental
+understanding of what gravity "is." Most of geology is descriptive and this eventually
+has led to a coherent picture of Earth's history. By their logic, one should not publish
+about the ~100,000 year periodicity of ice ages because we cannot precisely and
+mechanistically explain it. There is not much "based on physics" in all of agriculture,
+medicine, geology, or even chemistry and yet somehow these sciences have given us
+reliable results. On page 455 the authors mention the resignation of editors as proof of
+bad science getting published, but the ClimateGate emails showed that these events
+resulted from pressure from a handful of activists such as Mann. This only shows how
+political the subject has become and how much power the Hockey Team has. Case 3
+in A2 (A2.1, p. 466+) examines Loehle and Scafetta (2011), my paper. The authors'
+statement that our results "are at variance" with most of the climate science
+community is false (and if no one could publish anything that disagrees with dogma I
+don't think science would progress). We cite multiple attribution studies that attribute
+only part of the recent rise in temperature to human activities. The bulk of empirical
+sensitivity studies also give lower sensitivity than the models. On p. 466 l. 25 they find
+it "difficult to conceive" what could cause the forcings we propose. The fact that there
+is a ~60 year solar cycle and a ~60 year PDO makes our hypothesis far from absurd,
+and in fact represents movement toward a mechanistic model. That they lack
+imagination does not invalidate the putting forth of a hypothesis that the sun is having
+an influence on Earth's climate. Do they think it does not? Solar forcing can act via
+electromagnetic currents, ultraviolet effects at the poles, the cosmic ray mechanism,
+and differential heating of parts of the ocean which change clouds, atmospheric
+movements, and ocean currents--I hope this helps their imagination. They claim it is
+not valid to fit to 160 years of data and that we did not validate our method. We in fact
+show a validation test in the appendix. Their attempt to demonstrate that our approach
+is wrong using a synthetic series is itself wrong. They did not replicate our method and
+fitting periodic data is not simple. In fact, a free fit of cycle length to the data gave
+results visually almost indistinguishable from the results we got. We use the solar
+cycle lengths found in Scafetta's earlier work to filter out the solar effect on the
+post-1950 period warming and attribute the residual to human activity. It is an
+attribution study. There is no dependence on being able to properly find 60 and 20
+year cycles in 100 years of data except for the lag (timing) and amplitude because the
+existence of these cycles (based on a solar connection) is our HYPOTHESIS. We
+think the quality of the fit and the fact that our data 1850-1950 enabled us to predict
+the post-2000 flat temperatures speaks for itself. Their critique shows only that
+working with time series is tricky, not that we made any mistakes. In fact, they clearly
+did not read our paper very closely.

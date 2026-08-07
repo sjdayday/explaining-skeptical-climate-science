@@ -1,0 +1,42 @@
+Nicola Scafetta, "Reply to Benestad's comment on Loehle's rebuttal" — SC C318, 2 July 2013
+Interactive comment on "Agnotology: learning from mistakes" by R. E. Benestad et al.
+Earth Syst. Dynam. Discuss., 4, C318–C320, 2013. CC BY 3.0.
+Source: https://esd.copernicus.org/preprints/4/C318/2013/esdd-4-C318-2013.pdf
+[Extracted text; journal banner matter removed; PDF ligature artifacts cleaned.]
+
+Benestad response to the C. Loehle objections is quite vague.
+In my extended response I uncover numerous math and physical errors present in
+Benestad et al. (2013). So I do not repeat. Herein I just highlight a couple of issues.
+1) About the quasi 60-year cycle observed in the global surface temperature and used
+in Loehle and Scafetta (2011) and in other Scafetta's papers, Benestad states "For
+noisy geophysical data, it is hazardous trying to identify cycles when you only have a
+small number of them (2), and from such a curve-fit, you cannot really attribute much
+physical significance."
+It is evident that Benestad's statement does not demonstrate anything. Benestad
+cannot disprove that the global surface temperature since 1850 is characterized by a
+major pattern with a quasi 60-year oscillation, which is evident at naked eyes to any
+unbiased person and extensively demonstrated in Scafetta's papers many times.
+Benestad's statement is severely misleading because it gives the impression that
+Loehle and Scafetta did not consider longer sequences than the global surface
+temperature records which cover only 160 years. On the contrary, Loehle and Scafetta
+referenced numerous papers using climate proxies covering several centuries that
+demonstrate that a quasi 60-year oscillation is one of the common patterns that
+characterize climate records. This is also clearly shown in Figure 4 of our paper
+Loehle C. and N. Scafetta, 2011. Climate Change Attribution Using Empirical
+Decomposition of Climatic Data. The Open Atmospheric Science Journal 5, 74-86.
+that shows (A) G. Bulloides abundance variation record found in the Cariaco Basis
+sediments in the Caribbean sea since 1650 [Black et al., 1999]. B) tree-ring
+chronologies from Pinus Flexilis [MacDonald and Case, 2005] as an index to the PDO.
+Both records show five large quasi 60-year cycles since 1650.
+Other more advanced figures are present in more recent papers published by Scafetta
+which also include the solution of the secular trending problem.
+It is unclear whether Benestad's failure to properly understand Loehle and Scafetta
+(2011) about the quasi 60-year oscillation is due to the fact that he did not read our
+manuscript or he is explicitly trying to misrepresent our paper for the purpose of
+misleading the readers of the journal.
+2) About the Soon and Baliunas case and ClimateGate emails. Contrary to what
+BHDCN2013 lets a reader to believe, cases such as Soon and Baliunas (2003) are
+very complex, as documented for example [in the Wikipedia article on the Soon and
+Baliunas controversy and linked blog posts; quoted excerpts omitted here — see the
+source PDF].
+Other comments are present in my full response to Benestad et al. (2013).

@@ -54,7 +54,67 @@ that draft 2 now incorporates:
     observed — ≈¾ of their whole-century ceiling in two decades (El-Niño-proof
     framing); single recent years already exceed the ceiling.
 
+## The adversarial record (added 2026-08-07)
+
+Fetched from the 2013 ESDD open review (doi:10.5194/esdd-4-451-2013; the
+paper's first version, "Agnotology: learning from mistakes"; the revision was
+not accepted — editor decision C400, M. Huber, 03 Sep 2013; the expanded
+paper appeared in TAC 2016). Extracted texts + full comment roster in
+`sources/esdd-open-review/`. All quotations verified verbatim against the
+Copernicus PDFs (by the claude.ai session that fetched them, re-checked when
+merged here). L&S11-specific defenses and where the case file answers them:
+
+1. **Hypothesis, not discovery** (Loehle C253): periods imported from
+   Scafetta's solar work; only phase/amplitude fitted, so "2.5 beats"
+   allegedly misses. → comeback 4: Exhibit D grants exactly this framing
+   (fixed periods, free phase/amplitude) and still finds phantom cycles;
+   importing the period relocates the burden to the contested astronomy
+   (Objection 5).
+2. **"Did not replicate our method"** (C253, re the synthetic test):
+   → comeback 4: the slices use the algebraic twin of Eq. (1); no specific
+   discrepancy was named; the inflation/instability is estimator-generic.
+3. **SI-1 validation exists** (C253): → already answered (comeback 2).
+4. **Free fit "visually almost indistinguishable"** (C253): → folded into
+   Objection 2 as a concession: the record can't tell 60 from neighbours.
+5. **Predicted the post-2000 flat** (C253): → comeback 1 + Part Three.
+6. **Multi-century proxies / "evident at naked eyes"** (Scafetta C318):
+   → comeback 3 strengthened: Fig. 4's own best-fit periods 61.5±4 vs
+   59.5±4, five repeats, ±4-yr slack = broadband variability, not a
+   phase-locked clock; Exhibit D answers the appeal to the eye.
+7. Benestad C258 states the core point (not the recipe, not 60-vs-70; ~2
+   repeats of noisy data carry no physical significance) and closes with
+   "It would indeed be very good news is [sic] Loehle and Scafetta (2011)
+   were right" — quoted in comeback 4 with bracketed [if].
+
+**Case 02 flag:** Matthews C304 corrects the ESDD draft's
+Dirichlet-conditions wording in the *ice-core* case. When writing Case 02,
+state the Fourier point for finite discrete records only (as Case 01
+Objection 1 already does) and do not import the draft's continuous-function
+framing; check whether the Dirichlet claim survived into the 2016 SM. C257
+(Solheim/Humlum/Stordahl/Yndestad) is the authors' defense for Case 02 —
+mine it then. C312 + supplement (Scafetta's long rebuttal) and the Rypdal
+exchange (C328/C331/C338/C347) remain unmined.
+
 ## Draft changelog
+
+### Draft 3.2 (2026-08-07) — the ESDD open-review record merged in
+- Merged the claude.ai "aftermath-debate" research (based on an older draft)
+  into the current template, adapted to the draft-3 register:
+  - Comebacks retitled "Four defenses, four answers"; new preamble noting all
+    four defenses are on the written record of the 2013 ESDD open review.
+  - NEW fourth defense (id `#defense-hypothesis`): Loehle C253's hypothesis
+    framing + "did not replicate our method" charge, answered via Exhibit D;
+    closes with Benestad C258's "very good news [if]" line.
+  - Comeback 3 strengthened with Scafetta C318 ("evident at naked eyes") and
+    the Figure-4-proxies-on-their-own-terms answer.
+  - Objection 2 gains Loehle's free-fit concession ("visually almost
+    indistinguishable", C253).
+  - Going deeper gains "The adversarial record" (DOI + discussion page, both
+    verified live); Sources footer cites the ESDD exchange.
+  - `sources/esdd-open-review/` added (CC-BY extracted texts C253/C258/C318/
+    C304 + roster README with PDF URL pattern).
+- The "aftermath-debate/" directory at the repo root is the raw material for
+  this merge (gitignored; removable once this draft is accepted).
 
 ### Draft 3.1 (2026-08-07) — "Working from the source paper to the rebuttal"
 - New case-file section (id `#from-the-source`, between IN BRIEF and the

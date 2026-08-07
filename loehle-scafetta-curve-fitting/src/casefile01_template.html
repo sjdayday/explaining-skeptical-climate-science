@@ -338,7 +338,11 @@
        found that 65.75‑ and 21.5‑year waves fit HadCRUT3 <b>better</b> than 60 and 20.
        L&amp;S11’s own paper concedes the point: they note that a free fit lands only “close to”
        60, and the free‑fit target in their own supplement centers near <b>65</b> years — they
-       imposed 60 anyway to match the astronomy. On NOAA’s data we find the best “long cycle”
+       imposed 60 anyway to match the astronomy. In the 2013 open review, Loehle added a
+       further concession from the other side: a free fit of the periods gave results
+       “visually almost indistinguishable” from the fixed‑period fit — meaning the record
+       cannot tell 60 from its neighbours, so the fit lends the astronomical clock no
+       independent support. On NOAA’s data we find the best “long cycle”
        is ~87 years. A constant of nature should not change when the dataset changes, or
        disagree with its discoverers’ own free fit.</p>
   </div>
@@ -510,8 +514,16 @@
 <!-- ================================================================ comeback -->
 <section class="part">
   <div class="partlabel"><span class="no">ANTICIPATING THE COMEBACKS</span></div>
-  <h2>Three defenses, three answers</h2>
+  <h2>Four defenses, four answers</h2>
   <div class="partrule"></div>
+
+  <p>These defenses are not hypothetical. All four were made in writing during the 2013 public
+     peer review of the rebuttal’s first version — posted to <i>Earth System Dynamics
+     Discussions</i> under the title “Agnotology: learning from mistakes,” debated in the open
+     by the criticized authors and the rebuttal team, and not accepted there before the
+     expanded paper appeared in 2016. The key documents ship with this project in
+     <code>sources/esdd-open-review/</code>; the Going deeper section gives the full
+     record.</p>
 
   <h3 class="sub" id="defense-plateau">“But it predicted the plateau!”</h3>
   <p>The strongest defense is that the 1951–2010 wiggle‑match was a successful
@@ -539,13 +551,42 @@
   <h3 class="sub" id="defense-proxies">“But proxy records show 60‑year cycles for centuries!”</h3>
   <p>The paper’s supporting studies show quasi‑oscillations in the 50–80‑year range, in
      particular regions, waxing and waning in strength — which is exactly what slow, structured
-     natural variability looks like. That is not a fixed global clock. The wider contrarian
+     natural variability looks like. That is not a fixed global clock. In the open review
+     Scafetta pressed this defense, insisting the quasi‑60‑year pattern is “evident at naked
+     eyes to any unbiased person” and pointing to the paper’s Figure&nbsp;4 proxies. Taking
+     those two records on their own terms: best‑fit periods of 61.5&nbsp;±&nbsp;4 and
+     59.5&nbsp;±&nbsp;4 years, five swings each since 1650, disagreeing with each other and
+     with 60 — five noisy repeats with ±4‑year slack is what broadband ocean variability
+     produces, not a phase‑locked planetary clock. (Exhibit&nbsp;D also answers the appeal to
+     the eye: its slices of cause‑free noise look just as convincing.) The wider contrarian
      cycle literature, surveyed in Benestad et&nbsp;al.’s Table&nbsp;S2, reports “dominant”
      periods from 6 to 2,804 years — claims that cannot all be true and are rarely reconciled
      with one another. And the fundamental answer stands: ocean oscillations of similar
      size appear in standard climate models as internal variability, no planets required — and
      even a genuine quasi‑cycle would ride on top of the greenhouse trend, subtracting nothing
      from it.</p>
+
+  <h3 class="sub" id="defense-hypothesis">“But the cycles were a hypothesis — and the noise
+     test didn’t copy our method!”</h3>
+  <p>Loehle’s written defense makes two further claims. First, that the 60‑ and 20‑year
+     periods were never <i>found</i> in the 160‑year record at all — they were imported as a
+     hypothesis from Scafetta’s solar‑system analysis, with only the heights and timings left
+     to fit, so the too‑few‑beats objection attacks a step the paper never took. Second, that
+     the rebuttal’s synthetic‑data demonstration “did not replicate our method.”
+     Exhibit&nbsp;D answers both at once, because it grants the hypothesis framing entirely:
+     each slice of noise is fitted exactly as Eq.&nbsp;(1) fits the climate record — periods
+     pinned at 60 and 20 in advance, heights and timings free. That <i>is</i> the
+     imported‑hypothesis procedure, run on data known to contain no such clock, and it reports
+     convincing cycles anyway. Importing the period does not remove the flexibility that
+     matters — two free timings, two free heights, and a line; it relocates the burden of
+     proof onto the astronomy, the contested chain of Objection&nbsp;5. And a hypothesis earns
+     support only if the data fit it better than cause‑free noise would; the slices show they
+     do not.</p>
+  <p>Benestad’s reply in the same thread stated the core point plainly: the weakness is not
+     the exact fitting recipe, nor whether the true period is 60 or 70 years — with only about
+     two repeats of noisy geophysical data, no degree of in‑sample fit can confer physical
+     significance. He closed with a sentence worth preserving for the spirit of this series:
+     “It would indeed be very good news [if] Loehle and Scafetta (2011) were right.”</p>
 </section>
 
 <!-- ================================================================ talking points -->
@@ -937,6 +978,20 @@
         rel="noopener">replicationDemos</a>, Benestad's open R package; its function
         <code>LoehleScafetta2011()</code> re-runs the analysis behind the “Curve-fitting”
         section.</dd>
+    <dt>The adversarial record</dt>
+    <dd>The rebuttal's first version, titled “Agnotology: learning from mistakes,” went
+        through public peer review at
+        <a href="https://doi.org/10.5194/esdd-4-451-2013" target="_blank"
+        rel="noopener">Earth System Dynamics Discussions</a> (2013), where the criticized
+        authors filed defenses in their own words — Loehle (C253), Scafetta (C318, C312),
+        Solheim, Humlum, Stordahl &amp; Yndestad (C257), McKitrick (C261) — Benestad replied
+        (C258, C269, C340), and the editor ultimately declined the revision (C400); the
+        reorganized and expanded paper appeared in <i>Theor.&nbsp;Appl.&nbsp;Climatol.</i> in
+        2016. Every comment PDF remains freely available on the
+        <a href="https://esd.copernicus.org/preprints/esd-2013-12/" target="_blank"
+        rel="noopener">discussion page</a>; extracted texts of the L&amp;S11 thread ship in
+        <code>sources/esdd-open-review/</code>. The “Four defenses, four answers” section
+        answers the defenses made there.</dd>
   </dl>
 </section>
 
@@ -973,6 +1028,10 @@
      doi:10.1007/s00704-015-1597-5, and its supporting material, section “Curve‑fitting” and
      Table&nbsp;S2, with the open R package <code>replicationDemos</code>
      (<code>LoehleScafetta2011()</code>). ·
+     The 2013 open‑review exchange: Benestad et&nbsp;al., “Agnotology: learning from
+     mistakes,” <i>Earth Syst. Dynam. Discuss.</i> 4:451–505, doi:10.5194/esdd‑4‑451‑2013,
+     with interactive comments C253 (Loehle), C258 (Benestad), C318 and C312 (Scafetta), and
+     C400 (editor decision); extracted texts in <code>sources/esdd‑open‑review/</code>. ·
      Temperature data: NOAA NCEI NOAAGlobalTemp via the open “datasets/global‑temp” mirror.</p>
   <p style="margin-top:18px;color:var(--grey)">Case file 01 · draft 3 · prepared for the
      “skeptic papers &amp; rebuttals” explainer project · next candidates: the discarded ice‑core

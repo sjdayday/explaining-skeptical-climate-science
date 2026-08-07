@@ -1,0 +1,17 @@
+Paul Matthews, "Benestad wrong about Dirichlet conditions" — SC C304, 1 July 2013
+Interactive comment on "Agnotology: learning from mistakes" by R. E. Benestad et al.
+Earth Syst. Dynam. Discuss., 4, C304, 2013. CC BY 3.0.
+Source: https://esd.copernicus.org/preprints/4/C304/2013/esdd-4-C304-2013.pdf
+[Extracted text; journal banner matter removed.]
+
+Benestad is wrong to say that the ice core data violates the condition "f(x) is
+bounded". The measured dataset is, obviously, bounded.
+Furthermore, the Dirichlet conditions apply to a function f(x) defined for all values of a
+continuous variable x. It makes little sense to try to apply them to a discrete
+observational dataset.
+
+[Project note: this concerns the ESDD draft's treatment of the Humlum et al. ice-core
+case (planned Case File 02), not L&S11. The final 2016 paper's supporting material
+should be checked for whether the Dirichlet claim survived. Matthews' correction, if
+anything, reinforces Case File 01's Objection 1: finite sampled records always admit
+an exact wave decomposition.]

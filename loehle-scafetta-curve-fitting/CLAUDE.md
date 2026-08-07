@@ -68,6 +68,10 @@ Exhibit captions together.
   (per-page `{n}.txt` + `{n}.jpeg`). Unzip to read; concatenate the .txt
   files in numeric order for full text. Table S3 of the SM (pages 64–67)
   is image-only.
+- `esdd-open-review/` — the 2013 ESDD public-review defenses (Loehle C253,
+  Benestad C258, Scafetta C318, Matthews C304; CC-BY extracted texts + full
+  roster with PDF URL pattern). The case file's "Four defenses, four answers"
+  section answers these; keep them in sync.
 
 ## Current state (draft 3, 2026-08-07)
 

@@ -1,0 +1,44 @@
+Rasmus Benestad, "Response to C. Loehle" — SC C258, 14 June 2013
+Interactive comment on "Agnotology: learning from mistakes" by R. E. Benestad et al.
+Earth Syst. Dynam. Discuss., 4, C258–C260, 2013. CC BY 3.0.
+Source: https://esd.copernicus.org/preprints/4/C258/2013/esdd-4-C258-2013.pdf
+[Extracted text; journal banner matter removed. Typos are in the original.]
+
+I am grateful for the comments provided by C. Loehle, and hope that I can answer his
+criticism on the behalf of the whole team of authors.
+I think that we all disagree with the statement "the science of climate change is
+'settled' and that this consensus cannot be questioned." - the paper that we write just
+do that - it questions published results! We argue that the past findings must be
+reassessed continuously in the light of new findings. We argue that replication is an
+important way of doing so.
+I think that we also disagree that "anyone questioning this consensus does so willfully
+and malevolently". To think that we take this position in our paper, one needs must
+have misinterpreted our message.
+I disagree with Loehles statement "Yet in no case do the authors bother to truly refute
+anything," - the paper does in fact present a number of case studies showing how
+different papers are replicated and found to be incorrect. In particularly so, one of the
+papers that Loehle has co-authored with N. Scafetta. We are seriously questioning the
+methods used in this paper and the conclusions drawn from them.
+We agree on "takes no man's word" for anything - hence our paper, the R-package
+replicationDemos, and our attempts to replicate the results. I would also say that it
+would be beneficial if scholars were more open with their methods and data: see e.g.
+http://www.newscientist.com/article/dn18307-sceptical-climate-researcher-wont-divulge-key-program.html
+I also think that there is no evidence that "publications (143)" means that one is
+correct about a scientific position - as Loelhe just argued himself (in a few lines above
+this quote).
+I would like to challenge Loehle on his statement "ClimateGate emails showed that
+these events resulted from pressure from a handful of activists such as Mann" -
+please provide the evidence supporting this allegation! I also find it rather surprising
+that someone presenting a claim like this also accuses others for presenting
+handwavy arguments.
+We agree that working with time series is tricky, but also that the method chosen in
+Loehle and Scafetta (2011) is not convincing, and we provide a demonstration with
+synthetic series to show that is is not robust. The weakness is not the exact process
+for fitting a curve, and whether the length really is 60 or 70 years. For noisy
+geophysical data, it is hazardous trying to identify cycles when you only have a small
+number of them (~2), and from such a curve-fit, you cannot really attribute much
+physical significance.
+My advice to Loehle is to keep on working, and try to find more convincing arguemts. I
+agree that in some cases, discoveries have been made before the physics have been
+understood. It would indeed be very good news is Loehle and Scafetta (2011) were
+right.
