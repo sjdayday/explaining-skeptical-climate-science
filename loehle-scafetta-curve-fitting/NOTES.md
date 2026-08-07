@@ -56,6 +56,28 @@ that draft 2 now incorporates:
 
 ## Draft changelog
 
+### Draft 3 (2026-08-07) — neutral-tone rework of the case-file prose
+- Same register as the exercise pass, applied to the main document. Notable
+  changes: dek no longer says replication "took the argument apart" (now
+  "what replication revealed about the method"); "in one breath" → "in
+  brief"; Part 1 "given its best shot" → "at its strongest"; "argument's
+  engine" → "key premise"; "That ramp, they said, is us" → "is the human
+  contribution"; "File that away" → "Objection 2 returns to this"; "The
+  supporting cast" → "The supporting evidence"; Obj 2 closer restated ("A
+  constant of nature should not change when the dataset changes…"); Obj 5
+  whisper/shout → small/large push (wine-glass analogy kept, restated);
+  Part 3 retitled "What happened after publication" (was "The test nature
+  ran anyway"; ex5 nav link updated); "budget arithmetic is brutal" → "the
+  arithmetic is simple"; "premise smuggles in the conclusion" → "assumes
+  the conclusion"; "Five lines that carry the argument" → "The argument in
+  five sentences" (label FOR CONVERSATIONS → IN BRIEF); glossary entries
+  reworded (no "hugs/knobs/cheap/real currency"; "nature administered" →
+  dated plainly).
+- Kept: the document title, objection headings, the tightly mapped analogies
+  (melody/notation, smoke detector, wine glass, elephant, playground swing),
+  "wiggly/wiggle-match" as descriptive terms, and all numbers.
+- Status bumped to Draft 3 (header meta and footer).
+
 ### Draft 2.3 (2026-08-07) — neutral-tone pass over the exercises
 - Reworded the five exercise pages and the case file's trybox/going-deeper
   additions for a straightforward, non-confrontational register: "The game" →

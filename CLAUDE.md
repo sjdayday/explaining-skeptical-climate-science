@@ -69,7 +69,7 @@ Exhibit captions together.
   files in numeric order for full text. Table S3 of the SM (pages 64–67)
   is image-only.
 
-## Current state (draft 2, 2026-08-04)
+## Current state (draft 3, 2026-08-07)
 
 Key replication numbers on this data snapshot: calibration 1850–1950 gives
 60-yr amplitude 0.100 °C, 20-yr 0.043 °C, R² 0.457, cycle peaks ≈1997/1998
