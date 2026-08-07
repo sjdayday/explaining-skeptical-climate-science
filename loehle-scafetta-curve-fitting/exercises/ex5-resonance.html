@@ -113,25 +113,25 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
 </header>
 
 <section class="part">
-  <p><b>The game:</b> below is a simulated oscillator with a natural period of 60 years and a
+  <p><b>The exercise:</b> below is a simulated oscillator with a natural period of 60 years and a
      gentle ring — a stand-in for the claim's “resonant climate,” the same demonstration Benestad
-     et&nbsp;al. ran in their supporting material. You choose what pushes it. The claim's story
-     needs the first button to work and the others to fail. See what actually happens.</p>
+     et&nbsp;al. ran in their supporting material. You choose what pushes it. The claim's account
+     requires the first button to work and the others to fail. See what actually happens.</p>
 
   <div class="panel">
     <span class="extag r">Simulated oscillator · natural period 60 years</span>
     <div class="controls">
       <span class="lbl">The push</span>
-      <button class="btn" id="f-metro">&#129346; Planetary metronome</button>
-      <button class="btn" id="f-noise">&#127922; Random weather</button>
-      <button class="btn" id="f-ramp">&#128200; Greenhouse ramp</button>
+      <button class="btn" id="f-metro">Planetary metronome</button>
+      <button class="btn" id="f-noise">Random weather</button>
+      <button class="btn" id="f-ramp">Greenhouse ramp</button>
       <button class="btn" id="f-off">Silence</button>
-      <button class="btn claim pushbtn" id="f-push">&#128074; Push now</button>
+      <button class="btn claim pushbtn" id="f-push">Push now</button>
     </div>
     <canvas id="forcechart" class="chart"></canvas>
     <canvas id="respchart" class="chart"></canvas>
     <div class="legend">
-      <span class="chip c"><i></i>the push (its own magnified scale — the metronome is a whisper)</span>
+      <span class="chip c"><i></i>the push (drawn on its own magnified scale; the metronome's push is the smallest)</span>
       <span class="chip r"><i></i>the system's response</span>
     </div>
     <div class="readouts">
@@ -142,24 +142,24 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
     <p class="cap" id="punch"></p>
   </div>
 
-  <div class="note r"><b>What this exercise shows.</b> The metronome works — a whisper at the right
-     tempo builds a big swing. But so does everything else. Random, rhythm-free shoves excite the
-     same 60-year ring (a lesson for Exercise&nbsp;3: a 60-year wobble in a record needs no 60-year
-     cause). And the greenhouse ramp passes straight through: the system rides the rising push
-     while it wobbles — trends and wiggles coexist, so finding a wiggle subtracts nothing from
-     CO&#8322;. A wine glass rings at its pitch for the soprano, the cello, and the crowd alike. A
-     climate sensitive enough to amplify planetary whispers cannot also be deaf to CO&#8322;'s
-     shout — yet that double standard is precisely what L&amp;S11's accounting requires. And even
-     this concedes too much: unlike your finger, the planetary “whisper” has no accepted physical
-     mechanism to push with in the first place — the links in their chain (irradiance
-     reconstructions, cosmic-ray cloud seeding) are themselves faulted elsewhere in the same
-     replication study.</div>
+  <div class="note r"><b>What this exercise shows.</b> The metronome works — a small push at the
+     right tempo builds a large swing. But so does everything else. Random, rhythm-free pushes
+     excite the same 60-year ringing (which bears on Exercise&nbsp;3: a 60-year oscillation in a
+     record needs no 60-year cause). And the greenhouse ramp passes straight through: the system
+     rides the rising push while it oscillates — trends and oscillations coexist, so finding an
+     oscillation subtracts nothing from CO&#8322;. A wine glass rings at its pitch for any sound
+     at that pitch, whatever the source. A climate sensitive enough to amplify small planetary
+     pushes cannot also be insensitive to the much larger push from CO&#8322; — yet that double
+     standard is what L&amp;S11's accounting requires. And even this concedes too much: the
+     planetary push itself has no accepted physical mechanism behind it — the links in their
+     chain (irradiance reconstructions, cosmic-ray cloud seeding) are themselves faulted
+     elsewhere in the same replication study.</div>
 
-  <p>You have now run all five objections with your own hands: waves rebuild anything
-     (Exercise&nbsp;1); a 100-year window can't certify a 60-year rhythm (Exercise&nbsp;2); the
-     fit “discovers” cycles in dice rolls (Exercise&nbsp;3); memorizing the past predicts nothing
-     (Exercise&nbsp;4); and the proposed physics can't pick sides (Exercise&nbsp;5). The case
-     file's Part&nbsp;Three shows what happened when the real future arrived.</p>
+  <p>You have now run all five objections yourself: waves rebuild anything (Exercise&nbsp;1); a
+     100-year window cannot certify a 60-year rhythm (Exercise&nbsp;2); the fit “discovers”
+     cycles in random data (Exercise&nbsp;3); a close fit to the past does not imply predictive
+     skill (Exercise&nbsp;4); and resonance does not distinguish among causes (Exercise&nbsp;5).
+     The case file's Part&nbsp;Three shows what happened when the real future arrived.</p>
 </section>
 
 <nav class="exnav">
@@ -534,11 +534,11 @@ function frame(wall) {
 }
 
 const PUNCH = {
-  metro: "<b>The claim's mechanism, working as advertised:</b> a whisper — look how small the amber push is — repeated at the system's own tempo, builds a big 60-year swing. Resonance is real. Now try the other buttons; the claim needs them to fail.",
-  noise: "<b>No rhythm in, rhythm out.</b> These shoves are pure dice — no 60-year cause anywhere — yet the response wobbles at roughly 60 years, because that is the system's own tone. A 60-year wobble in a record is evidence of a resonant system, not of a 60-year pusher.",
-  ramp: "<b>The shout gets through.</b> A steadily growing push — the shape of greenhouse forcing — and the system rides it upward while still wobbling. The resonance does not filter it out. Trends and wiggles coexist; finding the wiggle subtracts nothing from the trend.",
-  off: "<b>Silence.</b> The ring fades at the system's own 60-year tempo — its memory of every push, whoever pushed.",
-  push: "<b>That's your finger, not a planet.</b> Tap roughly every 60 years (a couple of gridlines apart) and you can pump the swing as well as any orbital alignment — resonance answers to tempo, not to identity.",
+  metro: "<b>The claim's mechanism, working as described:</b> a small push — note the scale of the amber trace — repeated at the system's own tempo builds a large 60-year swing. Resonance is real. Now try the other pushes; the claim requires them to fail.",
+  noise: "<b>No rhythm in, rhythm out.</b> These pushes are random, with no 60-year cause anywhere, yet the response oscillates at roughly 60 years — that is the system's natural period. A 60-year oscillation in a record indicates a resonant system, not necessarily a 60-year cause.",
+  ramp: "<b>The large push gets through.</b> A steadily growing push — the shape of greenhouse forcing — and the system rides it upward while still oscillating. The resonance does not filter it out. Trends and oscillations coexist; finding the oscillation subtracts nothing from the trend.",
+  off: "<b>Silence.</b> The ringing fades at the system's own 60-year period — the aftereffect of earlier pushes, whatever their source.",
+  push: "<b>These pushes come from your mouse, not a planet.</b> Tap roughly every 60 simulated years (about one gridline apart) and the swing builds just as it does for the metronome — resonance responds to timing, not to the source.",
 };
 function setMode(m, label) {
   /* fresh start for each demonstration: reset clock, oscillator, and traces */

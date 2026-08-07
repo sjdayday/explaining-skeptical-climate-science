@@ -24,10 +24,10 @@
 </header>
 
 <section class="part">
-  <p><b>The game:</b> you control the long period. Every position of the slider refits the full
-     L&amp;S11 model — your wave, plus the 20-year wave, plus a straight line — to the real NOAA
-     temperature record's 1850&ndash;1950 window, live. Watch the fit quality (R&sup2;). Hunt for
-     the period that fits best. Is it 60?</p>
+  <p><b>The exercise:</b> you control the long period. Every position of the slider refits the
+     full L&amp;S11 model — your wave, plus the 20-year wave, plus a straight line — to the real
+     NOAA temperature record's 1850&ndash;1950 window, live. Watch the fit quality (R&sup2;).
+     Find the period that fits best. Is it 60?</p>
 
   <div class="panel">
     <span class="extag k">Real data · NOAA global temperature, fitted live</span>
@@ -61,7 +61,7 @@
       <span class="cap" id="scanhint" style="margin:0">Dots mark the periods you have visited.</span>
     </div>
     <canvas id="scanchart" class="chart"></canvas>
-    <div class="cap" id="scancap"><b>Hunting tip:</b> try the low 30s, the 60s, the high 80s.</div>
+    <div class="cap" id="scancap"><b>Suggestions:</b> try the low 30s, the 60s, the high 80s.</div>
   </div>
 
   <div class="note r"><b>What this exercise shows.</b> The R&sup2; landscape is broad and nearly flat
@@ -70,9 +70,9 @@
      et&nbsp;al. found 65.75 beat 60; and L&amp;S11's own supplement concedes that a free fit
      centers near 65 — they imposed 60 anyway to match the astronomy. A real physical constant
      doesn't move when you switch thermometer networks, and it doesn't lose to its neighbours on
-     the very data used to establish it. What you just felt with the slider is the sound of a
-     window too short to pin down a rhythm: 100 years of data holds fewer than two beats of a
-     60-year cycle.</div>
+     the very data used to establish it. What the slider demonstrates is a window too short to
+     pin down a rhythm: 100 years of data holds fewer than two full cycles of a 60-year
+     wave.</div>
 </section>
 
 <nav class="exnav">
@@ -149,7 +149,7 @@ function drawFit() {
       fc.line([s + 1, s + P - 1], [y0, y0], { color: C.rebut, width: 2.5 });
       fc.text("beat " + (n + 1), s + P / 2, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
     }
-    if (n === 0) fc.text("not even one full beat fits in the window!", 1900, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
+    if (n === 0) fc.text("no full beat of this period fits in the window", 1900, -0.64, { color: C.rebutDeep, align: "center", baseline: "top", font: "10px" });
   });
   fc.text("fitting window", 1900, 0.74, { color: C.grey, align: "center", font: "10px" });
 
@@ -161,13 +161,13 @@ function drawFit() {
   const cap = document.getElementById("fitcap");
   if (Math.abs(P - 60) < 0.01)
     cap.innerHTML = "<b>This is their choice:</b> 60 years — R&sup2; " + f.r2cal.toFixed(3) +
-      ". The window holds " + (100 / P).toFixed(2) + " beats. Now try to beat it.";
+      ". The window holds " + (100 / P).toFixed(2) + " beats. Now try other periods.";
   else if (d > 0.001)
     cap.innerHTML = "<b>" + P.toFixed(2).replace(/\.?0+$/, "") + " years fits better than 60</b> on the very data used to establish the cycle (+" + d.toFixed(3) + " R&sup2;).";
   else if (d < -0.05)
-    cap.innerHTML = "Worse than 60 — but look at the fitted curve: still a perfectly presentable wiggle-match. The eye is a poor referee.";
+    cap.innerHTML = "Worse than 60 — though the fitted curve still tracks the data plausibly to the eye. Visual matching is not a reliable test.";
   else
-    cap.innerHTML = "About as good as 60. Notice how gently R&sup2; changes as you drag — the data barely cares.";
+    cap.innerHTML = "About as good as 60. Notice how gently R&sup2; changes as you drag — the data hardly distinguish these periods.";
   drawScan();
 }
 
@@ -203,8 +203,8 @@ document.getElementById("reveal").addEventListener("click", () => {
     "<b>The landscape.</b> Broad, gentle, and not centred on 60: on this data the best long period " +
     "is ≈" + bestP.toFixed(1) + " yr (R² " + bestR.toFixed(3) + " vs. " + r2at60.toFixed(3) +
     " at 60). Benestad et al. found 65.75 beat 60 on HadCRUT3 — and L&S11's own free fit " +
-    "centred near 65. Three datasets, three different “best cycles”: that is what a too-short " +
-    "window sounds like.";
+    "centred near 65. Three datasets, three different best periods — the signature of a record " +
+    "too short to determine one.";
   drawScan();
 });
 slider.addEventListener("input", drawFit);

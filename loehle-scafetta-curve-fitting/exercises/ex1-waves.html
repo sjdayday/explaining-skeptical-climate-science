@@ -116,10 +116,10 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
 </header>
 
 <section class="part">
-  <p><b>The game:</b> pick a graph that has nothing to do with climate — or roll a random one.
-     Then drag the slider to hand the rebuild more and more waves. Watch the amber curve
-     (a straight line plus your waves, exactly the claim's recipe) hug the target ever more
-     tightly. It will never refuse. That is the point.</p>
+  <p><b>The exercise:</b> choose a graph that has nothing to do with climate, or generate a
+     random one. Then move the slider to give the rebuild more and more waves. The amber curve —
+     a straight line plus your waves, the same recipe as the paper's model — matches the target
+     more and more closely. It never fails to. That is the point.</p>
 
   <div class="panel">
     <span class="extag c">The rebuild · a line plus waves, like the paper's model</span>
@@ -127,12 +127,12 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
       <button class="btn" id="b-stock">Stock price</button>
       <button class="btn" id="b-skyline">Mountain skyline</button>
       <button class="btn" id="b-pop">Population of Europe, 0&ndash;2025&nbsp;CE</button>
-      <button class="btn primary" id="b-random">&#127922; Random graph</button>
+      <button class="btn primary" id="b-random">Random graph</button>
     </div>
     <div class="controls">
       <span class="lbl">Waves used</span>
       <input type="range" id="kslider" min="0" max="80" value="0" step="1">
-      <button class="btn" id="play">&#9654; Add them for me</button>
+      <button class="btn" id="play">&#9654; Add waves automatically</button>
     </div>
     <canvas id="main" class="chart"></canvas>
     <div class="legend">
@@ -148,23 +148,23 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
     <div class="cap" id="wavescap"></div>
     <div class="readouts">
       <div class="readout"><b>Waves used</b><div class="val" id="kval">0</div></div>
-      <div class="readout c"><b>How well it hugs (R&sup2;)</b><div class="val" id="r2val">&mdash;</div></div>
+      <div class="readout c"><b>Fit quality (R&sup2;)</b><div class="val" id="r2val">&mdash;</div></div>
     </div>
     <p class="punch" id="punch"></p>
     <div class="cap" id="srclabel"></div>
   </div>
 
-  <h3 class="sub">And yes — this graph “contains” a 60-unit cycle</h3>
-  <p>The temperature debate stars a 60-<i>year</i> wave. Every graph on this page has a
-     60-<i>unit</i> wave of its own — the mathematics guarantees a wave of every period is in
-     the inventory, with some nonzero strength. Here is this graph's:</p>
+  <h3 class="sub">This graph, too, contains a 60-unit wave</h3>
+  <p>The temperature debate centres on a 60-<i>year</i> wave. Every graph on this page has a
+     60-<i>unit</i> wave of its own — the mathematics guarantees that a wave of every period
+     appears in the inventory, with some nonzero amplitude. Here is this graph's:</p>
 
   <div class="panel">
     <span class="extag c">This graph's own “60-unit wave”</span>
     <canvas id="wave60" class="chart"></canvas>
     <div class="readouts">
       <div class="readout c"><b>Its period</b><div class="val" id="p60"></div></div>
-      <div class="readout c"><b>Its strength here</b><div class="val" id="a60"></div></div>
+      <div class="readout c"><b>Its amplitude here</b><div class="val" id="a60"></div></div>
     </div>
     <div class="cap">Finding a wave of some chosen period, with some fitted strength, is not a
       discovery — it is bookkeeping. The discovery would be showing the wave <b>had to</b> be
@@ -172,11 +172,11 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
   </div>
 
   <div class="note r"><b>What this exercise shows.</b> The rebuild succeeded on a stock chart, a
-     mountain ridge, twenty centuries of population — and on pure dice. It always succeeds, so
-     succeeding carries no information about <i>causes</i>. Writing a melody down in notes doesn't
-     mean a piano composed it. When L&amp;S11's two waves and a line hugged the temperature
-     record, that was this same guarantee at work — the fit was the language speaking, not
-     nature confessing.</div>
+     mountain ridge, twenty centuries of population — and on randomly generated data. It always
+     succeeds, so succeeding carries no information about <i>causes</i>. Writing a melody down in
+     notes does not mean a piano composed it. When L&amp;S11's two waves and a line matched the
+     temperature record, this same guarantee was at work — the good fit reflects a property of
+     the mathematics, not a discovery about nature.</div>
 </section>
 
 <nav class="exnav">
@@ -464,8 +464,9 @@ function genStock() {
   }
   return { xs, ys, xlabel: "trading day", ylabel: "share price ($)",
            unit: "days", name: "a stock price",
+           ampFmt: (a) => "±$" + a.toFixed(2),
            src: "Synthetic random walk (seed 7101) — statistically a stand-in for a real share price.",
-           quip: "Nobody thinks Jupiter and Saturn set share prices." };
+           quip: "No one proposes an astronomical cycle behind share prices — yet the rebuild works here too." };
 }
 function genSkyline() {
   const rand = mulberry32(90210);
@@ -480,8 +481,9 @@ function genSkyline() {
   const xs = ys.map((_, i) => i);
   return { xs, ys, xlabel: "distance along the ridge (m)", ylabel: "elevation (m)",
            unit: "metres", name: "a mountain skyline",
-           src: "Schematic fractal ridge (seed 90210) — the jagged profile any real skyline shares.",
-           quip: "Nobody thinks the mountain is made of waves." };
+           ampFmt: (a) => "±" + a.toFixed(1) + " m",
+           src: "Schematic fractal ridge (seed 90210), with the jagged profile characteristic of real ridgelines.",
+           quip: "A mountain profile has no periodic cause — yet the rebuild works here too." };
 }
 function genPopulation() {
   // Approximate European population estimates, millions (McEvedy & Jones 1978; UN),
@@ -504,8 +506,9 @@ function genPopulation() {
   }
   return { xs, ys, xlabel: "year (CE)", ylabel: "population (millions, log scale)",
            unit: "years", name: "Europe's population", logPop: true,
+           ampFmt: (a) => "±" + ((Math.pow(10, a) - 1) * 100).toFixed(2) + "% of the population",
            src: "Approximate scholarly estimates (McEvedy & Jones 1978; UN), interpolated between sparse anchor years; log scale. The dips: the Plague of Justinian (541) and the Black Death (1347–52).",
-           quip: "The Black Death was not a 60-year astronomical cycle." };
+           quip: "The rises and dips here have historical causes — plague, agriculture, industry — not a 60-year astronomical cycle." };
 }
 let randomSeed = 0;
 function genRandom() {
@@ -515,8 +518,10 @@ function genRandom() {
   let v = 0;
   for (let i = 0; i < N; i++) { v = 0.985 * v + gaussian(rand); xs.push(i); ys.push(v); }
   return { xs, ys, xlabel: "step", ylabel: "value", unit: "steps",
-           name: "a random graph", src: `Seeded noise, seed ${1000 + randomSeed} — press the button again for a new one.`,
-           quip: "This graph has no cause at all beyond dice — and the rebuild works anyway." };
+           name: "a random graph",
+           ampFmt: (a) => "±" + a.toFixed(2) + " (arbitrary units)",
+           src: `Seeded noise, seed ${1000 + randomSeed} — press the button again for a new one.`,
+           quip: "This graph was generated from random numbers — and the rebuild works anyway." };
 }
 
 /* ---------------- decomposition ---------------- */
@@ -634,10 +639,10 @@ function draw() {
   document.getElementById("targetlabel").textContent = series.name;
   document.getElementById("srclabel").innerHTML = "<b>What you're looking at:</b> " + series.src;
   const punch = document.getElementById("punch");
-  if (k === 0) punch.innerHTML = "Right now the rebuild is just the straight line. Give it waves.";
-  else if (R2 < 0.6) punch.innerHTML = `With <b>${k} waves</b> the hug is loose &mdash; keep going. The math has plenty more waves to offer.`;
-  else if (R2 < 0.9) punch.innerHTML = `<b>${k} waves</b> already trace the big swings of ${series.name}. ${series.quip}`;
-  else punch.innerHTML = `<b>${k} waves</b> rebuild ${series.name} almost perfectly (R&sup2; ${R2.toFixed(2)}). ${series.quip} The rebuild <b>always</b> works &mdash; that's why a good fit proves nothing about causes.`;
+  if (k === 0) punch.innerHTML = "With no waves, the rebuild is just the straight line. Move the slider to add waves.";
+  else if (R2 < 0.6) punch.innerHTML = `With <b>${k} waves</b> the match is still loose &mdash; add more.`;
+  else if (R2 < 0.9) punch.innerHTML = `<b>${k} waves</b> already trace the main swings of ${series.name}. ${series.quip}`;
+  else punch.innerHTML = `<b>${k} waves</b> rebuild ${series.name} almost exactly (R&sup2; ${R2.toFixed(2)}). ${series.quip} The rebuild <b>always</b> succeeds &mdash; which is why a good fit, by itself, proves nothing about causes.`;
 
   // ---- the near-60-unit component ----
   const cp = S.near60;
@@ -648,11 +653,7 @@ function draw() {
   w60c.axes({ xticks: ticks(main.xlim[0], main.xlim[1], 7), yticks: [] });
   w60c.clipPlot(() => { w60c.line(series.xs, ys60, { color: C.claimDeep, width: 1.8 }); });
   document.getElementById("p60").textContent = cp.period.toFixed(1) + " " + series.unit;
-  const ampTxt = series.logPop
-    ? "±" + ((Math.pow(10, cp.amp) - 1) * 100).toFixed(2) + "%"
-    : "±" + (cp.amp >= 10 ? cp.amp.toFixed(0) : cp.amp.toFixed(2));
-  document.getElementById("a60").innerHTML = ampTxt + " <small>" +
-    (series.logPop ? "population swing" : series.ylabel.replace(/ *\(.*\)/, "")) + "</small>";
+  document.getElementById("a60").textContent = series.ampFmt(cp.amp);
 }
 
 function setSeries(gen) {
@@ -663,7 +664,7 @@ function setSeries(gen) {
   draw();
 }
 function stopPlay() {
-  if (playTimer) { clearInterval(playTimer); playTimer = null; playBtn.innerHTML = "&#9654; Add them for me"; }
+  if (playTimer) { clearInterval(playTimer); playTimer = null; playBtn.innerHTML = "&#9654; Add waves automatically"; }
 }
 playBtn.addEventListener("click", () => {
   if (playTimer) { stopPlay(); return; }

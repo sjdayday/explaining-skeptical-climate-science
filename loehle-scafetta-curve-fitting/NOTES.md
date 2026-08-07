@@ -56,6 +56,31 @@ that draft 2 now incorporates:
 
 ## Draft changelog
 
+### Draft 2.3 (2026-08-07) — neutral-tone pass over the exercises
+- Reworded the five exercise pages and the case file's trybox/going-deeper
+  additions for a straightforward, non-confrontational register: "The game" →
+  "The exercise"; removed button emojis; "New random universe" → "New random
+  series"; "hug" → "match/fit"; "pure dice" → "randomly generated data";
+  dropped flourishes ("Gorgeous", "proud of the hug", "the R² readout
+  applauds", "the eye is a poor referee", "what a too-short window sounds
+  like", "resonance answers to tempo, not identity" reworded).
+- Ex 1: the 60-unit wave's amplitude readout now uses per-graph units
+  (±$ for the stock walk, ±m for the ridge, ±% of population, ± arbitrary
+  units for random) instead of the truncated y-axis label ("share price");
+  label renamed "Its amplitude here"; per-graph captions restated as neutral
+  observations (e.g. population: rises and dips have historical causes).
+- Ex 4: "Memorizing the past / Missing the future" meters → "Fit to the
+  past / Forecast error"; "knob" → "slider" throughout; dropped "The
+  scissors" nickname.
+- Ex 5: whisper/shout wording replaced with small/large push (the wine-glass
+  analogy retained, restated neutrally); fixed the manual-push guidance
+  ("about one gridline apart" — gridlines are 60 yr, the earlier text said
+  "a couple").
+- Kept the analogies that map tightly and already anchor the case file:
+  melody/notes (Ex 1), smoke detector (Ex 3), wine glass (Ex 5), Von
+  Neumann's elephant (Ex 4).
+- Case-file main prose untouched (its register is a separate decision).
+
 ### Draft 2.2 (2026-08-06) — “Going deeper” links
 - New case-file section (id `#going-deeper`, before the footer): curated
   external explainers for the concepts the document assumes — Fourier

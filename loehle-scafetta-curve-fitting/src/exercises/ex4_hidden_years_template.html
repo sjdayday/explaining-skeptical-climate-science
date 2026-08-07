@@ -24,16 +24,16 @@
   <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 4 of 5</b></div>
   <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-4">&larr; Back to the case file (Objection 4)</a></div>
   <h1>Flexible models must face data they've never seen</h1>
-  <p class="dek">With four parameters, the joke goes, you can fit an elephant. L&amp;S11's model had six —
-     and was never tested on data it hadn't already touched. Here you get the same temptation they had:
-     a knob that makes the past fit better and better. The future is behind a curtain.</p>
+  <p class="dek">With four parameters, the saying goes, you can fit an elephant. L&amp;S11's model had six —
+     and was never tested on data it hadn't already touched. This page offers the same choice they
+     faced: a control that makes the past fit better and better. The future is behind a curtain.</p>
 </header>
 
 <section class="part">
-  <p><b>The game:</b> the real NOAA temperature record is shown up to 2010 — the eve of the
+  <p><b>The exercise:</b> the real NOAA temperature record is shown up to 2010 — the eve of the
      paper's publication. Everything after is hidden. Your model is the claim's recipe, a straight
-     line plus waves, and the knob sets how many waves you may use. Crank it until the past is
-     memorized. Then commit, lift the curtain, and grade your forecast against what the planet
+     line plus waves, and the slider sets how many waves it may use. Raise it until the past is
+     closely fitted. Then lift the curtain and compare the forecast with what the planet
      actually did.</p>
 
   <div class="panel">
@@ -51,42 +51,44 @@
       <span class="chip c"><i style="border-top-style:dashed"></i>its forecast</span>
     </div>
     <div class="readouts">
-      <div class="readout c" style="min-width:220px"><b>Memorizing the past · R&sup2; 1850&ndash;2010</b>
+      <div class="readout c" style="min-width:220px"><b>Fit to the past · R&sup2; 1850&ndash;2010</b>
         <div class="val" id="trainval"></div><div class="meter" id="trainbar"><i></i></div></div>
-      <div class="readout r" style="min-width:220px"><b>Missing the future · avg error 2011&ndash;2025</b>
+      <div class="readout r" style="min-width:220px"><b>Forecast error · 2011&ndash;2025 average</b>
         <div class="val" id="testval">curtain down</div><div class="meter" id="testbar"><i></i></div></div>
     </div>
     <p class="cap" id="maincap"></p>
   </div>
 
   <div id="reveal-extra">
-    <h3 class="sub">The overfitting curve — every knob position, graded</h3>
+    <h3 class="sub">The overfitting curve — every slider position, graded</h3>
     <div class="panel">
-      <span class="extag r">Same experiment, all 25 knob positions at once</span>
+      <span class="extag r">Same experiment, all 25 slider positions at once</span>
       <div class="minirow">
         <div><canvas id="trainmini" class="chart"></canvas>
-          <div class="cap" style="text-align:center">memorizing the past — always improves</div></div>
+          <div class="cap" style="text-align:center">fit to the past — always improves</div></div>
         <div><canvas id="testmini" class="chart"></canvas>
-          <div class="cap" style="text-align:center">predicting the future — soon gets <b>worse</b></div></div>
+          <div class="cap" style="text-align:center">forecast of the future — soon gets <b>worse</b></div></div>
       </div>
       <div class="cap" id="minicap"></div>
     </div>
 
-    <div class="note r"><b>What this exercise shows.</b> More waves <i>always</i> memorize the
+    <div class="note r"><b>What this exercise shows.</b> More waves <i>always</i> fit the
        past better — the amber score can only go up. Prediction is another matter: past the first
-       knob positions, extra waves latch onto wiggles that were never going to repeat, and the
-       forecast degrades. Training-fit quality is cheap; it is the only currency L&amp;S11 ever
-       paid in. Their wiggle-match through 2010 reused years that had already shaped the model,
+       slider positions, extra waves attach to fluctuations that were never going to repeat, and
+       the forecast degrades. A high score on already-seen data is easy to achieve — and it is
+       the only kind of evidence L&amp;S11 offered. Their wiggle-match through 2010 reused years
+       that had already shaped the model,
        and the pre-1950 “nature-only” premise assumed the small early human effect it set out to
        prove. The only clean exam is data the model never touched — which for them began in 2011.
        For the record: rebuilt on this data, their own published recipe misses the 2011&ndash;2025
        years by <span id="lsmiss">≈0.3</span>&nbsp;°C on average, and by <span id="lsmiss24">≈0.7</span>&nbsp;°C in 2024.</div>
   </div>
 
-  <div class="note c" id="prenote"><b>Before you lift the curtain:</b> notice the feeling. Each
-     extra wave makes the curve hug the past more lovingly, and the R&sup2; readout applauds.
-     This is exactly the seduction of curve fitting — nothing in the amber score warns you that
-     you are memorizing, not understanding. Commit to a knob setting, then face the future.</div>
+  <div class="note c" id="prenote"><b>Before you lift the curtain:</b> each extra wave makes the
+     curve follow the past more closely, and the R&sup2; score rises. Nothing in that score
+     indicates whether the model has captured a real mechanism or merely absorbed the record's
+     fluctuations — that is the central problem with curve fitting as evidence. Choose a
+     setting, then check it against the future.</div>
 </section>
 
 <nav class="exnav">
@@ -188,16 +190,16 @@ function draw() {
     document.getElementById("testval").textContent = "±" + M.rmse.toFixed(2) + " °C";
     document.querySelector("#testbar i").style.width = Math.min(100, 100 * M.rmse / 0.8) + "%";
     const best = models.reduce((a, b) => (b.rmse < a.rmse ? b : a));
-    cap.innerHTML = "<b>Verdict at " + k + " wave" + (k === 1 ? "" : "s") + ":</b> past memorized to R² " +
-      M.trainR2.toFixed(2) + ", future missed by ±" + M.rmse.toFixed(2) + " °C on average. " +
-      (M.k === best.k ? "That's the best forecast on offer — and it's still poor." :
-       "Keep sliding: the amber score only rises, the teal error doesn't follow.");
+    cap.innerHTML = "<b>At " + k + " wave" + (k === 1 ? "" : "s") + ":</b> past fitted to R² " +
+      M.trainR2.toFixed(2) + "; future missed by ±" + M.rmse.toFixed(2) + " °C on average. " +
+      (M.k === best.k ? "That is the most accurate forecast this model family produces — still a substantial miss." :
+       "Move the slider: the amber score keeps rising with more waves; the forecast error does not improve with it.");
   } else {
     document.getElementById("testval").textContent = "curtain down";
     document.querySelector("#testbar i").style.width = "0%";
     cap.innerHTML = k >= KMAX
-      ? "<b>R² " + M.trainR2.toFixed(2) + ".</b> Gorgeous. Every bump of the past, memorized. Ready to face reality?"
-      : "<b>" + k + " wave" + (k === 1 ? "" : "s") + ", R² " + M.trainR2.toFixed(2) + ".</b> More waves never hurt the score — that's the trap. Slide on, or lift the curtain when you're proud of the hug.";
+      ? "<b>R² " + M.trainR2.toFixed(2) + ".</b> Nearly every bump of the past is reproduced. Lift the curtain when ready."
+      : "<b>" + k + " wave" + (k === 1 ? "" : "s") + ", R² " + M.trainR2.toFixed(2) + ".</b> Adding waves never lowers this score. Continue, or lift the curtain when you are satisfied with the fit.";
   }
   if (revealed) drawMinis(k);
 }
@@ -219,10 +221,10 @@ function drawMinis(kSel) {
   });
   const best = models.reduce((a, b) => (b.rmse < a.rmse ? b : a));
   document.getElementById("minicap").innerHTML =
-    "<b>The scissors.</b> Left: memorization rises with every wave, from R² " + models[0].trainR2.toFixed(2) +
-    " to " + models[KMAX].trainR2.toFixed(2) + ". Right: the forecast is least bad with " + best.k +
-    " wave" + (best.k === 1 ? "" : "s") + " (±" + best.rmse.toFixed(2) + " °C); every knob position after that " +
-    "is worse, and no amount of extra memorizing ever buys the accuracy back — the signature of overfitting.";
+    "<b>Left:</b> the fit to the past rises with every wave, from R² " + models[0].trainR2.toFixed(2) +
+    " to " + models[KMAX].trainR2.toFixed(2) + ". <b>Right:</b> the forecast is most accurate with " + best.k +
+    " wave" + (best.k === 1 ? "" : "s") + " (±" + best.rmse.toFixed(2) + " °C); every slider position after that " +
+    "is worse, and adding further waves never restores the accuracy — the signature of overfitting.";
 }
 
 document.getElementById("lift").addEventListener("click", () => {

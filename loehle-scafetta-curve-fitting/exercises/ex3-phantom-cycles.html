@@ -106,16 +106,16 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
   <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Exercise 3 of 5</b></div>
   <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-3">&larr; Back to the case file (Objection 3)</a></div>
   <h1>The method finds cycles in pure randomness</h1>
-  <p class="dek">This is the rebuttal's centerpiece, and you are about to run it with your own hands.
-     Below is a 10,000-year artificial world built from hundreds of waves with <i>random</i> strengths
+  <p class="dek">This is the rebuttal's centerpiece, and you can run it yourself here.
+     Below is a 10,000-year artificial series built from hundreds of waves with <i>random</i> strengths
      and timings — structured noise with no special 60-year cause. Slice off 160 years (the length of
      the real record) and run L&amp;S11's exact fit on it. See what it “discovers.”</p>
 </header>
 
 <section class="part">
-  <p><b>The game:</b> draw slices. Each press takes the next 160-year piece of the same random
+  <p><b>The exercise:</b> draw slices. Each press takes the next 160-year piece of the same random
      series and fits the full L&amp;S11 model — a 60-year wave, a 20-year wave, a straight line.
-     If the fit were an honest cycle-detector, it should report “no 60-year cycle here.”
+     If the fit were a reliable cycle-detector, it should report “no 60-year cycle here.”
      Count how many times it does.</p>
 
   <div class="panel">
@@ -123,7 +123,7 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
     <div class="controls">
       <button class="btn primary" id="draw">Draw the next 160-year slice</button>
       <button class="btn" id="runall">Run all 62 slices</button>
-      <button class="btn" id="reroll">&#127922; New random universe</button>
+      <button class="btn" id="reroll">New random series</button>
       <span class="lbl" id="seedlbl"></span>
     </div>
     <canvas id="slicechart" class="chart"></canvas>
@@ -136,7 +136,7 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
       <div class="readout"><b>True 60-yr content of the series</b><div class="val" id="trueamp"></div></div>
       <div class="readout c"><b>Same fit on the REAL record</b><div class="val" id="realamp"></div></div>
     </div>
-    <p class="cap" id="slicecap"><b>Press the button.</b> The series is scaled so its wiggliness
+    <p class="cap" id="slicecap"><b>Press the button.</b> The series is scaled so its variability
       matches the real detrended temperature record — amplitudes are directly comparable.</p>
   </div>
 
@@ -176,7 +176,7 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
 </nav>
 
 <div class="footnote"><b>Honest labels.</b> The sliced series is <b>synthetic</b>, generated in your
-  browser from the seed shown above (reproducible; “new universe” advances the seed): ~400 waves
+  browser from the seed shown above (reproducible; “New random series” advances the seed): ~400 waves
   with periods spread from 3 to 3,000 years, random strengths and phases — the recipe of the case
   file's Exhibit&nbsp;D, after Benestad et&nbsp;al.'s supporting material — standardized to match the
   real record's detrended 1850&ndash;2010 variability (NOAA data embedded at build time). The fit is
@@ -453,7 +453,7 @@ const [rsl, ric] = linfit(rT, rY);
 const obsDetrStd = std(rY.map((v, i) => v - (rsl * rT[i] + ric)));
 const ampReal = fitCycles(rT, rY, [60, 20]).amp(0);
 
-/* ---- the synthetic universe ---- */
+/* ---- the synthetic series ---- */
 const N = 10000, K = 400, SEG = 160, NSEG = Math.floor(N / SEG);
 let seed = 42, syn = null, trueAmp = 0, drawn = [], nextSlice = 0;
 
@@ -514,7 +514,7 @@ function render() {
     const ratio = a / trueAmp, pct = Math.round(100 * a / ampReal);
     const cap = document.getElementById("slicecap");
     if (drawn.length === 1)
-      cap.innerHTML = "<b>First slice, first “discovery.”</b> Pure randomness, and the fit reports a 60-year cycle of " +
+      cap.innerHTML = "<b>First slice:</b> pure randomness, and the fit reports a 60-year cycle of " +
         a.toFixed(3) + " °C — " + ratio.toFixed(1) + "× the series' true 60-year content, " + pct + "% of what the same fit finds in the real climate record.";
     else
       cap.innerHTML = "<b>Slice " + n + ":</b> “cycle” of " + a.toFixed(3) + " °C (" + ratio.toFixed(1) +
@@ -548,14 +548,14 @@ function render() {
   });
   const hc = document.getElementById("histcap");
   if (drawn.length === 0)
-    hc.innerHTML = "The dark line is the series' <b>true</b> 60-year content — what an honest detector would report every time. The amber dashed line is what the same fit finds in the real temperature record.";
+    hc.innerHTML = "The dark line is the series' <b>true</b> 60-year content — the correct answer for every slice. The amber dashed line is what the same fit finds in the real temperature record.";
   else {
     const m = mean(drawn), infl = m / trueAmp, over = drawn.filter(a => a > ampReal).length;
     hc.innerHTML = "<b>" + drawn.length + " slices:</b> reported “cycles” from " +
       Math.min(...drawn).toFixed(3) + " to " + Math.max(...drawn).toFixed(3) + " °C, average " + m.toFixed(3) +
       " °C — <b>" + infl.toFixed(0) + "× the true content</b> (dark line)." +
-      (over ? " " + over + " slice" + (over > 1 ? "s" : "") + " of pure noise beat the real record (amber)." : "") +
-      " If the fit were honest about this series, every bar would sit on the dark line.";
+      (over ? " " + over + " slice" + (over > 1 ? "s" : "") + " of pure noise exceeded the real record (amber)." : "") +
+      " A method reporting the series' actual 60-year content would place every bar on the dark line.";
   }
 }
 
@@ -569,7 +569,7 @@ document.getElementById("reroll").addEventListener("click", () => {
   current = null;
   document.getElementById("draw").disabled = false;
   document.getElementById("thisamp").textContent = "—";
-  document.getElementById("slicecap").innerHTML = "<b>New universe (seed " + seed + ").</b> Same recipe, fresh dice. Draw slices.";
+  document.getElementById("slicecap").innerHTML = "<b>New series (seed " + seed + ").</b> Same recipe, new random draws. Draw slices.";
   scv.begin([0, SEG], [-1, 1]);
   scv.axes({ xticks: [0, 40, 80, 120, 160], yticks: [], xlabel: "“year” within slice" });
   render();
