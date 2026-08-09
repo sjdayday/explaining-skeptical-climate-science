@@ -97,6 +97,31 @@ exchange (C328/C331/C338/C347) remain unmined.
 
 ## Draft changelog
 
+### Draft 4.1 (2026-08-09) — Exercise 5 push button and ramp display fixed
+- Steve's report, confirmed: the Push Now button injected a one-substep
+  impulse (Δv ≈ 0.003, ring ≈ 0.026) — ~10× too weak to see against any
+  running scenario, and its spike landed on a recorded trace sample only
+  ~1 time in 5. Now a one-year pulse (PUSH_F 0.018) sized so a single push
+  from rest rings at ≈0.17 (≈ the metronome's steady swing); it spans 4
+  trace samples (spike always visible, drawn clipped) and is excluded from
+  the forcing chart's autoscale so it doesn't flatten the other traces.
+- Charts now use fixed per-scenario scales (adaptive only if outgrown;
+  ramp's asymmetric). This removes the artifact Steve described: with
+  windowed autoscaling, a monotone ramp's newest point is always the window
+  max, so the push line rode the top edge and seemed to "flatten" as the
+  axis stretched.
+- Disclosures added (punch text + footnote): the "greenhouse ramp" is
+  radiative forcing, not CO₂ concentration (forcing ∝ log CO₂, hence
+  near-linear); it stabilizes after 240 simulated years to keep the display
+  bounded; the ramp scenario's fading 60-yr wobble is the onset transient
+  decaying at the damping time (~190 yr) while the trend passes through;
+  push-size asymmetry stated (metronome ≈ 30× smaller than ramp peak,
+  ≈ 80× smaller than the manual push). Legend chip updated (scales are
+  per-scenario, no longer "a common magnified scale").
+- Verified in-browser: push-from-silence rings at 0.159; spike spans 4
+  samples; ramp draws inside a stable frame with wobble visible; metronome
+  fills its scale with the clipped spike and a visible perturbation.
+
 ### Draft 4 (2026-08-09) — resonance attribution corrected; toolbox demo rendered
 - Steve's correction, verified: "resonance/resonant" never appears in L&S11's
   own text — the lone occurrence in the preprint is in a reference title

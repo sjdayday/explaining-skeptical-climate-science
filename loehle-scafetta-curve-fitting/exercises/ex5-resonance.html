@@ -132,7 +132,7 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
     <canvas id="forcechart" class="chart"></canvas>
     <canvas id="respchart" class="chart"></canvas>
     <div class="legend">
-      <span class="chip c"><i></i>the push (drawn on its own magnified scale; the metronome's push is the smallest)</span>
+      <span class="chip c"><i></i>the push (each scenario has its own scale; the manual push draws as a clipped spike)</span>
       <span class="chip r"><i></i>the system's response</span>
     </div>
     <div class="readouts">
@@ -171,9 +171,16 @@ input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer
 
 <div class="footnote"><b>Honest labels.</b> Fully <b>schematic</b>: a standard damped harmonic
   oscillator (natural period 60 “years,” quality factor Q&nbsp;=&nbsp;10) integrated live in your
-  browser — the textbook demonstration Benestad et&nbsp;al. used, not a climate model. The three
-  pushes are drawn on a common magnified scale; the metronome's is the <i>weakest</i>, which is the
-  claim's own premise (planetary nudges are tiny). What transfers to the real debate is the
+  browser — the textbook demonstration Benestad et&nbsp;al. used, not a climate model. The push
+  chart uses a separate scale for each scenario, because the pushes differ enormously in size:
+  the metronome's peak is roughly 30&times; smaller than the greenhouse ramp's and 80&times;
+  smaller than the manual push — on a common scale it would vanish, and that asymmetry is the
+  claim's own premise (planetary nudges are tiny). The “greenhouse ramp” is radiative
+  <i>forcing</i>, not CO&#8322; concentration — forcing grows like the logarithm of
+  concentration, hence near-linearly — and it stabilizes after 240 simulated years so the
+  display stays bounded. The manual push is a one-year pulse, sized so a single push from rest
+  rings at roughly the metronome scenario's amplitude; its spike is drawn clipped and is
+  excluded from the push chart's autoscale. What transfers to the real debate is the
   principle: a resonance amplifies any forcing near its frequency and transmits slow trends
   regardless of their origin — it cannot be selectively deaf to one cause.
   <br><b>Learn more:</b>
@@ -437,13 +444,24 @@ function debounceRedraw(fn) {
 /* damped driven oscillator:  x'' = -w^2 x - 2 z w x' + F(t) */
 const P0 = 60, W0 = 2 * Math.PI / P0, ZETA = 0.05;
 const DT = 0.05, YRS_PER_SEC = 42, SAMPLE = 0.25, SPANV = 300;
-let t = 0, x = 0, v = 0, mode = "metro", fNoise = 0, impulse = 0;
+let t = 0, x = 0, v = 0, mode = "metro", fNoise = 0, pushUntil = -1;
 let rand = mulberry32(2026);
 const hist = [];           // {t, F, x} every SAMPLE years
 
 /* the ramp climbs for 240 years then holds (a stabilized-forcing scenario),
    so the display stays sane no matter how long the page runs */
 const FSCALE = { metro: 0.00022, noiseSig: 0.00095, noiseA: 0.995, ramp: 2.6e-5, rampYears: 240 };
+/* manual push: a one-year pulse, sized so a single push from rest rings the
+   system at roughly the metronome scenario's steady amplitude */
+const PUSH_F = 0.018, PUSH_YRS = 1.0;
+/* fixed chart scales per scenario (adaptive only if the response outgrows
+   them); the ramp's are asymmetric because its response is one-sided */
+const SCALES = {
+  metro: { f: 0.0003, x: 0.42 },
+  noise: { f: 0.0035, x: 0.45 },
+  ramp:  { f: 0.007, flo: -0.0008, xhi: 0.72, xlo: -0.12 },
+  off:   { f: 0.0004, x: 0.2 },
+};
 
 function forcing() {
   let F = 0;
@@ -452,6 +470,7 @@ function forcing() {
     fNoise = FSCALE.noiseA * fNoise + FSCALE.noiseSig * Math.sqrt(1 - FSCALE.noiseA ** 2) * gaussian(rand);
     F = fNoise;
   } else if (mode === "ramp") F = FSCALE.ramp * Math.min(Math.max(0, t - tModeStart), FSCALE.rampYears);
+  if (t < pushUntil) F += PUSH_F;
   return F;
 }
 let tModeStart = 0;
@@ -460,13 +479,12 @@ function stepSim(dtWall) {
   let n = Math.round(dtWall * YRS_PER_SEC / DT);
   n = Math.min(n, 400);
   for (let i = 0; i < n; i++) {
-    const F = forcing() + impulse;
-    impulse = 0;
+    const F = forcing();
     v += (-W0 * W0 * x - 2 * ZETA * W0 * v + F) * DT;
     x += v * DT;
     t += DT;
     if (hist.length === 0 || t - hist[hist.length - 1].t >= SAMPLE - 1e-9) {
-      hist.push({ t, F, x });
+      hist.push({ t, F, x, p: t < pushUntil });
       if (hist.length > Math.ceil(SPANV / SAMPLE) + 8) hist.shift();
     }
   }
@@ -504,8 +522,12 @@ function frame(wall) {
   const t0 = Math.max(0, t - SPANV);
   const ts = hist.map(h => h.t), Fs = hist.map(h => h.F), xs = hist.map(h => h.x);
 
-  const fmax = Math.max(0.0004, ...Fs.map(Math.abs)) * 1.2;
-  fcv.begin([t0, Math.max(SPANV, t)], [-fmax, fmax]);
+  /* fixed per-scenario scales; the manual push's spike is excluded from the
+     forcing autoscale so it draws clipped rather than flattening the trace */
+  const sc = SCALES[mode];
+  const fBase = hist.reduce((m, h) => (h.p ? m : Math.max(m, Math.abs(h.F))), 0);
+  const fmax = Math.max(sc.f, 1.15 * fBase);
+  fcv.begin([t0, Math.max(SPANV, t)], [sc.flo !== undefined ? sc.flo : -fmax, fmax]);
   fcv.axes({ xticks: [], yticks: [] });
   fcv.clipPlot(() => {
     for (let g = Math.ceil(t0 / 60) * 60; g <= t; g += 60) fcv.vline(g, { color: C.hair });
@@ -514,8 +536,15 @@ function frame(wall) {
   });
   fcv.text("the push", t0 + 4, fmax * 0.72, { color: C.claimDeep, font: "10.5px" });
 
-  const xmax = Math.max(0.15, ...xs.map(Math.abs)) * 1.15;
-  rcv.begin([t0, Math.max(SPANV, t)], [-xmax, xmax]);
+  let xlo, xmax;
+  if (mode === "ramp") {
+    xmax = Math.max(sc.xhi, 1.15 * xs.reduce((m, v2) => Math.max(m, v2), 0));
+    xlo = Math.min(sc.xlo, 1.15 * xs.reduce((m, v2) => Math.min(m, v2), 0));
+  } else {
+    xmax = Math.max(sc.x, 1.15 * xs.reduce((m, v2) => Math.max(m, Math.abs(v2)), 0));
+    xlo = -xmax;
+  }
+  rcv.begin([t0, Math.max(SPANV, t)], [xlo, xmax]);
   rcv.axes({ xticks: ticks(t0, Math.max(SPANV, t), 6).map(Math.round), yticks: [],
              xlabel: "simulated year" });
   rcv.clipPlot(() => {
@@ -537,13 +566,13 @@ function frame(wall) {
 const PUNCH = {
   metro: "<b>The claim's mechanism, working as described:</b> a small push — note the scale of the amber trace — repeated at the system's own tempo builds a large 60-year swing. Resonance is real. Now try the other pushes; the claim requires them to fail.",
   noise: "<b>No rhythm in, rhythm out.</b> These pushes are random, with no 60-year cause anywhere, yet the response oscillates at roughly 60 years — that is the system's natural period. A 60-year oscillation in a record indicates a resonant system, not necessarily a 60-year cause.",
-  ramp: "<b>The large push gets through.</b> A steadily growing push — the shape of greenhouse forcing — and the system rides it upward while still oscillating. The resonance does not filter it out. Trends and oscillations coexist; finding the oscillation subtracts nothing from the trend.",
+  ramp: "<b>The large push gets through.</b> This push is the radiative forcing from added greenhouse gases — it grows like the logarithm of the CO&#8322; concentration, which rises near-linearly while concentrations grow exponentially. (Here it climbs for 240 simulated years, then stabilizes, so the display stays bounded.) The system rides it upward; the 60-year wobble is the transient from the ramp's onset and fades at the system's damping time, while the trend passes straight through. Trends and oscillations coexist; finding the oscillation subtracts nothing from the trend.",
   off: "<b>Silence.</b> The ringing fades at the system's own 60-year period — the aftereffect of earlier pushes, whatever their source.",
-  push: "<b>These pushes come from your mouse, not a planet.</b> Tap roughly every 60 simulated years (about one gridline apart) and the swing builds just as it does for the metronome — resonance responds to timing, not to the source.",
+  push: "<b>These pushes come from your mouse, not a planet.</b> Each press is a one-year pulse, strong enough to ring the system on its own — watch the response react in any scenario. Tap roughly every 60 simulated years (about one gridline apart) and the swing builds; tap off-tempo and your pushes work against each other — resonance responds to timing, not to the source.",
 };
 function setMode(m, label) {
   /* fresh start for each demonstration: reset clock, oscillator, and traces */
-  mode = m; t = 0; tModeStart = 0; x = 0; v = 0; fNoise = 0; hist.length = 0;
+  mode = m; t = 0; tModeStart = 0; x = 0; v = 0; fNoise = 0; pushUntil = -1; hist.length = 0;
   for (const id of ["f-metro", "f-noise", "f-ramp", "f-off"])
     document.getElementById(id).classList.toggle("on", { "f-metro": "metro", "f-noise": "noise", "f-ramp": "ramp", "f-off": "off" }[id] === m);
   document.getElementById("ftype").textContent = label;
@@ -554,7 +583,8 @@ document.getElementById("f-noise").addEventListener("click", () => setMode("nois
 document.getElementById("f-ramp").addEventListener("click", () => setMode("ramp", "greenhouse ramp"));
 document.getElementById("f-off").addEventListener("click", () => setMode("off", "silence"));
 document.getElementById("f-push").addEventListener("click", () => {
-  impulse = 0.055; document.getElementById("punch").innerHTML = PUNCH.push;
+  pushUntil = t + PUSH_YRS;
+  document.getElementById("punch").innerHTML = PUNCH.push;
 });
 
 setMode("metro", "planetary metronome");
