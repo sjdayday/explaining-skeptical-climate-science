@@ -65,11 +65,11 @@ Exhibit captions together.
 ## Sources (`sources/`)
 
 - `loehlescafetta1206_5845v1.pdf` — true PDF, the L&S11 arXiv preprint.
-- `Learningfrommistakesinclimateresearchs0070401515975.pdf` and
-  `benestadetalnccSM2014.pdf` — **zip archives despite the .pdf names**
-  (per-page `{n}.txt` + `{n}.jpeg`). Unzip to read; concatenate the .txt
-  files in numeric order for full text. Table S3 of the SM (pages 64–67)
-  is image-only.
+- `Learningfrommistakesinclimateresearchs0070401515975.pdf` — **zip archive
+  despite the .pdf name** (per-page `{n}.txt` + `{n}.jpeg`); unzip to read.
+- The SM (`benestadetalnccSM2014.pdf`, same zip format; Table S3 pp. 64–67
+  image-only) moved to the repo root `../sources/` — it is shared across
+  case files.
 - `esdd-open-review/` — the 2013 ESDD public-review defenses (Loehle C253,
   Benestad C258, Scafetta C318, Matthews C304; CC-BY extracted texts + full
   roster with PDF URL pattern). The case file's "Four defenses, four answers"
@@ -95,6 +95,10 @@ ratio ≈380× under an 11-yr forcing (check fig6 diagnostics in build output).
 
 ## Next in the series
 
-Sibling directories under `climate-explain/`: Humlum et al. (2011)
-discarded ice-core data; Douglass et al. (2007) statistical-interval
-mix-up. Follow the same case-file structure and conventions.
+Sibling directories under `climate-explain/`:
+- `humlum-greenland-ice-core/` — Case 02 (Humlum, Solheim & Stordahl 2011,
+  discarded GISP2 data), **in progress** (draft 1; see its CLAUDE.md and
+  NOTES.md — primary PDF still wanted).
+- Douglass et al. (2007) statistical-interval mix-up, planned as Case 03.
+Shared reference documents (the Benestad et al. SM) live in the repo root
+`sources/`. Follow the same case-file structure and conventions.

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File 02 — The 4,000-Year Window</title>
+<style>
+  :root{
+    --paper:#F7FAFB; --card:#FFFFFF; --ink:#1B2A3A; --ink-soft:#44586C;
+    --claim:#C7772E; --claim-tint:#FBF1E4; --claim-deep:#9A5A1F;
+    --rebut:#0E7C7B; --rebut-tint:#E4F1F0; --rebut-deep:#0A5C5B;
+    --grey:#7C8B99; --hair:#DFE6EC;
+    --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:780px;margin:0 auto;padding:0 22px 90px}
+
+  header{padding:58px 0 8px;position:relative}
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--grey);
+           text-transform:uppercase;margin-bottom:18px}
+  .eyebrow b{color:var(--ink);font-weight:600}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(34px,6vw,52px);
+     line-height:1.06;margin:0 0 18px;letter-spacing:-0.01em}
+  .dek{font-family:var(--serif);font-size:20px;line-height:1.5;color:var(--ink-soft);
+       max-width:640px;margin:0 0 26px}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;border-top:1px solid var(--hair);
+        border-bottom:1px solid var(--hair);padding:13px 0;font-size:13px;color:var(--ink-soft)}
+  .meta span b{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;display:block;
+               text-transform:uppercase;margin-bottom:2px}
+  .meta .c b{color:var(--claim-deep)} .meta .r b{color:var(--rebut-deep)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:16px 0 0;font-size:12.5px;color:var(--ink-soft)}
+  .chip{display:inline-flex;align-items:center;gap:7px}
+  .chip i{width:22px;height:0;border-top:3px solid;border-radius:2px;display:inline-block}
+  .chip.c i{border-color:var(--claim)} .chip.r i{border-color:var(--rebut)}
+  .chip.k i{border-color:var(--ink)} .chip.g i{border-color:var(--grey)}
+
+  .dossier{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:40px 0 8px;
+           border:1px solid var(--hair);border-radius:10px;overflow:hidden;background:var(--card)}
+  .dossier>div{padding:22px 24px 24px}
+  .dossier .claimside{background:var(--claim-tint);border-right:1px solid var(--hair)}
+  .dossier .rebutside{background:var(--rebut-tint)}
+  .dossier h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+              margin:0 0 10px}
+  .claimside h3{color:var(--claim-deep)} .rebutside h3{color:var(--rebut-deep)}
+  .dossier p{margin:0;font-size:15px;line-height:1.58}
+  @media(max-width:620px){.dossier{grid-template-columns:1fr}
+    .dossier .claimside{border-right:none;border-bottom:1px solid var(--hair)}}
+
+  .part{margin-top:64px}
+  .partlabel{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+  .partlabel .no{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--grey)}
+  h2{font-family:var(--serif);font-size:30px;line-height:1.15;margin:0 0 6px;letter-spacing:-0.005em}
+  .part.claim h2{color:var(--claim-deep)} .part.rebut h2{color:var(--rebut-deep)}
+  .partrule{height:3px;border-radius:2px;margin:10px 0 26px;background:var(--hair)}
+  .part.claim .partrule{background:linear-gradient(90deg,var(--claim) 0 120px,var(--hair) 120px)}
+  .part.rebut .partrule{background:linear-gradient(90deg,var(--rebut) 0 120px,var(--hair) 120px)}
+  .part.aftermath .partrule{background:linear-gradient(90deg,var(--ink) 0 120px,var(--hair) 120px)}
+
+  h3.sub{font-family:var(--serif);font-size:20.5px;margin:34px 0 10px}
+  .part p{margin:0 0 16px;max-width:700px}
+  .part.claim h3.sub{color:var(--claim-deep)} .part.rebut h3.sub{color:var(--rebut-deep)}
+
+  .rpoint{border-left:3px solid var(--rebut);padding:2px 0 2px 18px;margin:30px 0 22px}
+  .rpoint .tag{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--rebut-deep);
+               text-transform:uppercase;display:block;margin-bottom:4px}
+  .rpoint h3{font-family:var(--serif);font-size:20.5px;margin:0 0 10px}
+
+  figure{margin:30px 0 34px;background:var(--card);border:1px solid var(--hair);
+         border-radius:10px;padding:18px 18px 14px}
+  figure img{width:100%;height:auto;display:block;border-radius:4px}
+  .extag{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+         display:inline-block;margin-bottom:10px;padding:3px 9px;border-radius:3px}
+  .claim .extag, .extag.c{background:var(--claim-tint);color:var(--claim-deep)}
+  .rebut .extag, .extag.r{background:var(--rebut-tint);color:var(--rebut-deep)}
+  .extag.k{background:#E8EDF2;color:var(--ink)}
+  figcaption{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:12px}
+  figcaption b{color:var(--ink)}
+
+  .note{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--grey);
+        border-radius:8px;padding:14px 18px;font-size:14px;color:var(--ink-soft);margin:22px 0}
+  .note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
+  .note b{color:var(--ink)}
+
+  blockquote.src{font-family:var(--serif);font-size:16px;line-height:1.55;color:var(--ink);
+                 background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--claim);
+                 border-radius:8px;margin:12px 0;padding:12px 16px;max-width:700px}
+  blockquote.src cite{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+                      color:var(--grey);margin-top:8px;font-style:normal}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0 8px;background:var(--card);
+        border:1px solid var(--hair);border-radius:10px;overflow:hidden}
+  th,td{padding:11px 14px;vertical-align:top;text-align:left;border-bottom:1px solid var(--hair)}
+  tr:last-child td{border-bottom:none}
+  thead th{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+           background:#F1F5F8;color:var(--ink-soft)}
+  thead th.cc{color:var(--claim-deep)} thead th.rr{color:var(--rebut-deep)}
+  td.q{font-weight:600;width:24%;font-size:13.5px}
+
+  ul.points{padding-left:0;list-style:none;margin:14px 0}
+  ul.points li{position:relative;padding:0 0 0 26px;margin:0 0 12px;max-width:700px}
+  ul.points li::before{content:"—";position:absolute;left:0;color:var(--rebut);font-weight:700}
+
+  .footer{margin-top:70px;border-top:1px solid var(--hair);padding-top:22px;
+          font-size:13px;color:var(--ink-soft)}
+  .footer h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+             color:var(--ink);margin:22px 0 8px}
+  .footer p{margin:0 0 10px;max-width:720px}
+  a{color:var(--rebut-deep);text-decoration-color:var(--hair);text-underline-offset:3px}
+  a:hover{text-decoration-color:var(--rebut)}
+
+  @media print{
+    body{background:#fff;font-size:11.5pt}
+    .sheet{max-width:100%;padding:0}
+    figure,.dossier,.note,table{break-inside:avoid;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Skeptic papers, examined · <b>Case file 02</b> · Selective use of data</div>
+  <h1>The 4,000-Year<br>Window</h1>
+  <p class="dek">How a 2011 paper found three long natural cycles in the most recent slice of a
+     50,000-year ice-core record — and what the fitted curve did when it met the 46,000 years
+     the paper set aside.</p>
+  <div class="meta">
+    <span class="c"><b>The claim</b>Humlum, Solheim &amp; Stordahl (2011), <i>Global and Planetary Change</i></span>
+    <span class="r"><b>The rebuttal</b>Benestad et&nbsp;al. (2016), <i>Theor.&nbsp;Appl.&nbsp;Climatol.</i>, supporting material, “Selective use of data”</span>
+    <span><b>Status</b>Draft 1 · primary PDF pending; steel-man sourced from the rebuttal’s quotations and the companion Svalbard paper</span>
+  </div>
+  <div class="legend" aria-label="Color key used throughout">
+    <span class="chip c"><i></i>the claim &amp; its model</span>
+    <span class="chip r"><i></i>the rebuttal’s demonstrations</span>
+    <span class="chip k"><i></i>the data the paper used</span>
+    <span class="chip g"><i></i>the data the paper set aside</span>
+  </div>
+</header>
+
+<div class="dossier">
+  <div class="claimside">
+    <h3>The claim, in brief</h3>
+    <p>Greenland’s GISP2 ice core shows that the recent past is governed by long natural
+       cycles — about 2,800, 1,190, and 560 years — plausibly of solar and lunar origin.
+       Fitted to the last 4,000 years, these cycles reproduce the record well and permit
+       “testable forecasts of future climate”: natural variation, not greenhouse gases, is
+       the dominant driver, and natural cooling lies ahead. A companion paper by the same
+       authors forecast Svalbard’s annual mean to fall by 3.5&nbsp;±&nbsp;2&nbsp;°C over
+       solar cycle 24.</p>
+  </div>
+  <div class="rebutside">
+    <h3>The rebuttal, in brief</h3>
+    <p>The same public data file continues for another ~46,000 years — 92% of the record’s
+       span — and the paper set that part aside. Extend the fitted curve into the discarded
+       era and it fails at once: a fit with a 0.3&nbsp;°C error inside its window misses by
+       2–4&nbsp;°C outside it, within the same climate epoch. A sum of waves can always be
+       made to fit a finite stretch of data; the only honest test is data the fit never
+       touched, and this fit had 46,000 years of it waiting.</p>
+  </div>
+</div>
+
+<!-- ================================================================ PART 1 -->
+<section class="part claim">
+  <div class="partlabel"><span class="no">PART ONE</span></div>
+  <h2>The original argument, at its strongest</h2>
+  <div class="partrule"></div>
+
+  <p>In 2011, Ole Humlum, Jan-Erik Solheim and Kjell Stordahl — a Norwegian trio of a
+     physical geographer, an astrophysicist, and a statistician — published “Identifying
+     natural contributions to late Holocene climate change” in <i>Global and Planetary
+     Change</i>. The paper analyzed one of the most celebrated datasets in paleoclimate: the
+     GISP2 ice core from the summit of the Greenland ice sheet, whose oxygen isotopes yield a
+     temperature reconstruction reaching back through the entire last ice age.</p>
+
+  <h3 class="sub">The intuition</h3>
+  <p>If climate is shaped by slow natural rhythms — the Sun’s long activity cycles, tidal
+     cycles of the Moon — then a record spanning millennia is where they should appear. Find
+     the rhythms, and two things follow: the recent warming can be placed in its natural
+     context, and the rhythms can be extended forward as a forecast. The authors examined the
+     most recent 4,000 years of the GISP2 series and, using wavelet analysis, identified
+     three dominant long cycles with periods near <b>2,804, 1,186, and 556 years</b>. (They
+     ran the same machinery on the much shorter Svalbard thermometer record, finding cycles
+     of 68.4, 25.7, and 16.8 years there.) Their stated reason for the 4,000-year window, as
+     quoted in the rebuttal:</p>
+
+  <blockquote class="src">“[They] chose to focus on the most recent 4000 years of the GISP2
+    series, as the main thrust of [their] investigation is on climatic variations in the
+    recent past and their potential for forecasting the near future.”
+    <cite>HSS11a, as quoted in the Benestad et&nbsp;al. supporting material, p. 5
+    (pronouns adapted)</cite></blockquote>
+
+  <figure>
+    <span class="extag">Exhibit A · Their procedure, re-created</span>
+    <img src="{{FIG2}}" alt="GISP2 temperature over the most recent 4,000 years, with a three-cycle-plus-trend model fitted to it; the curve tracks the data closely.">
+    <figcaption><b>Inside the window, the model earns its keep.</b> The real GISP2 series
+      (most recent 4,000 years, ink) with our re-creation of the fit (amber): three sinusoids
+      with the periods fixed at their values — 2,804, 1,186, 556 years — plus a linear trend,
+      amplitudes and phases chosen by least squares. It explains 85% of the variance
+      (R²&nbsp;0.85), with a typical error of 0.30&nbsp;°C. The Medieval-era warmth, the
+      cooling into the Little Ice Age — the curve traces them. <b>Method note:</b> HSS11a's
+      own analysis was wavelet-based; this is the supporting material's Fourier re-creation
+      (its function <code>Humlum.et.al.2011()</code>), with their periods imposed.</figcaption>
+  </figure>
+
+  <h3 class="sub">What they concluded</h3>
+  <p>The cycles, the authors argued, are natural — plausibly linked to solar activity and
+     lunar tidal rhythms — and they dominate the record. On that basis the paper offered what
+     it called “testable forecasts of future climate,” extending the fitted cycles forward
+     and estimating, in the rebuttal’s quotation, “a realistic forecasting time range of
+     about 10–25% of the total record length.” The implication: the coming decades belong to
+     the cycles’ downswing — natural cooling or stasis, not accelerating greenhouse
+     warming.</p>
+  <p>The same author cluster put a number on it. In the companion paper in this case’s
+     <code>sources/</code> folder — “Solar Activity and Svalbard Temperatures,” which builds
+     directly on HSS11a’s Svalbard cycles — they modeled Arctic temperatures against the
+     length of the solar cycle, reported that “60 per cent of the annual and winter
+     temperature variations are explained by solar activity,” and concluded:</p>
+
+  <blockquote class="src">“We predict an annual mean temperature decrease for Svalbard of
+    3.5&nbsp;±&nbsp;2°C from solar cycle 23 to solar cycle 24 (2009–20) and a decrease in
+    the winter temperature of ≈6°C.”
+    <cite>Solheim, Stordahl &amp; Humlum, Adv. Meteorology (2011), abstract</cite></blockquote>
+
+  <div class="note c"><b>Why it persuaded people.</b> It has the ingredients that made Case
+     File 01’s paper persuasive, on a grander canvas: real, respected data; simple visible
+     rhythms; and the confidence of a falsifiable forecast. A 50,000-year ice core feels like
+     the deep context that thermometer records lack — and a paper saying “we found the
+     natural cycles in it” borrows that depth.</div>
+
+  <div class="note"><b>Sourcing caveat for this draft.</b> The HSS11a PDF is not yet in this
+     case’s <code>sources/</code>. Every statement above about the paper is traceable to the
+     rebuttal’s direct quotations of it or to the companion Svalbard paper (which cites
+     HSS11a as its ref.&nbsp;[3] and summarizes its Svalbard results). When the primary PDF
+     arrives, this steel-man will be rechecked against the authors’ own words — the same
+     standard Case File 01 followed.</div>
+</section>
+
+<!-- ================================================================ PART 2 -->
+<section class="part rebut">
+  <div class="partlabel"><span class="no">PART TWO</span></div>
+  <h2>The rebuttal: the window and what it left out</h2>
+  <div class="partrule"></div>
+
+  <p>Benestad and colleagues re-ran the analysis in their 2016 replication study of 38
+     contrarian papers, filing this one under <i>selective use of data</i>. Their objections
+     build on each other, and the centerpiece needs no statistics at all.</p>
+
+  <div class="rpoint" id="objection-1">
+    <span class="tag">Objection 1</span>
+    <h3>Most of the data was set aside</h3>
+    <p>The GISP2 temperature file is a single public download spanning nearly 50,000 years.
+       The paper used the most recent 4,000 — 8% of the record’s span — and its authors knew
+       the rest well: the rebuttal notes that Humlum had co-authored a popular technical
+       article the same year presenting exactly the part of the record that the paper set
+       aside. The stated reason (an interest in “the recent past”) explains the choice of
+       emphasis; it does not explain why 46,000 years of the same variable from the same
+       instrument were not used for the one thing discarded data is perfect for — testing
+       the model.</p>
+  </div>
+
+  <figure>
+    <span class="extag k">Exhibit B · The whole file</span>
+    <img src="{{FIG1}}" alt="The full 50,000-year GISP2 record with the small recent window used by the paper highlighted; the vast majority of the record lies outside it, including the ice age.">
+    <figcaption><b>One data file.</b> The full GISP2 temperature reconstruction (ink), from
+      49,981 to 95 years before 1950. The amber band is the paper’s 4,000-year window — 395
+      of the file’s 1,631 samples, 8% of its span. Everything to the left, including the end
+      of the last ice age and the early Holocene, was set aside.</figcaption>
+  </figure>
+
+  <div class="rpoint" id="objection-2">
+    <span class="tag">Objection 2</span>
+    <h3>Extended into the discarded data, the fit fails at once</h3>
+    <p>This is the rebuttal’s centerpiece, and it is Case File 01’s lesson applied with a
+       larger hammer: the honest test of a fitted curve is data it never touched. Here the
+       test data did not have to be awaited — it was sitting in the same file. The rebuttal
+       extended the fitted three-cycle model backward into the discarded era, in two
+       variants: keeping the fitted trend, and — to give the model its best chance —
+       zeroing the trend. Within the calibration window the fit misses by 0.3&nbsp;°C on
+       average. Across the rest of the Holocene — the same interglacial climate, no ice-age
+       excuse available — it misses by 4.5&nbsp;°C (trend kept) or 2.4&nbsp;°C (trend
+       zeroed), and its errors are worse than knowing nothing but the average would be. As
+       the rebuttal put it: the authors “did produce a testable forecast of the past climate”
+       — and the past falsified it.</p>
+  </div>
+
+  <figure>
+    <span class="extag r">Exhibit C · The test the file already contained</span>
+    <img src="{{FIG3}}" alt="The Holocene portion of GISP2 with the fitted curve inside its window and two extensions into the discarded data, both diverging badly from the grey discarded observations.">
+    <figcaption><b>The reveal.</b> The used data (ink), the discarded Holocene data (grey),
+      the fit inside its window (amber solid), and the two extensions (amber dashed: trend
+      kept, RMSE 4.5&nbsp;°C; amber dotted: trend zeroed, RMSE 2.4&nbsp;°C — against
+      0.3&nbsp;°C inside the window). This reproduces the supporting material’s Figure S1 on
+      the same NOAA data file its footnote cites. A model whose validity ends at its
+      calibration boundary is a description of that boundary’s contents, not of
+      climate.</figcaption>
+  </figure>
+
+  <div class="rpoint" id="objection-3">
+    <span class="tag">Objection 3</span>
+    <h3>A sum of waves always fits — the finding is the fitting</h3>
+    <p>Case File 01 established this in detail: any finite record can be rebuilt from a sum
+       of sinusoids, so a good in-window fit carries no information about causes. The
+       rebuttal makes the textbook point directly — a Fourier representation is valid only
+       within the fitted interval and is “mathematically bound to extend periodic
+       regularity” beyond it, with no predictive warrant. It adds a technical caution
+       specific to this paper’s method: wavelet results near a record’s end-points are
+       sensitive to subjective boundary-condition choices, and the end-point here is
+       precisely where the paper’s forecast lives. (For a hands-on demonstration of waves
+       fitting anything, see Case File 01’s
+       <a href="../loehle-scafetta-curve-fitting/exercises/ex1-waves.html">Exercise 1</a> —
+       and its Objection 1, which this objection is the sequel to.)</p>
+  </div>
+
+  <div class="rpoint" id="objection-4">
+    <span class="tag">Objection 4</span>
+    <h3>The physics would need the Sun and Moon to begin working 4,000 years ago</h3>
+    <p>Taking the model at face value creates a physical absurdity that the rebuttal states
+       plainly: if the three cycles are driven by the Sun and the Moon, the drivers did not
+       exist only in the last 4,000 years. The extension test shows the cycles absent from
+       the earlier Holocene — so either the Sun and Moon “had no effect on the Greenland
+       temperature in the ea[r]ly part of the Holocene, but suddenly started to play a role
+       for the last 4000 years,” or the cycles are not what the paper says they are. There
+       is no third option in the paper. And as in Case File 01, a genuine natural cycle
+       would in any case ride on top of greenhouse warming rather than replace it — finding
+       a wiggle subtracts nothing from a trend.</p>
+  </div>
+
+  <div class="rpoint" id="objection-5">
+    <span class="tag">Objection 5</span>
+    <h3>One borehole, ending in 1855</h3>
+    <p>Two facts about the record itself bound what any analysis of it can say about
+       modern, global climate. First, GISP2 is one location — the summit of the Greenland
+       ice sheet — and central-Greenland temperature is not global temperature; regional
+       records swing harder than the global mean. Second, the reconstruction’s ages count
+       back from 1950, and its youngest sample is ≈95 years before that: <b>the series
+       ends around 1855</b>. A paper using it to put “the recent past” in context is
+       working from a record that stops before essentially all of the modern warming
+       occurred. Neither fact is hidden — both are in the data file’s own header — but
+       neither survives into the claim’s framing.</p>
+  </div>
+
+  <figure>
+    <span class="extag k">Exhibit D · Where the record ends</span>
+    <img src="{{FIG4}}" alt="The most recent 2,000 years of GISP2 in calendar years, ending around 1855, marked to show that modern warming postdates the record.">
+    <figcaption><b>The youngest ice.</b> The most recent 2,000 years of GISP2 on a calendar
+      axis. In this file “present” means 1950 by radiocarbon convention, and the youngest
+      sample is ≈1855 CE — the record’s Little-Ice-Age-cold endpoint predates modern
+      warming. Any comparison between GISP2’s past and “today” has to splice on a
+      thermometer era the core itself never saw.</figcaption>
+  </figure>
+
+  <div class="note r"><b>The verdict in the study’s taxonomy.</b> Benestad et&nbsp;al. class
+     the paper between logic types&nbsp;B (wrong premises) and&nbsp;D (incomplete premises),
+     under the heading <i>selective use of data</i>: the discarded 46,000 years were never
+     used to evaluate the model, the fit is a Fourier exercise with no predictive warrant,
+     and the proposed physics is inconsistent with the record it was fitted to. Their
+     analysis is reproducible via the open R package <code>replicationDemos</code>
+     (function <code>Humlum.et.al.2011()</code>), and this case file’s figures re-run it
+     on the same NOAA data file.</div>
+</section>
+
+<!-- ================================================================ PART 3 -->
+<section class="part aftermath" id="part-three">
+  <div class="partlabel"><span class="no">PART THREE</span></div>
+  <h2>What happened after publication</h2>
+  <div class="partrule"></div>
+
+  <p>The GISP2 paper’s forecast content was directional — natural cycles implying cooling or
+     stasis ahead. But the companion Svalbard paper made the cluster’s prediction concrete
+     and dated: an annual-mean <b>drop of 3.5&nbsp;±&nbsp;2&nbsp;°C</b> at Svalbard from
+     solar cycle 23 to solar cycle 24 (given as 2009–20), and winters colder by about
+     6&nbsp;°C. Solar cycle 24 has now come and gone. Svalbard did not cool by three and a
+     half degrees; the archipelago instead recorded some of the fastest warming measured
+     anywhere on Earth over precisely that period, with record-warm years in the middle of
+     the forecast window. A quantitative verification exhibit from the Svalbard Airport
+     station series is planned for the next draft (see <code>NOTES.md</code>); the
+     qualitative verdict is not in doubt.</p>
+  <p>The deeper aftermath is the one the record itself supplies. The claim’s framing — put
+     recent climate in the context of natural cycles — used a record that ends around 1855.
+     The century and a half of instrumental data since, the part where the anthropogenic
+     signal lives, is exactly the part the ice core cannot see. And the part of the ice core
+     the paper could see but set aside is exactly the part that falsifies its model. Between
+     the two exclusions, the conclusion was never at risk from any data the paper
+     examined.</p>
+</section>
+
+<!-- ================================================================ side by side -->
+<section class="part">
+  <div class="partlabel"><span class="no">SIDE BY SIDE</span></div>
+  <h2>The two arguments at a glance</h2>
+  <div class="partrule"></div>
+  <table>
+    <thead><tr><th>Question</th><th class="cc">Humlum, Solheim &amp; Stordahl 2011</th><th class="rr">Benestad et&nbsp;al. 2016</th></tr></thead>
+    <tbody>
+      <tr><td class="q">What was analyzed?</td>
+          <td>The most recent 4,000 years of the GISP2 record, by wavelet analysis; three cycles (≈2,804, 1,186, 556 yr) identified as dominant.</td>
+          <td>The same file continues ~46,000 years further back; 92% of the record’s span was set aside without being used to test the model.</td></tr>
+      <tr><td class="q">What does the fit show?</td>
+          <td>The three cycles plus a trend reproduce the window well and support “testable forecasts of future climate.”</td>
+          <td>In-window fit R² 0.85 (RMSE 0.3 °C) collapses to RMSE 2.4–4.5 °C in the discarded Holocene — worse than using the average. A Fourier sum always fits its own window.</td></tr>
+      <tr><td class="q">The physics?</td>
+          <td>The cycles are plausibly solar and lunar in origin.</td>
+          <td>Then they should exist before 4,000 years ago — and the discarded data shows they do not. The proposed drivers cannot have switched on recently.</td></tr>
+      <tr><td class="q">The forecast?</td>
+          <td>Natural cooling ahead; companion paper: Svalbard −3.5 ± 2 °C over solar cycle 24.</td>
+          <td>Svalbard instead warmed rapidly through cycle 24 — among the fastest warming measured anywhere.</td></tr>
+      <tr><td class="q">The record’s reach?</td>
+          <td>Used to put recent climate change in natural context.</td>
+          <td>One central-Greenland site, youngest sample ≈1855 CE: the record stops before essentially all modern warming.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ================================================================ in brief -->
+<section class="part">
+  <div class="partlabel"><span class="no">IN BRIEF</span></div>
+  <h2>The argument in five sentences</h2>
+  <div class="partrule"></div>
+  <ul class="points">
+    <li>The paper fitted three long cycles to the most recent 4,000 years of a ~50,000-year data file — and set the other 92% aside.</li>
+    <li>Discarded data is a ready-made test: extend the fit into it, and the error grows roughly ten-fold within the same climate epoch.</li>
+    <li>A sum of waves can always be made to fit a finite stretch of data; only data the fit never touched can validate it (Case File 01’s lesson, repeated).</li>
+    <li>If the cycles were really solar and lunar, they could not exist only in the last 4,000 years — yet outside the window, they don’t.</li>
+    <li>The record itself ends around 1855 at one spot in Greenland — before essentially all modern warming — and the same team’s dated forecast (Svalbard −3.5 °C over solar cycle 24) was falsified by rapid warming instead.</li>
+  </ul>
+</section>
+
+<!-- ================================================================ footer -->
+<div class="footer">
+  <h4>Methods &amp; reproducibility</h4>
+  <p>All figures use the GISP2 temperature reconstruction (Alley 2000; data citation Alley
+     2004, NOAA NCEI Paleoclimatology), downloaded 2026-08-09 from the same file cited by
+     the rebuttal’s supporting material (footnote 2): 1,631 samples, 0.095–49.98 kyr before
+     1950. The fitted model is a constant + linear trend + three sinusoids with periods
+     fixed at 2,804/1,186/556 years (amplitudes and phases by least squares on ages ≤ 4 kyr
+     BP), replicating the supporting material’s <code>Humlum.et.al.2011()</code>
+     demonstration; HSS11a’s own analysis was wavelet-based, and our coefficients are not
+     presented as theirs. In-window: R² 0.852, RMSE 0.30&nbsp;°C. Extension over 4–11.7 kyr
+     BP: RMSE 4.45&nbsp;°C (trend kept), 2.39&nbsp;°C (trend zeroed). Every number
+     regenerates from <code>src/build.py</code> (deterministic; no random numbers in this
+     case).</p>
+  <h4>Sources</h4>
+  <p>Humlum, Solheim &amp; Stordahl (2011), <i>Global and Planetary Change</i> 79:145–156,
+     doi:10.1016/j.gloplacha.2011.09.005 (PDF pending; quotations via the rebuttal’s
+     supporting material). · Solheim, Stordahl &amp; Humlum, “Solar Activity and Svalbard
+     Temperatures,” <i>Adv. Meteorology</i> 2011, art. 543146, doi:10.1155/2011/543146
+     (in <code>sources/</code>). · Benestad et&nbsp;al. (2016),
+     doi:10.1007/s00704-015-1597-5, supporting material “Selective use of data” (pp. 5–8,
+     Figure S1), R package <code>replicationDemos</code>, function
+     <code>Humlum.et.al.2011()</code>. · GISP2 data: Alley (2000),
+     <i>Quat. Sci. Rev.</i> 19:213–226, via NOAA NCEI. ·
+     Companion case: <a href="../loehle-scafetta-curve-fitting/casefile01-loehle-scafetta-curve-fitting.html">Case
+     File 01 — The 60-Year Cycle That Wasn’t</a>.</p>
+  <p style="margin-top:18px;color:var(--grey)">Case file 02 · draft 1 · prepared for the
+     “skeptic papers, examined” series.</p>
+</div>
+
+</div>
+</body>
+</html>
