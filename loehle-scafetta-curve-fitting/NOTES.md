@@ -97,6 +97,25 @@ exchange (C328/C331/C338/C347) remain unmined.
 
 ## Draft changelog
 
+### Draft 4.2 (2026-08-09) — resonance primer supplement
+- New supplements/resonance-primer.html (template src/supplements/, built by
+  build.py step 3 with the shared CSS; no data injection). Content reworked
+  from the session's two explanations: the resonant-system recipe (restoring
+  force + inertia + weak damping = memory); examples grouped mechanical /
+  acoustic / electrical / geophysical (swing, wine glass, Mexico City 1985,
+  Millennium Bridge 2000, bottle-blowing as the everyday broadband-noise
+  analog, radio tuning as frequency-not-source, quartz, MRI, Bay of Fundy,
+  seiches, Laplace resonance, Kirkwood gaps); the three response regimes
+  (periodic → amplified; broadband/impulse → rings at own period; trend →
+  transmitted) with the summary "selective by frequency, never by source";
+  and Objection 5's structure as translation + dilemma, incl. what it does
+  NOT claim (no assertion the real climate is a 60-yr resonator; no
+  identified physical oscillator; heavy damping → quasi-periodicity, the
+  bridge to Objection 2) and the Exercise-5 button mapping.
+- Linked from: the word "resonance" inside Objection 5's quoted
+  "assumed some kind of selective and potent resonance", and a new first
+  entry under Going Deeper → Resonance. Footer links add Q factor.
+
 ### Draft 4.1 (2026-08-09) — Exercise 5 push button and ramp display fixed
 - Steve's report, confirmed: the Push Now button injected a one-substep
   impulse (Δv ≈ 0.003, ring ≈ 0.026) — ~10× too weak to see against any

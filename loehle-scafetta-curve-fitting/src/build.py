@@ -82,3 +82,16 @@ for src_name, out_name in exercises.items():
     assert "{{" not in page, f"unreplaced placeholder in {src_name}"
     (outdir / out_name).write_text(page)
     print(f"done: {outdir / out_name}  ({(outdir / out_name).stat().st_size/1e3:.0f} kB)")
+
+# prose supplements: shared CSS only, no data injection
+supplements = {
+    "resonance_primer_template.html": "resonance-primer.html",
+}
+supdir = ROOT / "supplements"
+supdir.mkdir(exist_ok=True)
+for src_name, out_name in supplements.items():
+    page = (HERE / "supplements" / src_name).read_text()
+    page = page.replace("{{SHARED_CSS}}", shared_css)
+    assert "{{" not in page, f"unreplaced placeholder in {src_name}"
+    (supdir / out_name).write_text(page)
+    print(f"done: {supdir / out_name}  ({(supdir / out_name).stat().st_size/1e3:.0f} kB)")

@@ -21,6 +21,7 @@ then the post-publication scorecard.
 | `sources/` | The three primary documents (see `sources/README.md` — two are zip archives despite `.pdf` names). |
 | `src/make_figures.py` | Generates the six analysis figures (Exhibits A–F). Replicates the L&S11 fit on real NOAA data, reproduces the Benestad et al. synthetic-noise experiment, and renders the `replicationDemos` forced-oscillator demonstration. |
 | `src/extract_ls11_figures.py` | Crops L&S11's own figures (Figs. 1–5 and Fig. Sup. 1) from the arXiv preprint PDF for the explainer's "Working from the source paper to the rebuttal" section. |
+| `supplements/` | Prose supplements built from `src/supplements/` — currently `resonance-primer.html` (what a resonant system is, examples, and the structure of Objection 5's argument), linked from Objection 5 and Going Deeper. |
 | `src/casefile01_template.html` | Document source with `{{FIGn}}` placeholders. |
 | `src/exercises/` | Exercise templates (`exN_*_template.html`) plus shared design-system CSS and math/chart JS, assembled by the build. |
 | `src/build.py` | Regenerates figures, assembles the explainer, and builds the exercise pages. |

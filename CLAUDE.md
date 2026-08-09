@@ -43,8 +43,10 @@ venv: `/Users/steve/git/climate-explain/.venv/bin/python3 build.py`.)
 
 Deterministic (seed 42). Output: `../figures/*.png`,
 `../casefile01-loehle-scafetta-curve-fitting.html` (figures embedded as
-base64), and `../exercises/*.html` — five interactive exercise pages, one per
-objection, built from `src/exercises/exN_*_template.html` plus
+base64), `../supplements/*.html` — prose supplements from
+`src/supplements/` (currently the resonance primer, linked from Objection 5
+and Going Deeper) — and `../exercises/*.html` — five interactive exercise
+pages, one per objection, built from `src/exercises/exN_*_template.html` plus
 `src/exercises/_shared.{css,js}` with the GCAG data injected as JSON. Edit
 prose in `src/casefile01_template.html` and the exercise templates, never in
 the built HTML. The exercises follow the same conventions: honest-labels

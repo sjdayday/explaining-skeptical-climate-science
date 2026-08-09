@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonance: a short primer — Case File 01</title>
+<style>
+/* Shared design system for Case File 01 exercises — mirrors the case file. */
+:root{
+  --paper:#F7FAFB; --card:#FFFFFF; --ink:#1B2A3A; --ink-soft:#44586C;
+  --claim:#C7772E; --claim-tint:#FBF1E4; --claim-deep:#9A5A1F;
+  --rebut:#0E7C7B; --rebut-tint:#E4F1F0; --rebut-deep:#0A5C5B;
+  --grey:#7C8B99; --hair:#DFE6EC;
+  --serif:Charter,"Bitstream Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Code",Menlo,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.sheet{max-width:860px;margin:0 auto;padding:0 22px 70px}
+
+header{padding:40px 0 8px}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.22em;color:var(--grey);
+         text-transform:uppercase;margin-bottom:14px}
+.eyebrow b{color:var(--ink);font-weight:600}
+.crumb{font-family:var(--mono);font-size:12px;margin-bottom:22px}
+.crumb a{color:var(--rebut-deep)}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,40px);
+   line-height:1.1;margin:0 0 14px;letter-spacing:-0.01em}
+.dek{font-family:var(--serif);font-size:18.5px;line-height:1.5;color:var(--ink-soft);
+     max-width:700px;margin:0 0 10px}
+.part p{margin:0 0 16px;max-width:740px}
+h3.sub{font-family:var(--serif);font-size:20px;margin:30px 0 10px;color:var(--rebut-deep)}
+
+a{color:var(--rebut-deep);text-decoration-color:var(--hair);text-underline-offset:3px}
+a:hover{text-decoration-color:var(--rebut)}
+
+/* panels & charts */
+.panel{background:var(--card);border:1px solid var(--hair);border-radius:10px;
+       padding:18px 18px 14px;margin:24px 0}
+.panel .extag{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+       display:inline-block;margin-bottom:12px;padding:3px 9px;border-radius:3px}
+.extag.c{background:var(--claim-tint);color:var(--claim-deep)}
+.extag.r{background:var(--rebut-tint);color:var(--rebut-deep)}
+.extag.k{background:#E8EDF2;color:var(--ink)}
+canvas.chart{width:100%;display:block;border-radius:4px}
+.cap{font-size:13px;line-height:1.55;color:var(--ink-soft);margin-top:12px}
+.cap b{color:var(--ink)}
+
+/* controls */
+.controls{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:14px 0}
+.controls .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+               text-transform:uppercase;color:var(--ink-soft)}
+button.btn{font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);
+  background:var(--card);border:1px solid var(--hair);border-radius:8px;
+  padding:8px 14px;cursor:pointer;transition:background .12s,border-color .12s}
+button.btn:hover{border-color:var(--grey)}
+button.btn.primary{background:var(--rebut);border-color:var(--rebut);color:#fff}
+button.btn.primary:hover{background:var(--rebut-deep)}
+button.btn.claim{background:var(--claim-tint);border-color:var(--claim);color:var(--claim-deep)}
+button.btn.on{background:var(--rebut-tint);border-color:var(--rebut);color:var(--rebut-deep)}
+button.btn:disabled{opacity:.45;cursor:default}
+input[type=range]{accent-color:var(--rebut);width:min(340px,100%);cursor:pointer}
+
+/* readouts */
+.readouts{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.readout{background:var(--paper);border:1px solid var(--hair);border-radius:8px;
+         padding:10px 14px;min-width:130px;flex:0 1 auto}
+.readout b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;display:block;
+           text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px;font-weight:600}
+.readout .val{font-family:var(--mono);font-size:20px;font-weight:600}
+.readout .val small{font-size:12px;color:var(--ink-soft);font-weight:400}
+.readout.c .val{color:var(--claim-deep)} .readout.r .val{color:var(--rebut-deep)}
+
+.note{background:var(--card);border:1px solid var(--hair);border-left:4px solid var(--grey);
+      border-radius:8px;padding:14px 18px;font-size:14px;color:var(--ink-soft);margin:22px 0}
+.note.c{border-left-color:var(--claim)} .note.r{border-left-color:var(--rebut)}
+.note b{color:var(--ink)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;font-size:12.5px;color:var(--ink-soft)}
+.chip{display:inline-flex;align-items:center;gap:7px}
+.chip i{width:22px;height:0;border-top:3px solid;border-radius:2px;display:inline-block}
+.chip.c i{border-color:var(--claim)} .chip.r i{border-color:var(--rebut)}
+.chip.k i{border-color:var(--ink)} .chip.g i{border-color:var(--grey)}
+
+/* prev / next navigation */
+.exnav{display:flex;justify-content:space-between;gap:14px;margin-top:50px;
+       border-top:1px solid var(--hair);padding-top:20px;font-size:14px}
+.exnav a{font-weight:600}
+.exnav .home{color:var(--grey)}
+.footnote{margin-top:26px;font-size:12.5px;color:var(--ink-soft);border-top:1px solid var(--hair);
+          padding-top:14px;max-width:760px}
+@media print{body{background:#fff}.sheet{max-width:100%;padding:0}}
+
+h2.sec{font-family:var(--serif);font-size:24px;margin:40px 0 12px;color:var(--ink)}
+ul.ex{padding-left:0;list-style:none;margin:14px 0}
+ul.ex li{position:relative;padding:0 0 0 26px;margin:0 0 12px;max-width:740px}
+ul.ex li::before{content:"—";position:absolute;left:0;color:var(--rebut);font-weight:700}
+ul.ex li b{color:var(--ink)}
+.regime{background:var(--card);border:1px solid var(--hair);border-radius:10px;
+        padding:14px 18px;margin:14px 0;max-width:740px}
+.regime b:first-child{font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+        text-transform:uppercase;color:var(--rebut-deep);display:block;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<header>
+  <div class="eyebrow">Case file 01 · The 60-year cycle that wasn't · <b>Supplement</b></div>
+  <div class="crumb"><a href="../casefile01-loehle-scafetta-curve-fitting.html#objection-5">&larr; Back to the case file (Objection 5)</a></div>
+  <h1>Resonance: a short primer</h1>
+  <p class="dek">Objection&nbsp;5 turns on a word that L&amp;S11 never use. The rebuttal reads
+     their picture of the climate — strongly amplifying small astronomical pushes, weakly
+     answering the much larger push from CO&#8322; — as describing a <i>resonant system</i>,
+     then works out what that description requires. This page explains what a resonant system
+     is, gives familiar examples, and spells out the argument's structure.</p>
+</header>
+
+<section class="part">
+
+  <h2 class="sec">What makes a system resonant</h2>
+  <p>The recipe has three ingredients: something that can swing back and forth between two
+     forms of energy (a restoring force plus inertia), and only weak losses per cycle. Weak
+     damping means the system “remembers” pushes long enough for well-timed ones to
+     accumulate — that memory is what makes it ring at its own <b>natural frequency</b>. Push
+     it at that tempo and small efforts build a large swing; push it off-tempo and the same
+     efforts cancel each other.</p>
+
+  <h2 class="sec">Examples</h2>
+  <p><b>Mechanical.</b></p>
+  <ul class="ex">
+    <li><b>A playground swing</b> — the case file's glossary example. A child pumping, or a
+        parent giving small shoves at the right moments, builds a big arc; the same effort
+        applied off-tempo goes nowhere.</li>
+    <li><b>A wine glass</b> — Objection&nbsp;5's example. It rings at its pitch when struck,
+        and a singer holding that pitch loudly enough can shatter it: a faint-but-tuned push
+        outperforming a strong-but-untuned one, which is exactly the intuition L&amp;S11's
+        picture relies on.</li>
+    <li><b>Strings, tuning forks, bells</b> — struck once (an impulse), each responds at its
+        own frequencies, regardless of how it was struck.</li>
+    <li><b>Buildings and bridges.</b> Skyscrapers sway with natural periods of several
+        seconds, which is why earthquake engineering matches ground-shaking periods against
+        building heights: in the 1985 Mexico City earthquake, soft lakebed soil amplified
+        waves near the sway period of mid-rise buildings, which failed disproportionately.
+        London's Millennium Bridge (2000) swayed because pedestrians unconsciously
+        synchronized their steps to its sideways mode — the walkers became the metronome.</li>
+    <li><b>A car's suspension</b> bouncing at its own rate over evenly spaced potholes.</li>
+  </ul>
+  <p><b>Acoustic.</b></p>
+  <ul class="ex">
+    <li><b>Blowing across a bottle's mouth:</b> your breath is broadband noise — structureless,
+        like Exercise&nbsp;5's “random weather” — yet the bottle answers with one clear pitch.
+        This is the best everyday analog of the noise scenario: no rhythm in, rhythm out.</li>
+    <li>Organ pipes, flutes, the body of a violin, a shower stall that flatters your singing
+        at certain notes.</li>
+  </ul>
+  <p><b>Electrical.</b></p>
+  <ul class="ex">
+    <li><b>A radio's tuning circuit:</b> tuning <i>is</i> resonance — the circuit responds
+        strongly to one broadcast frequency out of the electromagnetic din. Note that it picks
+        a frequency, never a station's identity: two transmitters on the same frequency both
+        get through. That is the frequency-not-source point in another costume.</li>
+    <li><b>Quartz crystals</b> in watches and computers, ringing at extremely stable
+        frequencies with very weak damping.</li>
+    <li><b>MRI machines</b> — nuclear magnetic resonance, literally in the name: nuclei
+        respond when the radio pulse matches their precession frequency.</li>
+  </ul>
+  <p><b>Natural, at geophysical scale.</b></p>
+  <ul class="ex">
+    <li><b>Tides in certain basins:</b> the Bay of Fundy's natural sloshing period (~13 hours)
+        sits close to the ~12.4-hour lunar tidal forcing, which is why its tides reach roughly
+        15 metres while the open ocean's are under one.</li>
+    <li><b>Seiches</b> — a sloshing bathtub or harbor: one shove and the water rocks at the
+        basin's own period.</li>
+    <li><b>Orbital resonances:</b> Jupiter's moons Io, Europa and Ganymede locked in 1:2:4
+        orbits; gaps in the asteroid belt swept clean where orbital periods resonate with
+        Jupiter's.</li>
+  </ul>
+
+  <h2 class="sec">How a resonant system answers different pushes</h2>
+  <p>A resonant system responds to <i>any</i> forcing — but the character of the response
+     depends on the forcing's frequency content, not on its origin:</p>
+  <div class="regime"><b>A periodic push near the natural period</b>
+     is <i>amplified</i>: large swings from a small push. This is the only regime in which
+     resonance discriminates — and it discriminates by tempo, never by identity of the
+     pusher.</div>
+  <div class="regime"><b>A broadband push — noise, or a one-off impulse</b>
+     contains some energy near the natural period, and the system selectively amplifies that
+     part. The response oscillates at the system's own period even though the push had no
+     such rhythm. (A volcanic eruption is a real-world impulse of this kind; Exercise&nbsp;5's
+     “Push now” button is another.)</div>
+  <div class="regime"><b>A slow trend</b> — such as greenhouse forcing —
+     is <i>transmitted</i>: the system tracks it quasi-statically. Not boosted like a resonant
+     beat, but not rejected either.</div>
+  <p>The one-sentence summary: <b>resonance is selective by frequency, never by source.</b>
+     What L&amp;S11's accounting requires is a system selective by source — one that amplifies
+     the astronomical push while effectively rejecting the much larger CO&#8322; push. No
+     passive resonant system does that. And there is a second edge: to amplify a tiny push
+     into the observed swings at all, a system needs very weak damping or a positive
+     feedback — and any such amplification machinery would be equally available to greenhouse
+     forcing.</p>
+
+  <h2 class="sec">The structure of Objection 5</h2>
+  <p>With that background, the objection is a <i>translation</i> followed by a
+     <i>conditional argument</i>. L&amp;S11 never say “resonance”; they describe a climate in
+     which tiny planetary influences arrive pre-amplified while CO&#8322; meets a “slight
+     negative feedback.” Any system matching that description just is a frequency-selective
+     amplifier — a resonant system, in standard physics vocabulary. That is what the
+     supporting material means by “L&amp;S11 assumed some kind of selective and potent
+     resonance”: a reconstruction from the paper's numbers, not a quotation from its text.
+     The argument then runs as a dilemma, granting their picture for the sake of argument:</p>
+  <ul class="ex">
+    <li><b>If</b> the climate is resonant enough at ~60 years to amplify planetary whispers,
+        <b>then</b> (a) ordinary internal noise also rings it at 60 years — so the observed
+        wiggle cannot identify the planets as the cause, and the attribution fails; and
+        (b) the CO&#8322; trend passes through — so the selective deafness their accounting
+        needs is physically unavailable.</li>
+    <li><b>If</b> the climate is <b>not</b> such a resonator, the proposed mechanism has no
+        way to turn tiny astronomical nudges into the observed swings in the first place.</li>
+  </ul>
+  <p>Either branch defeats the attribution. Note what the argument does <i>not</i> claim:
+     neither Benestad et&nbsp;al. nor this case file asserts that the real climate <i>is</i> a
+     60-year resonator. Every example above has an identifiable oscillator with a physical
+     restoring mechanism — a string's tension, a basin's geometry, a circuit's inductance —
+     and L&amp;S11 never identify what the climate's 60-year “string” would be. A sharp
+     60-year resonance would also require the climate to ring with little loss for centuries:
+     very weak damping in a turbulent, dissipative system, which the supporting material calls
+     unlikely. Real ocean modes are more like a heavily damped slosh, giving broad, wandering
+     quasi-periodicities — “50 to 80 years, sometimes,” not “60.0, always” — which is the
+     bridge back to Objection&nbsp;2: a record like that is what broadband variability looks
+     like, no metronome required.</p>
+
+  <div class="note r"><b>The four buttons of Exercise 5 map onto this argument one-to-one.</b>
+     Metronome = the claim's proposed cause (works, as granted). Random weather = internal
+     variability (also works — attribution lost). Greenhouse ramp = CO&#8322; (gets through —
+     selective deafness lost). Push now = your mouse standing in for any transient (works
+     too — origin irrelevant).
+     <a href="../exercises/ex5-resonance.html">Run them yourself in Exercise&nbsp;5.</a></div>
+</section>
+
+<nav class="exnav">
+  <a class="home" href="../casefile01-loehle-scafetta-curve-fitting.html#objection-5">&uarr; Case file 01 · Objection 5</a>
+  <a href="../exercises/ex5-resonance.html">Exercise 5: the resonance sandbox &rarr;</a>
+</nav>
+
+<div class="footnote"><b>Learn more:</b>
+  <a href="https://en.wikipedia.org/wiki/Resonance" target="_blank" rel="noopener">Resonance</a>
+  (Wikipedia) ·
+  <a href="https://en.wikipedia.org/wiki/Harmonic_oscillator" target="_blank" rel="noopener">Harmonic
+  oscillator</a> (Wikipedia — the equation Exercise&nbsp;5 integrates live) ·
+  <a href="https://en.wikipedia.org/wiki/Q_factor" target="_blank" rel="noopener">Q factor</a>
+  (Wikipedia — the standard measure of how weakly damped a resonator is). The examples above
+  are textbook cases; the Mexico City (1985) and Millennium Bridge (2000) episodes and the Bay
+  of Fundy tides are documented in the linked articles' references.</div>
+
+</div>
+</body>
+</html>
