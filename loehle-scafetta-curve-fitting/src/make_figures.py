@@ -290,4 +290,111 @@ ax.set_xlim(1850, 2036)
 fig.savefig(OUT + "/fig5_aftermath.png", bbox_inches="tight")
 plt.close(fig)
 
+# =========================================================== FIG 6 - the toolbox oscillator
+# Re-implements resonance()/FOscillator()/resonanceTest() from replicationDemos
+# (github.com/brasmus/replicationDemos, GPL >= 2): forced damped oscillator,
+# x'' + 2*zeta*w0*x' + w0^2*x = F(t), integrated by 4th-order Runge-Kutta.
+T0, ZETA, DT = 60.0, 0.05, 0.1
+W0 = 2 * np.pi / T0
+rngF = np.random.default_rng(42)
+
+def rk4_oscillator(Fv, tgrid, w0=W0, zeta=ZETA, x0=0.0, v0=0.0):
+    Ff = lambda tt: np.interp(tt, tgrid, Fv)
+    acc = lambda tt, xx, vv: Ff(tt) - 2 * zeta * w0 * vv - w0 ** 2 * xx
+    n = len(tgrid); h = tgrid[1] - tgrid[0]
+    x = np.empty(n); v = np.empty(n); x[0], v[0] = x0, v0
+    for k in range(n - 1):
+        tk, xk, vk = tgrid[k], x[k], v[k]
+        k1x, k1v = vk, acc(tk, xk, vk)
+        k2x, k2v = vk + .5*h*k1v, acc(tk+.5*h, xk+.5*h*k1x, vk+.5*h*k1v)
+        k3x, k3v = vk + .5*h*k2v, acc(tk+.5*h, xk+.5*h*k2x, vk+.5*h*k2v)
+        k4x, k4v = vk + h*k3v,   acc(tk+h,    xk+h*k3x,   vk+h*k3v)
+        x[k+1] = xk + h/6*(k1x + 2*k2x + 2*k3x + k4x)
+        v[k+1] = vk + h/6*(k1v + 2*k2v + 2*k3v + k4v)
+    return x
+
+def decompose_ft(n, nharm=50):
+    """Mirror of the toolbox's decomposeFT(): 50 harmonics of the record
+    length, Gaussian random cos/sin amplitudes scaled by 1/sqrt(i)."""
+    tt = np.linspace(0, 1, n)
+    A = rngF.normal(size=(nharm, 2))
+    x = np.zeros(n)
+    for i in range(1, nharm + 1):
+        x += (A[i-1, 0]*np.cos(2*np.pi*i*tt) + A[i-1, 1]*np.sin(2*np.pi*i*tt))/np.sqrt(i)
+    return x / x.std(), A
+
+def spectrum(tgrid, y, drop=60.0, pmin=4.0, pmax=300.0):
+    m = tgrid >= drop
+    yy = (y[m] - y[m].mean()) * np.hanning(m.sum())
+    P = np.abs(np.fft.rfft(yy)) ** 2
+    fr = np.fft.rfftfreq(m.sum(), d=DT)
+    ok = fr > 0
+    per, P = 1/fr[ok], P[ok]
+    sel = (per >= pmin) & (per <= pmax)
+    return per[sel], P[sel] / P[sel].max()
+
+TTOT = 600.0
+tg = np.arange(0, TTOT + DT/2, DT)
+
+# Row A: structureless noisy push
+FnA, Aharm = decompose_ft(len(tg))
+xA = rk4_oscillator(FnA, tg)
+a60 = float(np.hypot(*Aharm[9]) / np.sqrt(10))
+perA, PA = spectrum(tg, xA); perFA, PFA = spectrum(tg, FnA)
+print(f"fig6 A: forcing 60-yr harmonic draw={a60:.2f} rel; response dominant period="
+      f"{perA[np.argmax(PA)]:.1f} yr")
+
+# Row B: dominant 11-yr beat + a little noise
+FnB, _ = decompose_ft(len(tg))
+FB = np.sin(2*np.pi*tg/11.0) + 0.25*FnB
+xB = rk4_oscillator(FB, tg)
+perB, PB = spectrum(tg, xB); perFB, PFB = spectrum(tg, FB)
+i60 = np.argmin(np.abs(perB-60)); i11 = np.argmin(np.abs(perB-11))
+print(f"fig6 B: response dominant period={perB[np.argmax(PB)]:.1f} yr; "
+      f"response power 60yr/11yr = {PB[i60]/PB[i11]:.1f}; "
+      f"forcing dominant period={perFB[np.argmax(PFB)]:.1f} yr")
+
+# Row C: ln|CO2|-shaped ramp (illustrative; the toolbox used Mauna Loa)
+yrsC = np.arange(1850, 2025 + DT/2, DT)
+co2C = 280 + 5*np.exp((yrsC - 1850)/52.0)
+FC = np.log(co2C/280.0); FC = FC/FC.max()
+xC = rk4_oscillator(FC, yrsC - 1850)
+
+fig = plt.figure(figsize=(7.8, 7.6))
+gs = fig.add_gridspec(3, 2, width_ratios=[2.1, 1], hspace=0.62, wspace=0.28)
+
+def rowAB(r, F, x, perF, PF, perX, PX, label):
+    ax = fig.add_subplot(gs[r, 0])
+    ax.plot(tg, F/F.std(), color=GREY, lw=0.7, alpha=0.9, label="the push (standardized)")
+    ax.plot(tg, x/x.std(), color=REBUT, lw=1.9, label="the system's response")
+    ax.set_xlim(0, TTOT); ax.set_yticks([])
+    ax.set_title(label, loc="left", fontsize=10.5, fontweight="bold", pad=5)
+    if r == 0: ax.legend(fontsize=7.5, frameon=False, loc="upper right", ncol=2)
+    if r == 1: ax.set_xlabel("year")
+    axs = fig.add_subplot(gs[r, 1])
+    axs.semilogx(perF, PF, color=GREY, lw=1.0)
+    axs.semilogx(perX, PX, color=REBUT, lw=1.9)
+    axs.axvline(60, color=INK, lw=0.9, ls=":"); axs.axvline(11, color=GREY, lw=0.7, ls=":")
+    axs.set_yticks([]); axs.set_xticks([10, 60, 300]); axs.set_xticklabels(["10", "60", "300"])
+    axs.text(0.04, 0.95, "spectra:\npush vs response", transform=axs.transAxes,
+             fontsize=7.5, va="top", color=INK)
+    if r == 1: axs.set_xlabel("period (yr)")
+
+rowAB(0, FnA, xA, perFA, PFA, perA, PA,
+      "A · Pushed with structureless noise \u2014 the response oscillates at 60")
+rowAB(1, FB, xB, perFB, PFB, perB, PB,
+      "B · Pushed with an 11-yr solar-like beat \u2014 the response still peaks at 60")
+
+axC = fig.add_subplot(gs[2, :])
+axC.plot(yrsC, FC, color=GREY, lw=1.4, ls="--", label="the push: ln CO\u2082-shaped ramp (scaled)")
+axC.plot(yrsC, xC*W0**2, color=REBUT, lw=1.9, label="the system's response (equilibrium units)")
+axC.set_title("C \u00b7 Pushed with a CO\u2082-like ramp \u2014 the response follows the ramp",
+              loc="left", fontsize=10.5, fontweight="bold", pad=5)
+axC.set_xlabel("year"); axC.set_yticks([])
+axC.legend(fontsize=7.5, frameon=False, loc="upper left")
+fig.suptitle("The toolbox oscillator: x\u2033 + 2\u03b6\u03c9\u2080x\u2032 + \u03c9\u2080\u00b2x = F(t)   \u00b7   natural period 60 yr, light damping (\u03b6 = 0.05)",
+             x=0.01, ha="left", fontsize=9.5, color=INK, y=0.995)
+fig.savefig(OUT + "/fig6_oscillator.png", bbox_inches="tight")
+plt.close(fig)
+
 print("done")

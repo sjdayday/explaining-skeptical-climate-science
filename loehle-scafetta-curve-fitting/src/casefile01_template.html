@@ -171,7 +171,7 @@
   <div class="meta">
     <span class="c"><b>The claim</b>Loehle &amp; Scafetta (2011), <i>The Open Atmospheric Science Journal</i></span>
     <span class="r"><b>The rebuttal</b>Benestad et&nbsp;al. (2016), <i>Theor.&nbsp;Appl.&nbsp;Climatol.</i>, supporting material, “Curve‑fitting”</span>
-    <span><b>Status</b>Draft 3 · checked against the original paper</span>
+    <span><b>Status</b>Draft 4 · resonance attribution corrected; toolbox demonstration rendered</span>
   </div>
   <div class="legend" aria-label="Color key used throughout">
     <span class="chip c"><i></i>the claim &amp; its model</span>
@@ -414,16 +414,25 @@
   <div class="rpoint" id="objection-5">
     <span class="tag">Objection 5</span>
     <h3>The physics contradicts itself</h3>
-    <p>To connect distant planets to Earth’s thermometers, the paper leans on <i>resonance</i> —
-       the climate supposedly rings like a struck glass in sympathy with small astronomical
-       nudges, while responding only sluggishly (a “slight negative feedback”) to the far larger
-       energy push of added CO₂. But resonance is a property of the <b>system</b>, not of the
-       forcing it prefers: a wine glass rings at its pitch for any sound at that pitch, whatever
-       the source. Benestad et&nbsp;al. demonstrate with a simulated oscillator
-       that a resonant system gets excited by noisy or trending pushes of any origin, greenhouse
-       forcing included. A climate sensitive enough to amplify small planetary pushes could not
-       also be insensitive to the much larger push from CO₂. And that exposes the deeper
-       problem — the <b>false dichotomy</b>:
+    <p>A note on vocabulary first: <b>the word “resonance” does not appear in L&amp;S11</b> —
+       its one occurrence in the preprint is in the title of a paper they cite. Their own
+       language is different: the solar influence arrives pre‑amplified, with cloud and
+       greenhouse feedbacks folded in automatically by their empirical calibration, while CO₂
+       meets a “slight negative feedback.” The rebuttal translates that picture into standard
+       physics and examines what it requires — hence the supporting material’s phrasing that
+       L&amp;S11 “assumed some kind of selective and potent resonance”: an assumption
+       reconstructed from the paper’s numbers, not quoted from its text. The translation is
+       fair: a system that answers a faint periodic push with a large swing at that same
+       period, while staying nearly indifferent to a stronger steady push, is what physicists
+       call a resonant system, whichever word one uses. But the translation does not help the
+       paper, because resonance is a property of the <b>system</b>, not of the forcing it
+       prefers: a wine glass rings at its pitch for any sound at that pitch, whatever the
+       source. The rebuttal’s replication toolbox demonstrates this with a simulated oscillator
+       (Exhibit&nbsp;F): fed structureless noise, the system oscillates at its own period; fed
+       a push with a different dominant beat, it still oscillates at its own period; fed a
+       CO₂‑like ramp, it follows the ramp. A climate selective enough to amplify small
+       planetary pushes could not also be insensitive to the much larger push from CO₂. And
+       that exposes the deeper problem — the <b>false dichotomy</b>:
        even if 20‑ and 60‑year wiggles are real (similar ocean variability appears in climate
        models too), wiggles ride on top of trends. Finding a wiggle subtracts nothing from CO₂.
        The paper never tested the greenhouse explanation it claimed to displace. One more
@@ -435,6 +444,27 @@
        (the Friis‑Christensen &amp; Lassen and Svensmark papers). The chain’s links rest largely
        on one another rather than on independent physics.</p>
   </div>
+
+  <figure>
+    <span class="extag r">Exhibit F · The toolbox oscillator</span>
+    <img src="{{FIG6}}" alt="Three-row demonstration: a damped oscillator with a 60-year natural period responds to structureless noise with 60-year oscillations; responds to an 11-year forcing plus noise still at 60 years, shown by spectra; and follows a CO2-like ramp forcing.">
+    <figcaption><b>The demonstration the supporting material describes but never prints.</b>
+      A forced damped oscillator, x″ + 2ζω₀x′ + ω₀²x = F(t), with a 60‑year natural period and
+      light damping (ζ = 0.05). <b>Row A:</b> pushed with structureless noise (the toolbox’s
+      own <code>decomposeFT</code> recipe — 50 wave components with random strengths), the
+      system responds with ~60‑year swings; the spectra show a broadband push against a sharply
+      peaked response. <b>Row B:</b> pushed with a dominant 11‑year, solar‑like beat plus a
+      little noise, the response still peaks at 60 years, with roughly 380 times more spectral
+      power there than at the 11‑year period it is actually pushed at — the system, not the
+      push, sets the rhythm. <b>Row C:</b> pushed with a ln&nbsp;CO₂‑shaped ramp (illustrative
+      curve matching the historical shape; the toolbox’s own driver used the Mauna Loa record),
+      the same system follows the ramp. Re‑implemented from the <code>resonance()</code> /
+      <code>FOscillator()</code> code in <code>replicationDemos</code>, archived under
+      <code>sources/</code> together with its <code>decomposeFT</code> noise recipe; the
+      shipped <code>resonanceTest()</code> driver halts at a stray <code>stop()</code> before
+      reaching its sinusoid, noise, and CO₂ demonstrations, so this exhibit completes the
+      sequence the text describes.</figcaption>
+  </figure>
 
   <div class="trybox"><span class="t">Try it yourself · Exercise 5</span>
     <a href="exercises/ex5-resonance.html">Push a resonant system</a> — with a planetary metronome,
@@ -499,7 +529,7 @@
               ~1–1.5&nbsp;°C per doubling.</td>
           <td>An artifact of assuming pre‑1950 warming was natural and calling the leftover “human” — the premise assumes the conclusion.</td></tr>
       <tr><td class="q">The physics?</td>
-          <td>Planets pace the Sun; a resonant climate follows (via irradiance and perhaps cosmic rays/clouds); CO₂ meets a slight negative feedback.</td>
+          <td>Planets pace the Sun; the solar effect arrives amplified by cloud and other feedbacks (folded into their empirical calibration); CO₂ meets a slight negative feedback.</td>
           <td>Self‑contradictory: a resonant system amplifies any matching or trending push, greenhouse forcing included — and the chain’s links are themselves contested.</td></tr>
       <tr><td class="q">The forecast?</td>
           <td>Warming masked by the cycle until ~2040; ≈0.6&nbsp;°C above 2000 by 2100, vs. the ~3&nbsp;°C they attribute to IPCC projections.</td>
@@ -1013,7 +1043,16 @@
      years; the inflation factor (ours ~14×, theirs ~4×) depends on the noise recipe — the
      instability is the finding, not the exact factor. This differs deliberately from the
      paper’s own Supplemental test, which adds <i>white</i> noise to an assumed‑true cycle and
-     therefore only measures recovery‑given‑truth, not the false‑alarm rate. All figures were
+     therefore only measures recovery‑given‑truth, not the false‑alarm rate. Exhibit&nbsp;F
+     integrates x″ + 2ζω₀x′ + ω₀²x = F(t) by fourth‑order Runge–Kutta (dt&nbsp;=&nbsp;0.1 yr,
+     T₀&nbsp;=&nbsp;60 yr, ζ&nbsp;=&nbsp;0.05), re‑implementing
+     <code>FOscillator()</code>/<code>resonance()</code> from the <code>replicationDemos</code>
+     package; rows A–B use the package’s <code>decomposeFT</code> noise recipe (50 harmonics,
+     Gaussian amplitudes ∝ 1/√i; both R files archived under <code>sources/</code>), and
+     row&nbsp;C uses an illustrative ln&nbsp;CO₂ ramp matching the historical shape where the
+     package’s driver used R’s built‑in Mauna Loa record. The shipped
+     <code>resonanceTest()</code> driver stops early at a stray <code>stop()</code>;
+     Exhibit&nbsp;F completes the intended sequence. All figures were
      generated for this project; the script, template and data ship alongside this document so
      every number can be rebuilt — in the same spirit of open replication the rebuttal
      practised.</p>
@@ -1027,13 +1066,14 @@
      research,” <i>Theoretical and Applied Climatology</i> 126:699–703,
      doi:10.1007/s00704-015-1597-5, and its supporting material, section “Curve‑fitting” and
      Table&nbsp;S2, with the open R package <code>replicationDemos</code>
-     (<code>LoehleScafetta2011()</code>). ·
+     (<code>LoehleScafetta2011()</code>; source at github.com/brasmus/replicationDemos, its
+     <code>resonance.R</code> and <code>FT.R</code> archived under <code>sources/</code>). ·
      The 2013 open‑review exchange: Benestad et&nbsp;al., “Agnotology: learning from
      mistakes,” <i>Earth Syst. Dynam. Discuss.</i> 4:451–505, doi:10.5194/esdd‑4‑451‑2013,
      with interactive comments C253 (Loehle), C258 (Benestad), C318 and C312 (Scafetta), and
      C400 (editor decision); extracted texts in <code>sources/esdd‑open‑review/</code>. ·
      Temperature data: NOAA NCEI NOAAGlobalTemp via the open “datasets/global‑temp” mirror.</p>
-  <p style="margin-top:18px;color:var(--grey)">Case file 01 · draft 3 · prepared for the
+  <p style="margin-top:18px;color:var(--grey)">Case file 01 · draft 4 · prepared for the
      “skeptic papers &amp; rebuttals” explainer project · next candidates: the discarded ice‑core
      data (Humlum et&nbsp;al. 2011) and the statistics mix‑up (Douglass et&nbsp;al. 2007).</p>
 </div>

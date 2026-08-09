@@ -34,6 +34,7 @@ figures = {
     "FIG3": "fig3_phantom_cycles",
     "FIG4": "fig4_period_scan",
     "FIG5": "fig5_aftermath",
+    "FIG6": "fig6_oscillator",
     "LS11FIG1": "ls11_fig1",
     "LS11FIG2": "ls11_fig2",
     "LS11FIG3": "ls11_fig3",

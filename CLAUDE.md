@@ -27,7 +27,7 @@ review, the accuracy audit, the draft changelog, and open items.
   are framed as instability findings, never as point estimates.
 - **Structure encodes the debate.** Amber = claim, teal = rebuttal,
   ink = observations, throughout prose, figures, and CSS. Exhibits are
-  lettered A–E. Keep the dual-rail design system.
+  lettered A–F. Keep the dual-rail design system.
 - **Reproducibility is part of the argument.** Every number in the document
   must regenerate from `src/build.py`. If you change an analysis, rerun the
   build and update the affected captions/notes in the same commit.
@@ -72,8 +72,13 @@ Exhibit captions together.
   Benestad C258, Scafetta C318, Matthews C304; CC-BY extracted texts + full
   roster with PDF URL pattern). The case file's "Four defenses, four answers"
   section answers these; keep them in sync.
+- `replicationDemos-resonance.R` + `replicationDemos-FT.R` — archived from
+  github.com/brasmus/replicationDemos (GPL): the forced-oscillator demo and
+  its decomposeFT noise recipe, re-implemented as Exhibit F / fig6. Note
+  "resonance" is the rebuttal's term, not L&S11's (one occurrence in the
+  preprint, in a reference title); Objection 5 leads with that correction.
 
-## Current state (draft 3, 2026-08-07)
+## Current state (draft 4, 2026-08-09)
 
 Key replication numbers on this data snapshot: calibration 1850–1950 gives
 60-yr amplitude 0.100 °C, 20-yr 0.043 °C, R² 0.457, cycle peaks ≈1997/1998
@@ -82,7 +87,9 @@ residual ramp 0.81 °C/century crossing ~1947 (theirs: 0.66±0.08 crossing
 1942); period scan best ≈87.5 yr vs R² 0.457 at 60; synthetic slices:
 amplitudes 0.007–0.139 °C, mean ≈13.7× the series' true 60-yr content;
 observed decadal warming 1996–2005 → 2016–2025 = +0.47 °C vs. their
-≈0.6 °C-above-2000 ceiling for 2100.
+≈0.6 °C-above-2000 ceiling for 2100; Exhibit F oscillator (seed 42): response
+dominant period 60.0 yr under structureless noise, 60-vs-11-yr response power
+ratio ≈380× under an 11-yr forcing (check fig6 diagnostics in build output).
 
 ## Next in the series
 

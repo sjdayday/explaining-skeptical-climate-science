@@ -97,6 +97,36 @@ exchange (C328/C331/C338/C347) remain unmined.
 
 ## Draft changelog
 
+### Draft 4 (2026-08-09) — resonance attribution corrected; toolbox demo rendered
+- Steve's correction, verified: "resonance/resonant" never appears in L&S11's
+  own text — the lone occurrence in the preprint is in a reference title
+  (Minobe 1999, line 640 of the extracted text). The SM's wording is
+  "L&S11 assumed some kind of selective and potent resonance" (SM p. 9) —
+  a translation of the paper's physics, not a quotation. Objection 5 now
+  leads with this precision note, presents the translation as the rebuttal's
+  (fair) move, and keeps the wine-glass/system point; the at-a-glance table's
+  claim cell restated in the paper's own framing (pre-amplified solar effect
+  via calibrated feedbacks); Ex 5 dek likewise corrected.
+- NEW Exhibit F (fig6_oscillator): the SM's "replication toolbox"
+  demonstration, described in its resonance passage but never printed as a
+  figure. Re-implements resonance()/FOscillator() (RK4, dt 0.1 yr, T₀ 60 yr,
+  ζ 0.05) and decomposeFT (50 harmonics, Gaussian amplitudes ∝ 1/√i), from
+  github.com/brasmus/replicationDemos; both R files archived under sources/
+  with provenance headers (decomposeFT verified against the repo's FT.R,
+  fetched 2026-08-09). Disclosed in caption + methods: the shipped
+  resonanceTest() driver halts at a stray stop() (line 120) before its
+  sinusoid/noise/CO₂ panels, so the exhibit completes the described
+  sequence; row C uses an illustrative ln CO₂ ramp where the driver used
+  Mauna Loa. Diagnostics print in the build output (seed 42): response
+  dominant period 60.0 yr under structureless noise; 60-vs-11-yr response
+  power ratio ≈380× under an 11-yr beat.
+- Provenance of this draft: merged from the claude.ai "resonance" session
+  (root resonance/ directory, gitignored), whose base was v4.5 — only its
+  Objection-5/Exhibit-F changes were grafted onto the current draft; its
+  copies of the Obj-2 concession, fourth defense, and adversarial-record
+  entries were already present via v5.2 and were not re-applied.
+- Status bumped to Draft 4 (header meta, footer, CLAUDE.md).
+
 ### Draft 3.2 (2026-08-07) — the ESDD open-review record merged in
 - Merged the claude.ai "aftermath-debate" research (based on an older draft)
   into the current template, adapted to the draft-3 register:
