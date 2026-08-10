@@ -91,6 +91,16 @@ for name, b in (("trend kept", beta), ("trend zeroed", beta0)):
     print(f"Extension 4-11.7 kyr ({name}): mean error={resid.mean():+.2f}, "
           f"RMSE={np.sqrt((resid ** 2).mean()):.2f} degC, R2={r2_out:.2f}")
 
+# The paper's own stated forecasting range is "about 10-25% of the total
+# record length" (HSS11a conclusion 3): for a 4,000-yr window, 400-1,000 yr.
+# Score the extension inside that band (4.0-5.0 kyr BP), both variants.
+band = (age > CAL_MAX) & (age <= CAL_MAX + 1000.0)
+for name, b in (("trend kept", beta), ("trend zeroed", beta0)):
+    resid = T[band] - design(age[band]) @ b
+    print(f"Extension within their own 10-25% rule, 4.0-5.0 kyr ({name}): "
+          f"mean error={resid.mean():+.2f}, RMSE={np.sqrt((resid ** 2).mean()):.2f} degC "
+          f"(n={band.sum()}; in-window RMSE {rmse_in:.2f})")
+
 # =========================================================== FIG 1 - the whole file
 fig, ax = plt.subplots(figsize=(7.8, 3.9))
 ax.axvspan(0, CAL_MAX / 1000, color="#FBF1E4", zorder=0)

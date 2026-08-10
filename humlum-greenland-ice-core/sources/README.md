@@ -2,13 +2,8 @@
 
 | File | Format | Contents |
 |---|---|---|
-| `Advances in Meteorology - 2012 - Solheim - Solar Activity and Svalbard Temperatures.pdf` | true PDF (8 pp.) | Solheim, Stordahl & Humlum, "Solar Activity and Svalbard Temperatures," *Adv. Meteorology* vol. 2011, art. 543146 (accepted Nov 2011). The companion paper by the same author cluster: its ref. [3] is HSS11a, and it makes the falsifiable forecast (Svalbard annual mean −3.5 ± 2 °C for solar cycle 24, winter ≈ −6 °C). |
-
-**Not yet present:** the case's primary paper, Humlum, Solheim & Stordahl
-(2011), "Identifying natural contributions to late Holocene climate change,"
-*Global and Planetary Change* 79:145–156, doi:10.1016/j.gloplacha.2011.09.005
-(paywalled). Please add the PDF here when available — the steel-man and a
-"Working from the source paper" section depend on it.
+| `Identifying_natural_contributions_to_late_Holocene.pdf` | true PDF (12 pp.) | **The primary paper**: Humlum, Solheim & Stordahl (2011), "Identifying natural contributions to late Holocene climate change," *Global and Planetary Change* 79:145–156, doi:10.1016/j.gloplacha.2011.09.005. Supplied by Steve 2026-08-10; all case-file quotations verified against it (cite by journal pages 145–156; PDF page N = printed page 144+N). |
+| `Advances in Meteorology - 2012 - Solheim - Solar Activity and Svalbard Temperatures.pdf` | true PDF (8 pp.) | Solheim, Stordahl & Humlum, "Solar Activity and Svalbard Temperatures," *Adv. Meteorology* vol. 2011, art. 543146 (accepted Nov 2011). The companion paper by the same author cluster: its ref. [3] is HSS11a, and it makes the falsifiable forecast (Svalbard annual mean −3.5 ± 2 °C for solar cycle 24, winter ≈ −6 °C). Restored from git history after the 2026-08-10 file swap — both papers are quoted in the case file. |
 
 **Shared materials** (repo root `../../sources/`):
 `benestadetalnccSM2014.pdf` — the Benestad et al. (2016) supporting material

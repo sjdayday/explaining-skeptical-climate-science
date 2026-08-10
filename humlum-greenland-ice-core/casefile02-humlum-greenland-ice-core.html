@@ -133,7 +133,7 @@
   <div class="meta">
     <span class="c"><b>The claim</b>Humlum, Solheim &amp; Stordahl (2011), <i>Global and Planetary Change</i></span>
     <span class="r"><b>The rebuttal</b>Benestad et&nbsp;al. (2016), <i>Theor.&nbsp;Appl.&nbsp;Climatol.</i>, supporting material, “Selective use of data”</span>
-    <span><b>Status</b>Draft 1 · primary PDF pending; steel-man sourced from the rebuttal’s quotations and the companion Svalbard paper</span>
+    <span><b>Status</b>Draft 2 · checked against the original paper</span>
   </div>
   <div class="legend" aria-label="Color key used throughout">
     <span class="chip c"><i></i>the claim &amp; its model</span>
@@ -147,12 +147,13 @@
   <div class="claimside">
     <h3>The claim, in brief</h3>
     <p>Greenland’s GISP2 ice core shows that the recent past is governed by long natural
-       cycles — about 2,800, 1,190, and 560 years — plausibly of solar and lunar origin.
-       Fitted to the last 4,000 years, these cycles reproduce the record well and permit
-       “testable forecasts of future climate”: natural variation, not greenhouse gases, is
-       the dominant driver, and natural cooling lies ahead. A companion paper by the same
-       authors forecast Svalbard’s annual mean to fall by 3.5&nbsp;±&nbsp;2&nbsp;°C over
-       solar cycle 24.</p>
+       cycles — 2,804, 1,186, and 556 years — plausibly of solar and lunar origin. Fitted
+       to the last 4,000 years, three cycles reproduce every major warm and cold period
+       (r²&nbsp;=&nbsp;0.63) and permit “testable forecast of future climate”: the warming
+       since the Little Ice Age “to a high degree may be the result of natural climatic
+       variations.” For Svalbard, the same machinery forecast temperatures declining until
+       about 2015–2017; a companion paper put it at −3.5&nbsp;±&nbsp;2&nbsp;°C over solar
+       cycle 24.</p>
   </div>
   <div class="rebutside">
     <h3>The rebuttal, in brief</h3>
@@ -182,18 +183,43 @@
   <p>If climate is shaped by slow natural rhythms — the Sun’s long activity cycles, tidal
      cycles of the Moon — then a record spanning millennia is where they should appear. Find
      the rhythms, and two things follow: the recent warming can be placed in its natural
-     context, and the rhythms can be extended forward as a forecast. The authors examined the
-     most recent 4,000 years of the GISP2 series and, using wavelet analysis, identified
-     three dominant long cycles with periods near <b>2,804, 1,186, and 556 years</b>. (They
-     ran the same machinery on the much shorter Svalbard thermometer record, finding cycles
-     of 68.4, 25.7, and 16.8 years there.) Their stated reason for the 4,000-year window, as
-     quoted in the rebuttal:</p>
+     context, and the rhythms can be extended forward as a forecast. The paper presents
+     itself as “an empirical bottom-up approach to climate modelling,” in deliberate
+     contrast to physics-based climate models: instead of solving the equations of the
+     atmosphere, decompose real temperature records into their periodic components — Fourier
+     analysis for the spectrum, wavelet analysis (the Morlet transform, AutoSignal v1.7
+     software) to see how each rhythm’s strength varies over time — then keep the few
+     dominant, persistent cycles as a model, fitted by nonlinear optimization.</p>
 
-  <blockquote class="src">“[They] chose to focus on the most recent 4000 years of the GISP2
-    series, as the main thrust of [their] investigation is on climatic variations in the
-    recent past and their potential for forecasting the near future.”
-    <cite>HSS11a, as quoted in the Benestad et&nbsp;al. supporting material, p. 5
-    (pronouns adapted)</cite></blockquote>
+  <h3 class="sub">What they did</h3>
+  <p>They applied the machinery to two Arctic records. On the <b>Svalbard thermometer
+     series</b> (1912–2010, the High Arctic’s longest), the spectrum is dominated by periods
+     of 68.4, 25.7 and 16.8 years, and a three-cycle model hindcasts the record with
+     r²&nbsp;=&nbsp;0.47 — against 0.14 for a straight line. Their strongest card is a real
+     out-of-sample test: truncate the series at 1990, refit, and the model (periods 71.7,
+     24.9, 15.3 yr) tracks the withheld 1991–2010 years — including the warm 2005–2007 —
+     about as well as it tracked the training years. From tests like this they estimate
+     “a realistic forecasting time range of about 10–25% of the total record length.”</p>
+  <p>For deep context they turned to the <b>GISP2 ice core</b>, taking the most recent
+     4,000 years of the temperature reconstruction. Their stated reason, in full:</p>
+
+  <blockquote class="src">“Here we chose to focus on the most recent 4000 years of the GISP2
+    series, as the main thrust of our investigation is on climatic variations in the recent
+    past and their potential for forecasting the near future. In addition, this part of the
+    GISP2 series shows an overall linear temperature trend, which simplifies the following
+    analysis.”
+    <cite>HSS11a, Global and Planetary Change 79, pp. 145–146</cite></blockquote>
+
+  <p>On that window, after removing a small linear trend, their Fourier spectrum shows five
+     periods — 3,598, 1,139, 788, 584 and 366 years — all exceeding the 99.9% significance
+     level against white noise. Nonlinear optimization then settled on a three-period model
+     of <b>2,804, 1,186 and 556 years</b>, which hindcasts the window with
+     r²&nbsp;=&nbsp;0.63 and reproduces, in their words, the timing of the Medieval, Roman
+     and Minoan warm periods and the intervening Dark Age and Little Ice Age cold spells.
+     The paper’s candidate mechanisms are lunar tidal cycles (the 18.6-year nodal cycle and
+     its harmonics, following Yndestad) and known solar cycles (the ~205-year De Vries and
+     ~2,300-year Hallstatt cycles), while noting that “the attribution of physical
+     explanations for the observed cyclic climate change is not our main concern.”</p>
 
   <figure>
     <span class="extag">Exhibit A · Their procedure, re-created</span>
@@ -203,24 +229,34 @@
       with the periods fixed at their values — 2,804, 1,186, 556 years — plus a linear trend,
       amplitudes and phases chosen by least squares. It explains 85% of the variance
       (R²&nbsp;0.85), with a typical error of 0.30&nbsp;°C. The Medieval-era warmth, the
-      cooling into the Little Ice Age — the curve traces them. <b>Method note:</b> HSS11a's
-      own analysis was wavelet-based; this is the supporting material's Fourier re-creation
-      (its function <code>Humlum.et.al.2011()</code>), with their periods imposed.</figcaption>
+      cooling into the Little Ice Age — the curve traces them. <b>Method note:</b> HSS11a’s
+      own model was built by wavelet-guided nonlinear optimization and reports
+      r²&nbsp;=&nbsp;0.63; this is the supporting material’s Fourier re-creation (its
+      function <code>Humlum.et.al.2011()</code>) with their periods imposed, and the
+      constructions differ in detrending and optimization target. Both agree on the point
+      this figure makes: inside the window, the three-cycle model fits well.</figcaption>
   </figure>
 
   <h3 class="sub">What they concluded</h3>
-  <p>The cycles, the authors argued, are natural — plausibly linked to solar activity and
-     lunar tidal rhythms — and they dominate the record. On that basis the paper offered what
-     it called “testable forecasts of future climate,” extending the fitted cycles forward
-     and estimating, in the rebuttal’s quotation, “a realistic forecasting time range of
-     about 10–25% of the total record length.” The implication: the coming decades belong to
-     the cycles’ downswing — natural cooling or stasis, not accelerating greenhouse
-     warming.</p>
-  <p>The same author cluster put a number on it. In the companion paper in this case’s
-     <code>sources/</code> folder — “Solar Activity and Svalbard Temperatures,” which builds
-     directly on HSS11a’s Svalbard cycles — they modeled Arctic temperatures against the
-     length of the solar cycle, reported that “60 per cent of the annual and winter
-     temperature variations are explained by solar activity,” and concluded:</p>
+  <p>Because the record “ends 1855 AD, before onset of the 20th century warming,” the
+     authors read the forward extension of their cycles as a further test — and a success:
+     “the natural cycle approach based on wavelet analysis is able to forecast the observed
+     1856–2010 warming (Fig.&nbsp;8) as an out-of-sample forecasting test” (155 years, they
+     note, being about 4% of the record’s length). From this they concluded that “the
+     present period of warming since the LIA to a high degree may be the result of natural
+     climatic variations, known to characterise at least the previous 4000 years,” and —
+     extending forward — that “the present post LIA warm period is likely to continue for
+     most of the 21st century,” after which the late-Holocene cooling trend may resume,
+     “dependant on the magnitude of the anthropogenic greenhouse enhancement.” For
+     Svalbard, their model forecast temperatures declining to about 2015–2017, then a minor
+     warm peak around 2026: “the observed late 20th century warming in Svalbard is not
+     going to continue for the next 20–25 years.”</p>
+  <p>The same author cluster put a sharper number on the Svalbard forecast. In the
+     companion paper in this case’s <code>sources/</code> folder — “Solar Activity and
+     Svalbard Temperatures,” which builds directly on HSS11a’s Svalbard analysis — they
+     modeled Arctic temperatures against the length of the solar cycle, reported that “60
+     per cent of the annual and winter temperature variations are explained by solar
+     activity,” and concluded:</p>
 
   <blockquote class="src">“We predict an annual mean temperature decrease for Svalbard of
     3.5&nbsp;±&nbsp;2°C from solar cycle 23 to solar cycle 24 (2009–20) and a decrease in
@@ -229,16 +265,14 @@
 
   <div class="note c"><b>Why it persuaded people.</b> It has the ingredients that made Case
      File 01’s paper persuasive, on a grander canvas: real, respected data; simple visible
-     rhythms; and the confidence of a falsifiable forecast. A 50,000-year ice core feels like
-     the deep context that thermometer records lack — and a paper saying “we found the
-     natural cycles in it” borrows that depth.</div>
-
-  <div class="note"><b>Sourcing caveat for this draft.</b> The HSS11a PDF is not yet in this
-     case’s <code>sources/</code>. Every statement above about the paper is traceable to the
-     rebuttal’s direct quotations of it or to the companion Svalbard paper (which cites
-     HSS11a as its ref.&nbsp;[3] and summarizes its Svalbard results). When the primary PDF
-     arrives, this steel-man will be rechecked against the authors’ own words — the same
-     standard Case File 01 followed.</div>
+     rhythms; a genuine out-of-sample test on the Svalbard record; and the confidence of a
+     falsifiable forecast. A 50,000-year ice core feels like the deep context that
+     thermometer records lack — and a paper saying “we found the natural cycles in it”
+     borrows that depth. The paper is also candid in places its critics are not obliged to
+     be: it flags the record’s 1855 endpoint, notes that central-Greenland temperature “is
+     not identical to global temperature,” and concedes its Svalbard trend may be
+     “unrealistic high.” The question Part Two asks is whether the candour reaches the
+     one comparison that matters.</div>
 </section>
 
 <!-- ================================================================ PART 2 -->
@@ -258,10 +292,13 @@
        The paper used the most recent 4,000 — 8% of the record’s span — and its authors knew
        the rest well: the rebuttal notes that Humlum had co-authored a popular technical
        article the same year presenting exactly the part of the record that the paper set
-       aside. The stated reason (an interest in “the recent past”) explains the choice of
-       emphasis; it does not explain why 46,000 years of the same variable from the same
-       instrument were not used for the one thing discarded data is perfect for — testing
-       the model.</p>
+       aside. The paper’s two stated reasons deserve separate weighing. An interest in “the
+       recent past” explains the choice of <i>emphasis</i>; it does not explain why 46,000
+       years of the same variable from the same instrument were never used for the one thing
+       discarded data is perfect for — testing the model. The second reason is more
+       revealing: the window was chosen partly because it “shows an overall linear
+       temperature trend, which simplifies the following analysis” — that is, the data was
+       selected for being the kind of data the model handles well.</p>
   </div>
 
   <figure>
@@ -277,16 +314,21 @@
     <span class="tag">Objection 2</span>
     <h3>Extended into the discarded data, the fit fails at once</h3>
     <p>This is the rebuttal’s centerpiece, and it is Case File 01’s lesson applied with a
-       larger hammer: the honest test of a fitted curve is data it never touched. Here the
-       test data did not have to be awaited — it was sitting in the same file. The rebuttal
-       extended the fitted three-cycle model backward into the discarded era, in two
-       variants: keeping the fitted trend, and — to give the model its best chance —
-       zeroing the trend. Within the calibration window the fit misses by 0.3&nbsp;°C on
-       average. Across the rest of the Holocene — the same interglacial climate, no ice-age
-       excuse available — it misses by 4.5&nbsp;°C (trend kept) or 2.4&nbsp;°C (trend
-       zeroed), and its errors are worse than knowing nothing but the average would be. As
-       the rebuttal put it: the authors “did produce a testable forecast of the past climate”
-       — and the past falsified it.</p>
+       larger hammer: the honest test of a fitted curve is data it never touched. The paper
+       itself claims such a test — it reads the match between its extended cycles and the
+       warming after the record’s 1855 endpoint as “an out-of-sample forecasting test”
+       passed. But that comparison spans 155 years against a model whose <i>shortest</i>
+       cycle is 556 years: at that resolution, “forecasting the 1856–2010 warming” means
+       only that the fitted long cycles were rising at the window’s edge. The test with
+       real teeth was sitting in the same file, and did not have to be awaited: 7,700 more
+       years of the same interglacial climate. The rebuttal extended the model backward, in
+       two variants — keeping the fitted trend, and, to give the model its best chance,
+       zeroing it. Within the window the fit misses by 0.30&nbsp;°C on average. Within the
+       first 1,000 years outside it — inside the paper’s own claimed forecasting range of
+       “10–25% of the total record length” — the miss is already 1.0–1.7&nbsp;°C, three to
+       five times worse. Across the rest of the Holocene it reaches 2.4–4.5&nbsp;°C, worse
+       than knowing nothing but the average. As the rebuttal put it: the authors “did
+       produce a testable forecast of the past climate” — and the past falsified it.</p>
   </div>
 
   <figure>
@@ -295,10 +337,11 @@
     <figcaption><b>The reveal.</b> The used data (ink), the discarded Holocene data (grey),
       the fit inside its window (amber solid), and the two extensions (amber dashed: trend
       kept, RMSE 4.5&nbsp;°C; amber dotted: trend zeroed, RMSE 2.4&nbsp;°C — against
-      0.3&nbsp;°C inside the window). This reproduces the supporting material’s Figure S1 on
-      the same NOAA data file its footnote cites. A model whose validity ends at its
-      calibration boundary is a description of that boundary’s contents, not of
-      climate.</figcaption>
+      0.30&nbsp;°C inside the window; within the first 1,000 years alone, the paper’s own
+      claimed forecasting range, the miss is already 1.7 and 1.0&nbsp;°C respectively).
+      This reproduces the supporting material’s Figure S1 on the same NOAA data file its
+      footnote cites. A model whose validity ends at its calibration boundary is a
+      description of that boundary’s contents, not of climate.</figcaption>
   </figure>
 
   <div class="rpoint" id="objection-3">
@@ -308,11 +351,15 @@
        of sinusoids, so a good in-window fit carries no information about causes. The
        rebuttal makes the textbook point directly — a Fourier representation is valid only
        within the fitted interval and is “mathematically bound to extend periodic
-       regularity” beyond it, with no predictive warrant. It adds a technical caution
-       specific to this paper’s method: wavelet results near a record’s end-points are
-       sensitive to subjective boundary-condition choices, and the end-point here is
-       precisely where the paper’s forecast lives. (For a hands-on demonstration of waves
-       fitting anything, see Case File 01’s
+       regularity” beyond it, with no predictive warrant. Two details of the paper sharpen
+       the point here. Its longest “cycle,” 2,804 years, is 70% of the window’s length —
+       the window contains 1.4 repeats of it, and a rhythm cannot be established from a
+       beat and a half (Case File 01’s Objection 2, at larger scale). And 2,804 appears
+       nowhere in the paper’s own Fourier spectrum, whose long peak sits at 3,598 years;
+       the optimizer moved it. The rebuttal adds a technical caution specific to the
+       method: wavelet results near a record’s end-points are sensitive to subjective
+       boundary-condition choices, and the end-point is precisely where the forecast
+       lives. (For a hands-on demonstration of waves fitting anything, see Case File 01’s
        <a href="../loehle-scafetta-curve-fitting/exercises/ex1-waves.html">Exercise 1</a> —
        and its Objection 1, which this objection is the sequel to.)</p>
   </div>
@@ -339,10 +386,15 @@
        ice sheet — and central-Greenland temperature is not global temperature; regional
        records swing harder than the global mean. Second, the reconstruction’s ages count
        back from 1950, and its youngest sample is ≈95 years before that: <b>the series
-       ends around 1855</b>. A paper using it to put “the recent past” in context is
-       working from a record that stops before essentially all of the modern warming
-       occurred. Neither fact is hidden — both are in the data file’s own header — but
-       neither survives into the claim’s framing.</p>
+       ends around 1855</b>. To the paper’s credit, it states both facts — the 1855
+       endpoint explicitly, and the caveat that central-Greenland changes “are not
+       identical to global temperature changes,” though it adds that they “tend to reflect
+       planetary temperature changes with a decadal-scale delay.” The objection is that
+       the caveats do not survive into the conclusions: a record that stops before
+       essentially all of the modern warming is used to conclude that the warming “to a
+       high degree may be the result of natural climatic variations,” and a model whose
+       shortest cycle is 556 years — coarser than the entire instrumental era — is read as
+       having forecast that era’s behaviour.</p>
   </div>
 
   <figure>
@@ -371,15 +423,19 @@
   <h2>What happened after publication</h2>
   <div class="partrule"></div>
 
-  <p>The GISP2 paper’s forecast content was directional — natural cycles implying cooling or
-     stasis ahead. But the companion Svalbard paper made the cluster’s prediction concrete
-     and dated: an annual-mean <b>drop of 3.5&nbsp;±&nbsp;2&nbsp;°C</b> at Svalbard from
-     solar cycle 23 to solar cycle 24 (given as 2009–20), and winters colder by about
-     6&nbsp;°C. Solar cycle 24 has now come and gone. Svalbard did not cool by three and a
-     half degrees; the archipelago instead recorded some of the fastest warming measured
-     anywhere on Earth over precisely that period, with record-warm years in the middle of
-     the forecast window. A quantitative verification exhibit from the Svalbard Airport
-     station series is planned for the next draft (see <code>NOTES.md</code>); the
+  <p>The paper made two dated predictions of its own. For Svalbard: temperatures declining
+     until about 2015–2017, a minor peak around 2026, and — in its words — “the observed
+     late 20th century warming in Svalbard is not going to continue for the next 20–25
+     years.” For central Greenland: the post-Little-Ice-Age warm period continuing for most
+     of the 21st century, at cycle-scale resolution. The companion Svalbard paper made the
+     cluster’s prediction concrete and falsifiable on a decade: an annual-mean <b>drop of
+     3.5&nbsp;±&nbsp;2&nbsp;°C</b> at Svalbard from solar cycle 23 to solar cycle 24 (given
+     as 2009–20), and winters colder by about 6&nbsp;°C. Solar cycle 24 has now come and
+     gone. Svalbard did not cool by three and a half degrees, and the late-20th-century
+     warming did continue: the archipelago instead recorded some of the fastest warming
+     measured anywhere on Earth over precisely that period, with record-warm years in the
+     middle of the forecast window. A quantitative verification exhibit from the Svalbard
+     Airport station series is planned for the next draft (see <code>NOTES.md</code>); the
      qualitative verdict is not in doubt.</p>
   <p>The deeper aftermath is the one the record itself supplies. The claim’s framing — put
      recent climate in the context of natural cycles — used a record that ends around 1855.
@@ -402,17 +458,17 @@
           <td>The most recent 4,000 years of the GISP2 record, by wavelet analysis; three cycles (≈2,804, 1,186, 556 yr) identified as dominant.</td>
           <td>The same file continues ~46,000 years further back; 92% of the record’s span was set aside without being used to test the model.</td></tr>
       <tr><td class="q">What does the fit show?</td>
-          <td>The three cycles plus a trend reproduce the window well and support “testable forecasts of future climate.”</td>
-          <td>In-window fit R² 0.85 (RMSE 0.3 °C) collapses to RMSE 2.4–4.5 °C in the discarded Holocene — worse than using the average. A Fourier sum always fits its own window.</td></tr>
+          <td>Three cycles reproduce the window’s every major feature (their r² 0.63; our re-creation 0.85), supporting “testable forecast of future climate” with a range of “10–25% of the total record length.”</td>
+          <td>Extended into the discarded Holocene, the fit misses by 1.0–1.7 °C within the first 1,000 years — inside their own claimed range — and by 2.4–4.5 °C overall, against 0.30 °C in-window. A Fourier sum always fits its own window.</td></tr>
       <tr><td class="q">The physics?</td>
           <td>The cycles are plausibly solar and lunar in origin.</td>
           <td>Then they should exist before 4,000 years ago — and the discarded data shows they do not. The proposed drivers cannot have switched on recently.</td></tr>
       <tr><td class="q">The forecast?</td>
-          <td>Natural cooling ahead; companion paper: Svalbard −3.5 ± 2 °C over solar cycle 24.</td>
-          <td>Svalbard instead warmed rapidly through cycle 24 — among the fastest warming measured anywhere.</td></tr>
+          <td>Svalbard declining to ≈2015–17 (“not going to continue... for the next 20–25 years”); companion paper: −3.5 ± 2 °C over solar cycle 24. Greenland: warm period persists at cycle resolution.</td>
+          <td>Svalbard instead warmed rapidly through cycle 24 — among the fastest warming measured anywhere — with record-warm years inside the forecast window.</td></tr>
       <tr><td class="q">The record’s reach?</td>
-          <td>Used to put recent climate change in natural context.</td>
-          <td>One central-Greenland site, youngest sample ≈1855 CE: the record stops before essentially all modern warming.</td></tr>
+          <td>Used to put recent climate change in natural context; the paper notes the 1855 endpoint and that Greenland “tends to reflect” global changes with a decadal-scale delay.</td>
+          <td>One central-Greenland site, youngest sample ≈1855 CE: the record stops before essentially all modern warming, and the stated caveats do not reach the conclusions.</td></tr>
     </tbody>
   </table>
 </section>
@@ -424,7 +480,7 @@
   <div class="partrule"></div>
   <ul class="points">
     <li>The paper fitted three long cycles to the most recent 4,000 years of a ~50,000-year data file — and set the other 92% aside.</li>
-    <li>Discarded data is a ready-made test: extend the fit into it, and the error grows roughly ten-fold within the same climate epoch.</li>
+    <li>Discarded data is a ready-made test: extend the fit into it, and the error triples within the paper’s own claimed forecasting range, growing roughly ten-fold across the rest of the same climate epoch.</li>
     <li>A sum of waves can always be made to fit a finite stretch of data; only data the fit never touched can validate it (Case File 01’s lesson, repeated).</li>
     <li>If the cycles were really solar and lunar, they could not exist only in the last 4,000 years — yet outside the window, they don’t.</li>
     <li>The record itself ends around 1855 at one spot in Greenland — before essentially all modern warming — and the same team’s dated forecast (Svalbard −3.5 °C over solar cycle 24) was falsified by rapid warming instead.</li>
@@ -440,15 +496,19 @@
      1950. The fitted model is a constant + linear trend + three sinusoids with periods
      fixed at 2,804/1,186/556 years (amplitudes and phases by least squares on ages ≤ 4 kyr
      BP), replicating the supporting material’s <code>Humlum.et.al.2011()</code>
-     demonstration; HSS11a’s own analysis was wavelet-based, and our coefficients are not
-     presented as theirs. In-window: R² 0.852, RMSE 0.30&nbsp;°C. Extension over 4–11.7 kyr
-     BP: RMSE 4.45&nbsp;°C (trend kept), 2.39&nbsp;°C (trend zeroed). Every number
-     regenerates from <code>src/build.py</code> (deterministic; no random numbers in this
-     case).</p>
+     demonstration; HSS11a’s own model was built by wavelet-guided nonlinear optimization
+     (reported r² 0.63) and our coefficients are not presented as theirs. In-window:
+     R² 0.852, RMSE 0.30&nbsp;°C. Extension over 4–5 kyr BP (the first 1,000 years, within
+     the paper’s stated 10–25%-of-record forecasting range): RMSE 1.66&nbsp;°C (trend
+     kept), 1.02&nbsp;°C (trend zeroed). Extension over the full 4–11.7 kyr BP: RMSE
+     4.45&nbsp;°C and 2.39&nbsp;°C respectively. Quotations were verified against the
+     primary PDF in <code>sources/</code> (page numbers are the journal’s, 145–156). Every
+     number regenerates from <code>src/build.py</code> (deterministic; no random numbers in
+     this case).</p>
   <h4>Sources</h4>
   <p>Humlum, Solheim &amp; Stordahl (2011), <i>Global and Planetary Change</i> 79:145–156,
-     doi:10.1016/j.gloplacha.2011.09.005 (PDF pending; quotations via the rebuttal’s
-     supporting material). · Solheim, Stordahl &amp; Humlum, “Solar Activity and Svalbard
+     doi:10.1016/j.gloplacha.2011.09.005 (PDF in <code>sources/</code>; all quotations
+     verified against it). · Solheim, Stordahl &amp; Humlum, “Solar Activity and Svalbard
      Temperatures,” <i>Adv. Meteorology</i> 2011, art. 543146, doi:10.1155/2011/543146
      (in <code>sources/</code>). · Benestad et&nbsp;al. (2016),
      doi:10.1007/s00704-015-1597-5, supporting material “Selective use of data” (pp. 5–8,
@@ -457,7 +517,7 @@
      <i>Quat. Sci. Rev.</i> 19:213–226, via NOAA NCEI. ·
      Companion case: <a href="../loehle-scafetta-curve-fitting/casefile01-loehle-scafetta-curve-fitting.html">Case
      File 01 — The 60-Year Cycle That Wasn’t</a>.</p>
-  <p style="margin-top:18px;color:var(--grey)">Case file 02 · draft 1 · prepared for the
+  <p style="margin-top:18px;color:var(--grey)">Case file 02 · draft 2 · prepared for the
      “skeptic papers, examined” series.</p>
 </div>
 

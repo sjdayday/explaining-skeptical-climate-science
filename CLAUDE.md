@@ -97,8 +97,8 @@ ratio ≈380× under an 11-yr forcing (check fig6 diagnostics in build output).
 
 Sibling directories under `climate-explain/`:
 - `humlum-greenland-ice-core/` — Case 02 (Humlum, Solheim & Stordahl 2011,
-  discarded GISP2 data), **in progress** (draft 1; see its CLAUDE.md and
-  NOTES.md — primary PDF still wanted).
+  discarded GISP2 data), **in progress** (draft 2, checked against the
+  original paper; see its CLAUDE.md and NOTES.md).
 - Douglass et al. (2007) statistical-interval mix-up, planned as Case 03.
 Shared reference documents (the Benestad et al. SM) live in the repo root
 `sources/`. Follow the same case-file structure and conventions.
