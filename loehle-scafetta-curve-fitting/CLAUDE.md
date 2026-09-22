@@ -80,7 +80,7 @@ Exhibit captions together.
   "resonance" is the rebuttal's term, not L&S11's (one occurrence in the
   preprint, in a reference title); Objection 5 leads with that correction.
 
-## Current state (draft 4, 2026-08-09)
+## Current state (draft 5, 2026-09-21)
 
 Key replication numbers on this data snapshot: calibration 1850–1950 gives
 60-yr amplitude 0.100 °C, 20-yr 0.043 °C, R² 0.457, cycle peaks ≈1997/1998

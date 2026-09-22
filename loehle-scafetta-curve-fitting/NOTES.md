@@ -97,6 +97,27 @@ exchange (C328/C331/C338/C347) remain unmined.
 
 ## Draft changelog
 
+### Draft 5 (2026-09-21)
+- **Interval-provenance pass (Steve's question):** verified against the preprint
+  that the 160-year interval is inherited from the archive, not chosen. The 1850
+  start is explicitly data availability — stated twice: Introduction, first
+  sentence, p. 3 ("the time when global instrumental temperature estimates are
+  first available [Brohan et al., 2006]") and Section 3, p. 10 ("Before 1850
+  global instrumental temperature records are not available"). The end is dataset
+  vintage only: abstract extrapolates "from 1951 to 2009" (p. 2); Figure 1 legend
+  names the "April 8, 2010 dataset" (p. 30). Section 2 merely announces the span
+  ("over a 160 year interval," p. 6). No main-text argument that 160 years
+  suffices for a 60-year cycle; adequacy argued only retroactively in SI-1,
+  pp. 37-38 ("works sufficiently well even on a 100 yr calibration period").
+  Contrast: the 1950 calibration cutoff IS explicitly justified (p. 6 — Thompson
+  et al. 2009; IPCC 2007; Hegerl et al. 2001 "cutoff year"; Hansen et al. 2007
+  aerosol offset). Also p. 3: forcing datasets "for the past 160 years" — the
+  span treated as a given horizon throughout.
+- Edits: Part One provenance sentence ("the full span the thermometers allow");
+  Objection 2 insertion ("the archive set the span; the hypothesis simply had to
+  live within it"); methods note gains pinpoint cites; status/footer bumped to
+  draft 5. Prose-only; figures unchanged.
+
 ### Draft 4.2 (2026-08-09) — resonance primer supplement
 - New supplements/resonance-primer.html (template src/supplements/, built by
   build.py step 3 with the shared CSS; no data injection). Content reworked
