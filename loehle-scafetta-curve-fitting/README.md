@@ -18,7 +18,7 @@ then the post-publication scorecard.
 | `exercises/` | Five interactive exercise pages, one per objection (self-contained HTML + vanilla JS; real NOAA data embedded at build time). Linked from the “try it yourself” boxes in the explainer. |
 | `CLAUDE.md` | Standing instructions and current state for Claude Code sessions in this repo (conventions, build, key numbers). |
 | `NOTES.md` | Working notes: review of the original paper, accuracy audit, draft changelog. |
-| `sources/` | The three primary documents (see `sources/README.md` — two are zip archives despite `.pdf` names). |
+| `sources/` | The primary documents (see `sources/README.md`); the shared Benestad paper and supporting material live in the repo root `../sources/`. |
 | `src/make_figures.py` | Generates the six analysis figures (Exhibits A–F). Replicates the L&S11 fit on real NOAA data, reproduces the Benestad et al. synthetic-noise experiment, and renders the `replicationDemos` forced-oscillator demonstration. |
 | `src/extract_ls11_figures.py` | Crops L&S11's own figures (Figs. 1–5 and Fig. Sup. 1) from the arXiv preprint PDF for the explainer's "Working from the source paper to the rebuttal" section. |
 | `supplements/` | Prose supplements built from `src/supplements/` — currently `resonance-primer.html` (what a resonant system is, examples, and the structure of Objection 5's argument), linked from Objection 5 and Going Deeper. |

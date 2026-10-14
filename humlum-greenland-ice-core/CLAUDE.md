@@ -73,8 +73,9 @@ section: file lines 76–1711; 1,631 samples, 0.0951–49.981 kyr BP,
   is HSS11a; it predicts a Svalbard annual-mean **decrease of 3.5 ± 2 °C**
   for solar cycle 24 (2009–20), winter ≈6 °C — the falsifiable forecast.
 - Shared Benestad materials moved to the repo root: `../sources/
-  benestadetalnccSM2014.pdf` (**zip archive despite the name**; per-page
-  `{n}.txt` + `{n}.jpeg`). The HSS11a case is SM pp. 5–8 + Figure S1
+  benestadetalnccSM2014.pdf` (true PDF, 81 pp.) and
+  `../sources/benestadetal2016-learning-from-mistakes.pdf` (true PDF, 5 pp.,
+  the published paper). The HSS11a case is SM pp. 5–8 + Figure S1
   (p. 57) + Table S1 entry (p. 62). The ESDD open-review record for the
   rebuttal's first version is in
   `../loehle-scafetta-curve-fitting/sources/esdd-open-review/` (C257 —

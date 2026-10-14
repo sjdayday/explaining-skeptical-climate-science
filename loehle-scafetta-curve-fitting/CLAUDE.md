@@ -65,11 +65,12 @@ Exhibit captions together.
 ## Sources (`sources/`)
 
 - `loehlescafetta1206_5845v1.pdf` — true PDF, the L&S11 arXiv preprint.
-- `Learningfrommistakesinclimateresearchs0070401515975.pdf` — **zip archive
-  despite the .pdf name** (per-page `{n}.txt` + `{n}.jpeg`); unzip to read.
-- The SM (`benestadetalnccSM2014.pdf`, same zip format; Table S3 pp. 64–67
-  image-only) moved to the repo root `../sources/` — it is shared across
-  case files.
+- The Benestad et al. (2016) paper and its SM both live in the repo root
+  `../sources/` — they are shared across case files:
+  `benestadetal2016-learning-from-mistakes.pdf` (true PDF, 5 pp., the
+  published article, Theor. Appl. Climatol. 126:699–703, CC BY 4.0) and
+  `benestadetalnccSM2014.pdf` (true PDF, 81 pp.; Table S3 pp. 64–67 is
+  image-only).
 - `esdd-open-review/` — the 2013 ESDD public-review defenses (Loehle C253,
   Benestad C258, Scafetta C318, Matthews C304; CC-BY extracted texts + full
   roster with PDF URL pattern). The case file's "Four defenses, four answers"

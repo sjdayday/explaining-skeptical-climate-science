@@ -7,8 +7,9 @@
 
 **Shared materials** (repo root `../../sources/`):
 `benestadetalnccSM2014.pdf` — the Benestad et al. (2016) supporting material
-(**zip archive despite the .pdf name**; unzip and concatenate the `{n}.txt`
-pages). This case is its "Selective use of data" section, pp. 5–8, with
-Figure S1 (legend p. 57) and the `Humlum.et.al.2011()` entry in Table S1
-(p. 62). The main-paper container and the ESDD open-review extracts remain in
+(true PDF, 81 pp.). This case is its "Selective use of data" section, pp. 5–8,
+with Figure S1 (legend p. 57) and the `Humlum.et.al.2011()` entry in Table S1
+(p. 62). The published main paper sits alongside it as
+`benestadetal2016-learning-from-mistakes.pdf` (true PDF, 5 pp.). The ESDD
+open-review extracts remain in
 `../../loehle-scafetta-curve-fitting/sources/`.
